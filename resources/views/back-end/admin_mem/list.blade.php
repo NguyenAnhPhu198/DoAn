@@ -39,9 +39,9 @@
 										<th>ID</th>										
 										<th>Tên nhân viên</th>
 										<th>Email</th>
-										<th>Quyền</th>
 										<th>Địa chỉ</th>
-										<th>Đt Liên hệ</th>
+										<th>Số điện thoại</th>
+										<th>Quyền</th>
 										<th>Ngày đăng ký</th>										
 										<th>Action</th>
 									</tr>

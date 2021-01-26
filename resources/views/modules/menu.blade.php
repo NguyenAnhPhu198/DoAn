@@ -52,7 +52,7 @@
                       <thead>
                       <tr>
                         <th>Ảnh</th>
-                        <th>LS</th>
+                        <th>Số lượng</th>
                         <th>Tên <SPAN></SPAN></th>
                         <th>Giá</th>
                       </tr>

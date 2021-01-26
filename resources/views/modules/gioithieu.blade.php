@@ -26,11 +26,11 @@
     <p>Hỗ trợ thanh toán  <img src="{!!url('public/images/pay.png')!!}" alt=""> </p>
     <div class="gt-left pull-left">
       <p><small>Tư vẫn miễn phí (24/7)</small></p> 
-      <strong>1800 xxxx</strong>
+      <strong>0913087894</strong>
     </div>
      <div class="gt-right pull-right">
       <p><small>Góp ý, phản ánh(8h00 - 22h00)</small></p>
-      <strong>1800 xxxx</strong>
+      <strong>1800 1999</strong>
     </div>
   </div>
 </div>

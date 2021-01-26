@@ -17,7 +17,7 @@ class ProductsController extends Controller
     public function getlist($cat)
     {
       	if ($cat =='all') {
-    		$data = Products::paginate(15);
+    		$data = Products::orderBy('created_at', 'desc')->paginate(15); //sắp xếp list
     		return view('back-end.products.list',['data'=>$data,'slug'=>'all']);
     	} else {
     		$root = DB::table('category')->where('slug',$cat)->first();

@@ -2,8 +2,8 @@
       <div class="container">
         <hr>
         <footer>
-          © <?=date("Y"); ?> Công Ty Cổ Phần Bán Lẻ Kỹ Thuật Số FSHOP / Địa chỉ: TP. BMT / GPĐKKD số: website đang thử nghiệm. <br>
-          Thiết Kế Bởi : <a href="https://www.facebook.com/vietdhtn" title="" target="#">Hoàng Việt</a>
+          © <?=date("Y"); ?> Công Ty Cổ Phần Bán Lẻ Linh Kiện Máy Tính KIM AN / Địa chỉ: 257 Đống Đa - tp.Đà Nẵng số: website đang thử nghiệm. <br>
+          Thiết Kế Bởi : <a href="https://www.facebook.com/biet.timemdau.3" title="" target="#">Nguyễn ANh Phú</a>
       </footer>
       </div>
     </div>

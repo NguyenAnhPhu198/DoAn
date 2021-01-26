@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">   
-    <h2>Mẫu iện thoại di động mới về</h2>
+    <h2> Ram đời mới </h2>
         <!-- danh muc dien thoai -->
         @foreach($mobile as $row)        
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 no-padding">
@@ -45,7 +45,7 @@
 
         <!--========================== phan danh muc laptop   =========================================  -->
           <div id="laptop"></div>
-          <h2>Mẫu laptop mới về</h2>
+          <h2>Mẫu chuột mới về</h2>
           @foreach($laptop as $row)
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 no-padding" >
             <div class="thumbnail">          
@@ -93,9 +93,9 @@
         <div class="clearfix">
           
         </div>
-<!-- =============== danh muc may tinh ===================================== -->
+<!-- =============== danh muc CPU ===================================== -->
         <div id="pc"></div>
-            <h2>Mẫu máy tính bộ mới về</h2>
+            <h2>Mẫu CPU mới về</h2>
         @foreach($pc as $row)
            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
             <div class="thumbnail pc">              

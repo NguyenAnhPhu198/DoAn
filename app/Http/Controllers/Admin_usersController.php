@@ -18,7 +18,7 @@ class Admin_usersController extends Controller
   
   public function getlist()
    {
-   		$data = Admins::paginate(10);
+   		$data = Admins::orderBy('created_at', 'desc')-> paginate(10);
     	return view('back-end.admin_mem.list',['data'=>$data]);
    }
    public function getadd()
@@ -27,8 +27,9 @@ class Admin_usersController extends Controller
    }
    public function postadd(Request $rq)
    {
+      // dd($rq->all());
       $validator = Validator::make(
-            $rq->only('name', 'email', 'password','password_confirmation','sltlevel'),
+            $rq->all(),
             Admins::$validators,Admins::$msg
             );
         if ($validator->fails()) {
