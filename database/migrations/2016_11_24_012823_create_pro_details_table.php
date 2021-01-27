@@ -13,7 +13,7 @@ class CreateProDetailsTable extends Migration
     public function up()
     {
         Schema::create('pro_details', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id'); // doan này id tự động tăng á dũng
             $table->string('cpu');
             $table->string('ram');
             $table->string('screen');
