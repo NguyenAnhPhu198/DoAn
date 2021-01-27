@@ -16,7 +16,7 @@ class Newscontroller extends Controller
     }
     public function getlist()
     {
-    	$data = News::paginate(10);
+    	$data = News::orderBy('created_at', 'desc')->paginate(10);
     	return view('back-end.news.list',['data'=>$data]);
     }
     public function getadd()

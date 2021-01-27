@@ -15,7 +15,7 @@ class UsersController extends Controller
    }
    public function getlist()
    {
-   		$data = User::paginate(10);
+   		$data = User::orderBy('created_at', 'desc')->paginate(10);
     	return view('back-end.users.list',['data'=>$data]);
    }
    public function getedit($id)
