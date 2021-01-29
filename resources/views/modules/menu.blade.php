@@ -77,13 +77,13 @@
                       <thead>
                       <tr>
                         <th>Ảnh</th>
-                        <th>LS</th>
+                        <th>Số lượng</th>
                         <th>Tên <SPAN></SPAN></th>
                         <th>Giá</th>
                       </tr>
                     </thead>
                        <tbody>                       
-                        <td colspan="3">Hện đang trống</td>                        
+                        <td colspan="3"> Giỏ hàng đang trống </td>                        
                        </tbody>                       
                      </table> 
                   </div>

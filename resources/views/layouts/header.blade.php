@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{!!url('public/images/logo.png')!!}" alt="logo" width="50" height="20">
 
-    <title>KIM AN: Hệ thống linh kiện</title>
+    <title>KIM AN: Thiên đường công nghệ</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{!!url('public/bootstrap/css/bootstrap.min.css')!!}" rel="stylesheet">
