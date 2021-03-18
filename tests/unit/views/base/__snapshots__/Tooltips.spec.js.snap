@@ -74,6 +74,7 @@ exports[`Tooltips.vue renders correctly 1`] = `
           >
             <cbutton-stub
               activeclass="router-link-active"
+              aria-describedby="tooltip_q6r9fd141u"
               color="secondary"
               event="click"
               exactactiveclass="router-link-exact-active"
@@ -85,6 +86,27 @@ exports[`Tooltips.vue renders correctly 1`] = `
               Hover me
             
             </cbutton-stub>
+            <div
+              aria-hidden="false"
+              class="tooltip-old bs-tooltip-old-auto fade show"
+              id="tooltip_q6r9fd141u"
+              role="tooltip"
+            >
+              
+              
+              <div
+                class="arrow"
+              />
+              
+              
+              <div
+                class="tooltip-old-inner"
+              >
+                I start open!
+              </div>
+              
+            
+            </div>
           </div>
         </ccol-stub>
       </crow-stub>
