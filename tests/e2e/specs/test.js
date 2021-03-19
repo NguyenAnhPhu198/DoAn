@@ -50,7 +50,7 @@ module.exports = {
       .assert.elementPresent('.c-footer')
       .assert.elementPresent('.c-sidebar')
       .assert.elementPresent('.c-body')
-      
+
     browser.resizeWindow(700, 800)
     sidebarIsHidden()
     toggle('mobile')
