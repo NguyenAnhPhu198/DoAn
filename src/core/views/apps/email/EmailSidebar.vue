@@ -3,7 +3,7 @@
     color-scheme="light"
     :minimize="minimized"
     :show="show"
-    @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
+    @update:show="(value) => $store.commit('sidebar.set', ['sidebar_show', value])"
 
   >
     <CSidebarBrand class="d-md-down-none" to="/apps/email">
@@ -82,10 +82,10 @@ export default {
   },
   computed: {
     show () {
-      return this.$store.state.sidebarShow
+      return this.$store.state.sidebar_show
     },
     minimize () {
-      return this.$store.state.sidebarMinimize
+      return this.$store.state.sidebar_minimize
     }
   }
 }

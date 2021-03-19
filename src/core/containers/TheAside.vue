@@ -1,13 +1,13 @@
 <template>
   <CSidebar
     aside
-    :show="$store.state.sidebar.asideShow"
-    @update:show="(val) => $store.commit('set', ['asideShow', val])"
+    :show="$store.state.sidebar.sidebar_aside_show"
+    @update:show="(val) => $store.commit('sidebar.set', ['sidebar_aside_show', val])"
     colorScheme="light"
     overlaid
     size="lg"
   >
-    <CSidebarClose @click.native="$store.commit('toggle', 'asideShow')"/>
+    <CSidebarClose @click.native="$store.commit('sidebar.toggle', 'sidebar_aside_show')"/>
     <CTabs tabs class="nav-underline nav-underline-primary">
       <CTab active>
         <template slot="title">

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'c-dark-theme': $store.state.darkMode }" class="c-app">
+  <div :class="{ 'c-dark-theme': $store.state.sidebar_dark_mode }" class="c-app">
     <CContainer class="d-flex align-items-center min-vh-100">
       <CRow class="w-100 justify-content-center">
         <CCol md="6">

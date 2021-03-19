@@ -1,5 +1,5 @@
 <template>
-  <div class="c-app" :class="{ 'c-dark-theme': $store.state.darkMode }">
+  <div class="c-app" :class="{ 'c-dark-theme': $store.state.sidebar_dark_mode }">
     <EmailSidebar/>
     <TheAside/>
     <CWrapper>

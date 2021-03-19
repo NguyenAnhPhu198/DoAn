@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import sidebar from "./sidebar.module";
-import nav from "./nav.module";
+import sidebar from "./sidebar";
+import nav from "./nav";
 
 Vue.use(Vuex);
 

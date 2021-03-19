@@ -3,7 +3,7 @@
     :minimize="minimize"
     unfoldable
     :show="show"
-    @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
+    @update:show="(value) => $store.commit('sidebar.set', ['sidebar_show', value])"
   >
     <CSidebarBrand class="d-md-down-none" to="/">
       <CIcon
@@ -24,7 +24,7 @@
     <CRenderFunction flat :contentToRender="sidebarItems" />
     <CSidebarMinimizer
       class="c-d-md-down-none"
-      @click.native="$store.commit('toggle', 'sidebarMinimize')"
+      @click.native="$store.commit('sidebar.toggle', 'sidebar_minimize')"
     />
   </CSidebar>
 </template>
@@ -35,18 +35,18 @@ import items from "./nav";
 export default {
   name: "TheSidebar",
   created() {
-    this.$store.dispatch("freshNavItems");
-    this.$store.dispatch("pushNavItems", items);
+    this.$store.dispatch("nav.fresh");
+    this.$store.dispatch("nav.push", items);
   },
   computed: {
     show() {
-      return this.$store.state.sidebar.sidebarShow;
+      return this.$store.state.sidebar.sidebar_show;
     },
     minimize() {
-      return this.$store.state.sidebar.sidebarMinimize;
+      return this.$store.state.sidebar.sidebar_minimize;
     },
     sidebarItems() {
-      return this.$store.getters["navItems"];
+      return this.$store.getters["nav.list"];
     },
   },
 };
