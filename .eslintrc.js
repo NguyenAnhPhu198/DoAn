@@ -17,8 +17,9 @@ module.exports = {
     'max-depth': ["error", 4],
     'max-params': ["error", 5],
     'no-multiple-empty-lines': "error",
-    'no-trailing-spaces': ["error", { ignoreComments: true }],
+    'no-trailing-spaces': ["warn", { ignoreComments: true }],
     'no-whitespace-before-property': "error",
+    'multiline-comment-style': ["warn"],
   },
   parserOptions: {
     parser: 'babel-eslint'
