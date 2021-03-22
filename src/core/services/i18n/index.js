@@ -23,7 +23,7 @@ export default new VueI18n({
   messages,
 })
 
-function getBrowserLocale() {
+export function getBrowserLocale() {
   const navigatorLocale =
     navigator.languages !== undefined ?
       navigator.languages[0] :
