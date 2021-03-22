@@ -1,5 +1,6 @@
 import axios from "axios"
 import { getBrowserLocale } from '../i18n'
+import token from './token.local'
 
 class ApiService {
   constructor(axios) {
@@ -62,7 +63,7 @@ class ApiService {
 }
 
 const defaultHeaders = {
-  'Authorization': `Bearer x`,
+  'Authorization': `Bearer ${token.get()}`,
   'Accept-Language': getBrowserLocale(),
 }
 
