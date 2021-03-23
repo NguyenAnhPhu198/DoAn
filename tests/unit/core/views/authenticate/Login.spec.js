@@ -33,8 +33,4 @@ describe('Login.vue', () => {
     const wrapper = shallowMount(Login, { store, localVue })
     expect(wrapper.find('h1').text()).toMatch('Login')
   })
-  test('renders correctly', () => {
-    const wrapper = shallowMount(Login, { store, localVue })
-    expect(wrapper.element).toMatchSnapshot()
-  })
 })

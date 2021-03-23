@@ -30,8 +30,4 @@ describe('Dashboard.vue', () => {
     const wrapper = shallowMount(Dashboard)
     expect(wrapper.find('#traffic').text()).toMatch('Traffic')
   })
-  test('renders correctly', () => {
-    const wrapper = shallowMount(Dashboard)
-    expect(wrapper.element).toMatchSnapshot()
-  })
 })
