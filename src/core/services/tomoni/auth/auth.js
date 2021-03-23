@@ -25,7 +25,6 @@ export default {
     return SERVICE.post('api/password/reset', payload)
   },
   me(query) {
-    SERVICE.attachHeader();
     return SERVICE.query('api/me', query);
   },
   logout() {
