@@ -12,7 +12,11 @@
                 <CForm>
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
-                  <CInput placeholder="Username" autocomplete="username email">
+                  <CInput
+                    placeholder="Username"
+                    :value.sync="username"
+                    autocomplete="username email"
+                  >
                     <template #prepend-content
                       ><CIcon name="cil-user"
                     /></template>
@@ -20,6 +24,7 @@
                   <CInput
                     placeholder="Password"
                     type="password"
+                    :value.sync="password"
                     autocomplete="curent-password"
                   >
                     <template #prepend-content
@@ -28,7 +33,9 @@
                   </CInput>
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton color="primary" class="px-4" @click="login">Login</CButton>
+                      <CButton color="primary" class="px-4" @click="login"
+                        >Login</CButton
+                      >
                     </CCol>
                     <CCol col="6" class="text-right">
                       <CButton color="link" class="px-0"

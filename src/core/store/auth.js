@@ -26,16 +26,19 @@ const getters = {
 
 const actions = {
   ['auth.fetch_access_token'](context, payload) {
-    return tomoni.auth.auth.getAccessToken(payload).then(({ data }) => {
-      context.commit('auth.set_token', data.access_token)
-      return data
-    }).catch(({ response }) => {
-      context.dispatch('errors.push-http-error', response)
-      return response
-    })
+    return new Promise((resolve, reject) => {
+      tomoni.auth.auth.getAccessToken(payload).then(({ data }) => {
+        context.commit('auth.set_token', data.access_token)
+        resolve(data)
+      }).catch(({ response }) => {
+        context.dispatch('errors.push-http-error', response)
+        reject(response)
+      })
+    });
   },
   ['auth.logout'](context) {
     context.commit('auth.purge');
+    return tomoni.auth.auth.logout()
   },
   ['auth.register']() {
     return new Promise();
@@ -53,22 +56,26 @@ const actions = {
 
   },
   ['auth.verify'](context) {
-    tomoni.auth.auth.me().then(({ data }) => {
-      context.commit('auth.set_user', data)
+    return new Promise((resolve, reject) => {
+      tomoni.auth.auth.me().then(({ data }) => {
+        context.commit('auth.set_user', data)
 
-      // If email not verified then redirect to verify
-      if (!context.getters['auth.email_verified']) {
-        redirects.auth.toEmailUnverified()
-      }
+        // If email not verified then redirect to verify
+        if (!context.getters['auth.email_verified']) {
+          redirects.auth.toEmailUnverified()
+        }
 
-      // If this auth has been locked then redirect to login
-      if (context.getters['auth.locked']) {
-        redirects.auth.toLogin()
-      }
-    }).catch(({ response }) => {
-      context.dispatch('errors.push-http-error', response)
-      context.commit('auth.purge')
-      return response
+        // If this auth has been locked then redirect to login
+        if (context.getters['auth.locked']) {
+          redirects.auth.toLogin()
+        }
+
+        resolve(data)
+      }).catch(({ response }) => {
+        context.dispatch('errors.push-http-error', response)
+        context.commit('auth.purge')
+        return reject(response)
+      })
     })
   },
 };
