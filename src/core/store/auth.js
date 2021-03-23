@@ -29,6 +29,9 @@ const actions = {
     return tomoni.auth.auth.getAccessToken(payload).then(({ data }) => {
       context.commit('auth.set_token', data.access_token)
       return data
+    }).catch(({ response }) => {
+      context.dispatch('errors.push-http-error', response)
+      return response
     })
   },
   ['auth.logout'](context) {
@@ -62,8 +65,10 @@ const actions = {
       if (context.getters['auth.locked']) {
         redirects.auth.toLogin()
       }
-    }).catch(() => {
+    }).catch(({ response }) => {
+      context.dispatch('errors.push-http-error', response)
       context.commit('auth.purge')
+      return response
     })
   },
 };
