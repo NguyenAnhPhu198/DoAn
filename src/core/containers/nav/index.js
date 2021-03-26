@@ -1,9 +1,11 @@
-import bottomItems from "./bottom"
-import centerItems from "@/config/nav"
-import topItems from "./top"
+import templateItems from "./template"
+import serviceItems from "@/config/nav"
+import dashboardItems from "./dashboard"
+import authItems from "./auth"
 
 export default [
-  ...topItems,
-  ...centerItems,
-  ...bottomItems,
+  ...dashboardItems,
+  ...serviceItems,
+  ...authItems,
+  ...templateItems,
 ]
