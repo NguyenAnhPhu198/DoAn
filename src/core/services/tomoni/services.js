@@ -1,5 +1,5 @@
 import axios from "axios"
-import { getBrowserLocale } from '../i18n'
+import { getBrowserLocale } from '@/core/plugins/i18n'
 import token from './token.local'
 import RESTApi from '../rest.api'
 
