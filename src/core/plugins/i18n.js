@@ -1,7 +1,7 @@
 import VueI18n from 'vue-i18n'
-import en from "@/config/languages/en";
-import vi from "@/config/languages/vi";
-import ja from "@/config/languages/ja";
+import en from "@/mixins/languages/en";
+import vi from "@/mixins/languages/vi";
+import ja from "@/mixins/languages/ja";
 import Vue from 'vue'
 
 const messages = { en, vi, ja };

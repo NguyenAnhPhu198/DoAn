@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import initServicesStore from "@/config/initStore";
+import initServicesStore from "@/mixins/initStore";
 
 export default {
   name: "InitStore",

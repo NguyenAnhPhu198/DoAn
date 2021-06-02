@@ -1,5 +1,5 @@
 import router from '../router'
-import redirect from '@/config/redirect'
+import redirect from '@/mixins/redirect'
 
 export default {
   /*

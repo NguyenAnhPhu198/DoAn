@@ -6,8 +6,8 @@ import redirect from '@/core/plugins/redirect'
 import defaultProtectedRoutes from './protected'
 import defaultPublicRoutes from './public'
 
-import protectedRoutes from '@/config/routes/protected'
-import publicRoutes from '@/config/routes/public'
+import protectedRoutes from '@/mixins/routes/protected'
+import publicRoutes from '@/mixins/routes/public'
 
 Vue.use(Router)
 
