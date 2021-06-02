@@ -15,6 +15,7 @@ export default {
   methods: {
     initStore() {
       // init core store
+      this.$store.dispatch("auth.flatten_permissions.fetch");
       this.$store.dispatch("auth.roles.fetch");
       this.$store.dispatch("auth.user_statuses.fetch");
       // ...

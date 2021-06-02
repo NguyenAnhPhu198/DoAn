@@ -1,21 +1,22 @@
-import lodash from "lodash";
+import lodash from "@/core/plugins/lodash";
 
 const state = {
-  nav_list: [
-    {
-      _name: 'CSidebarNav',
-      _children: []
-    }
-  ],
+  nav_items: [],
+  nav_available_items: [],
   nav_selected: {},
 }
 
 const getters = {
-  ['nav.list'](state) {
-    /**
-     * - translate "name"
-     */
-    return state.nav_list;
+  ['nav.structure'](state) {
+    return [
+      {
+        _name: 'CSidebarNav',
+        _children: state.nav_available_items,
+      }
+    ];
+  },
+  ['nav.items'](state) {
+    return state.nav_items;
   },
   ['nav.selected'](state) {
     return state.nav_selected;
@@ -25,14 +26,51 @@ const getters = {
 const actions = {
   ['nav.push'](context, items) {
     context.commit('nav.push', items);
+    context.dispatch('nav.available.refresh');
   },
-  ['nav.fresh'](context) {
-    context.commit('nav.fresh');
+  ['nav.set'](context, items) {
+    context.commit('nav.set', items);
+    context.dispatch('nav.available.refresh');
   },
-  ['nav.select'](context, route) {
+  ['nav.available.refresh'](context) {
+    const items = context.getters["nav.items"].filter((i) => {
+      if (i.permissions) {
+        return lodash.hasAll(
+          context.getters["auth.flatten_permissions"],
+          i.permissions
+        );
+      }
+      if (i.any_permissions) {
+        return lodash.hasAny(
+          context.getters["auth.flatten_permissions"],
+          i.any_permissions
+        );
+      }
+      return true;
+    });
+
+    context.commit('nav.available.set', items);
+  },
+}
+
+const mutations = {
+  ['nav.push'](state, items) {
+    state.nav_items.push(...items);
+  },
+  ['nav.set'](state, items) {
+    state.nav_items = items;
+  },
+  ['nav.available.set'](state, items) {
+    state.nav_available_items = items;
+  },
+  ['nav.clear'](state) {
+    state.nav_items = [];
+    state.nav_available_items = [];
+  },
+  ['nav.select'](state, route) {
     let item = null
 
-    context.state.nav_list[0]._children.forEach(i => {
+    state.nav_items.forEach(i => {
       if (i.items) {
         item = i.items.find(subitem => {
           return lodash.startsWith(route, subitem.to)
@@ -41,23 +79,11 @@ const actions = {
     })
 
     if (!item) {
-      item = context.state.nav_list[0]._children.find((i) => {
+      item = state.nav_items.find((i) => {
         return lodash.startsWith(route, i.to)
       })
     }
 
-    context.commit('nav.select', item);
-  },
-}
-
-const mutations = {
-  ['nav.push'](state, items) {
-    state.nav_list[0]._children.push(...items);
-  },
-  ['nav.fresh'](state) {
-    state.nav_list[0]._children = [];
-  },
-  ['nav.select'](state, item) {
     state.nav_selected = item;
   },
 }

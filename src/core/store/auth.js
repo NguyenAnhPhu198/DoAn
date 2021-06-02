@@ -5,6 +5,7 @@ import tomoni from '../services/tomoni'
 const LOCKED_ID = 'locked';
 
 const state = {
+  auth_flatten_permissions: [],
   auth_user: {},
   auth_authenticated: !!tomoni['token.local'].get(),
 };
@@ -21,7 +22,10 @@ const getters = {
   },
   ['auth.locked'](state) {
     return state.auth_user.status_id == LOCKED_ID;
-  }
+  },
+  ['auth.flatten_permissions'](state) {
+    return state.auth_flatten_permissions.map(p => p.id);
+  },
 };
 
 const actions = {
@@ -78,6 +82,17 @@ const actions = {
       })
     })
   },
+  ['auth.flatten_permissions.fetch'](context) {
+    return new Promise((resolve) => {
+      tomoni.auth.auth.flattenPermissions()
+        .then(({ data }) => {
+          context.commit('auth.set_flatten_permissions', data);
+          resolve(data)
+        }).catch(({ response }) => {
+          context.dispatch('errors.push-http-error', response);
+        });
+    });
+  },
 };
 
 const mutations = {
@@ -92,7 +107,10 @@ const mutations = {
   ['auth.purge'](state) {
     state.auth_authenticated = false;
     state.auth_user = {};
-  }
+  },
+  ['auth.set_flatten_permissions'](state, permissions) {
+    state.auth_flatten_permissions = permissions;
+  },
 };
 
 export default {
