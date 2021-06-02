@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
-import redirects from '../redirects'
+import redirect from '@/core/plugins/redirect'
 
 import defaultProtectedRoutes from './protected'
 import defaultPublicRoutes from './public'
@@ -48,7 +48,7 @@ router.beforeEach((routeTo, routeFrom, next) => {
   if (!authRequired) return next()
 
   // If authenticated, just continue.
-  if (!store.getters['auth.authenticated']) redirects.auth.toLogin()
+  if (!store.getters['auth.authenticated']) redirect.toLogin()
 
   Promise.all([store.dispatch('auth.verify')]).then(next())
   // next()

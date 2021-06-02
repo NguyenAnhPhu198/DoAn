@@ -6,6 +6,7 @@ import CoreuiVuePro from '@coreui/vue-pro'
 // import CoreuiVuePro from '../node_modules/@coreui/vue-pro/src/index.js'
 import { iconsSet as icons } from '@/assets/icons/icons.js'
 import mixin from "@/mixins/vue"
+import redirect from './plugins/redirect'
 
 export const options = {
   router,
@@ -22,5 +23,11 @@ export default {
     Vue.prototype.$log = console.log.bind(console)
 
     Vue.mixin(mixin);
+
+    Vue.use({
+      install(Vue) {
+        Vue.prototype.$redirect = redirect;
+      }
+    });
   }
 }

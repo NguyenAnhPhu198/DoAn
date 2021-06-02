@@ -1,4 +1,4 @@
-import redirects from '../redirects'
+import redirect from '@/core/plugins/redirect'
 import tomoni from '../services/tomoni'
 
 // resource constants
@@ -66,12 +66,12 @@ const actions = {
 
         // If email not verified then redirect to verify
         if (!context.getters['auth.email_verified']) {
-          redirects.auth.toEmailUnverified()
+          redirect.toEmailUnverified()
         }
 
         // If this auth has been locked then redirect to login
         if (context.getters['auth.locked']) {
-          redirects.auth.toLogin()
+          redirect.toLogin()
         }
 
         resolve(data)

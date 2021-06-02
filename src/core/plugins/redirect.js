@@ -1,4 +1,5 @@
 import router from '../router'
+import redirect from '@/config/redirect'
 
 export default {
   /*
@@ -9,6 +10,17 @@ export default {
   to(params) {
     router.push(params);
   },
+
+  /**
+   * common
+   */
+  back() {
+    router.back();
+  },
+
+  /**
+   * auth
+   */
   toLogin() {
     this.to({ path: '/login' });
   },
@@ -18,4 +30,9 @@ export default {
   toHome() {
     this.to({ path: '/' });
   },
+
+  /**
+   * more
+   */
+  ...redirect,
 }

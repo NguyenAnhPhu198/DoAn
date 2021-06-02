@@ -55,8 +55,6 @@
 </template>
 
 <script>
-import redirects from "../redirects";
-
 export default {
   name: "TheHeaderDropdownAccnt",
   data() {
@@ -67,7 +65,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("auth.logout").then(() => {
-        redirects.auth.toLogin();
+        this.$redirect.toLogin();
       });
     },
   },

@@ -74,8 +74,6 @@
 </template>
 
 <script>
-import redirects from "../../redirects";
-
 export default {
   name: "Login",
   data() {
@@ -96,7 +94,7 @@ export default {
           password: this.password,
         })
         .then(() => {
-          redirects.auth.toHome();
+          this.$redirect.toHome();
         });
     },
   },
