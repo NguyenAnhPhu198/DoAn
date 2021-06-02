@@ -44,8 +44,22 @@ const actions = {
     context.commit('auth.purge');
     return tomoni.auth.auth.logout()
   },
-  ['auth.register']() {
-    return new Promise();
+  ['auth.register'](context, user) {
+    return new Promise((resolve, reject) => {
+      tomoni.auth.auth.register({ ...user, callback_domain: process.env.VUE_APP_HOST })
+        .then((data) => {
+          context.commit('toasts.push', {
+            title: 'Your account has been created',
+            message: 'Please check your mail for verifycation',
+            type: 'success',
+          })
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          context.dispatch('errors.push-http-error', response);
+          reject(response);
+        });
+    });
   },
   ['auth.resent_mail_verification']() {
 

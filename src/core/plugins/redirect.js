@@ -24,6 +24,9 @@ export default {
   toLogin() {
     this.to({ path: '/login' });
   },
+  toRegister() {
+    this.to({ path: '/register' });
+  },
   toEmailUnverified() {
     this.to({ path: '/email-unverified' });
   },
