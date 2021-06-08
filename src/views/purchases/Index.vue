@@ -1,10 +1,10 @@
 <template>
   <CRow>
-    <SearchBox
+    <!-- <CSearchBoxSimple
       :fields="searchFields"
       @fieldChanged="searchFieldChanged"
       @valueChanged="searchValueChanged"
-    />
+    /> -->
     <CCol col="12">
       <CDataTable
         border
@@ -12,6 +12,7 @@
         :fields="fields"
         :itemsPerPage="paginate.per"
         :loading="loading"
+        column-filter
       >
         <template #id="{ item }">
           <td>
@@ -53,6 +54,12 @@
             {{ item.created_at }}
           </td>
         </template>
+        <template #id-filter>
+          <CInput @change="setFieldFilter($event, 'id')" class="m-0" />
+        </template>
+        <template #buyer_id-filter>
+          <CInput @change="setFieldFilter($event, 'buyer_id')" class="m-0" />
+        </template>
       </CDataTable>
       <CPagination
         align="center"
@@ -72,16 +79,32 @@ export default {
   data() {
     return {
       fields: [
-        { key: "id", _classes: "text-truncate" },
-        { key: "items", label: "Items", _classes: "text-truncate" },
-        { key: "supplier", _classes: "text-truncate" },
-        { key: "buyer_id", label: "Buyer", _classes: "text-truncate" },
-        { key: "balance", _classes: "font-weight-bold text-truncate" },
-        { key: "status", _classes: "text-truncate" },
-        { key: "created_at", _classes: "text-truncate" },
+        { key: "id", _classes: "text-truncate", filter: true },
+        {
+          key: "items",
+          label: "Items",
+          _classes: "text-truncate",
+          filter: false,
+        },
+        { key: "supplier", _classes: "text-truncate", filter: false },
+        {
+          key: "buyer_id",
+          label: "Buyer",
+          _classes: "text-truncate",
+          filter: true,
+        },
+        {
+          key: "balance",
+          _classes: "font-weight-bold text-truncate",
+          sorter: true,
+          filter: false,
+        },
+        { key: "status", _classes: "text-truncate", filter: false },
+        { key: "created_at", _classes: "text-truncate", filter: true },
       ],
       searchField: "",
       searchValue: "",
+      filter: {},
     };
   },
   created() {
@@ -144,6 +167,21 @@ export default {
       this.searchValue = value;
       this.$store.dispatch("order.purchases.push-query", {
         search: this.searchQuery,
+      });
+    },
+    setFieldFilter(value, field) {
+      if (this.lodash.isEmpty(value)) {
+        this.$delete(this.filter, field);
+      } else {
+        this.$set(this.filter, field, value);
+      }
+      const searchFieldItems = this.lodash.map(
+        this.filter,
+        (value, field) => `${field}:${value}`
+      );
+      const searchFields = this.lodash.join(searchFieldItems, ";");
+      this.$store.dispatch("order.purchases.push-query", {
+        search: searchFields,
       });
     },
   },

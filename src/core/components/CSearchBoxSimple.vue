@@ -37,7 +37,6 @@ events:
 
 <script>
 export default {
-  name: "SearchBox",
   props: {
     fields: {
       type: Array,

@@ -13,6 +13,7 @@ const state = {
     appends: "supplier",
     orderBy: "created_at",
     sortedBy: "desc",
+    searchJoin: 'and',
   },
   order_purchases_query: {},
 };
