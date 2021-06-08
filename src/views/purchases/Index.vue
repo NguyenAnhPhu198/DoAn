@@ -1,11 +1,6 @@
 <template>
-  <CRow>
-    <!-- <CSearchBoxSimple
-      :fields="searchFields"
-      @fieldChanged="searchFieldChanged"
-      @valueChanged="searchValueChanged"
-    /> -->
-    <CCol col="12">
+  <TListResource store="order.purchases">
+    <template #list>
       <CDataTable
         border
         :items="purchases"
@@ -30,16 +25,19 @@
         </template>
         <template #status="{ item }">
           <td>
-            <CBadge :color="getBadge(item.status.id)">{{
+            <CBadge v-if="item.status" :color="getBadge(item.status.id)">{{
               item.status.name
             }}</CBadge>
           </td>
         </template>
         <template #supplier="{ item }">
-          <td>
-            <CLink :to="'suppliers/' + item.supplier.id">
+          <td class="text-truncate">
+            <CLink v-if="item.supplier" :to="'suppliers/' + item.supplier.id">
               {{ item.supplier.name }}
             </CLink>
+            <em v-else class="small text-muted"
+              >[{{ item.supplier_id }}] - Not found</em
+            >
           </td>
         </template>
         <template #buyer_id="{ item }">
@@ -61,21 +59,14 @@
           <CInput @change="setFieldFilter($event, 'buyer_id')" class="m-0" />
         </template>
       </CDataTable>
-      <CPagination
-        align="center"
-        :pages="paginate.last"
-        :active-page.sync="paginate.current"
-        @update:activePage="pageChange"
-      />
-    </CCol>
-  </CRow>
+    </template>
+  </TListResource>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Purchases",
   data() {
     return {
       fields: [
@@ -96,32 +87,13 @@ export default {
         {
           key: "balance",
           _classes: "font-weight-bold text-truncate",
-          sorter: true,
           filter: false,
         },
         { key: "status", _classes: "text-truncate", filter: false },
-        { key: "created_at", _classes: "text-truncate", filter: true },
+        { key: "created_at", _classes: "text-truncate", filter: false },
       ],
-      searchField: "",
-      searchValue: "",
       filter: {},
     };
-  },
-  created() {
-    this.$store.dispatch("order.purchases.fetch");
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      handler(route) {
-        if (route.query && route.query.page) {
-          this.$store.dispatch(
-            "order.purchases.change-page",
-            Number(route.query.page)
-          );
-        }
-      },
-    },
   },
   computed: {
     ...mapGetters({
@@ -129,20 +101,6 @@ export default {
       loading: "order.purchases.loading",
       purchases: "order.purchases.list",
     }),
-    searchQuery() {
-      if (!this.searchValue) return null;
-      if (!this.searchField) return this.searchValue;
-      return this.searchField + ":" + this.searchValue;
-    },
-    searchFields() {
-      return [
-        { value: "", label: "All" },
-        { value: "id", label: "Id" },
-        { value: "items.product_id", label: "Product Id" },
-        { value: "buyer_id", label: "Buyer" },
-        { value: "created_at", label: "Created At" },
-      ];
-    },
   },
   methods: {
     getBadge(status) {
@@ -156,18 +114,6 @@ export default {
         default:
           return "warning";
       }
-    },
-    pageChange(val) {
-      this.$router.push({ query: { page: val } });
-    },
-    searchFieldChanged(field) {
-      this.searchField = field.value;
-    },
-    searchValueChanged(value) {
-      this.searchValue = value;
-      this.$store.dispatch("order.purchases.push-query", {
-        search: this.searchQuery,
-      });
     },
     setFieldFilter(value, field) {
       if (this.lodash.isEmpty(value)) {

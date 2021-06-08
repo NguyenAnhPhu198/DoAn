@@ -19,13 +19,9 @@ requireComponent.keys().forEach(fileName => {
   const componentName = upperFirst(
     camelCase(
       // Gets the file name regardless of folder depth
-      fileName
-        .split('/')
-        .pop()
-        .replace(/\.\w+$/, '')
+      fileName.replace(/\.\w+$/, '')
     )
   )
-
 
   // Register component globally
   Vue.component(

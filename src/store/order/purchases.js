@@ -57,6 +57,12 @@ const actions = {
         });
     });
   },
+  ['order.purchases.fetch.if-first-time'](context) {
+    if (context.getters['order.purchases.list'].length) {
+      return;
+    }
+    return context.dispatch('order.purchases.fetch');
+  },
   ['order.purchases.change-page'](context, page) {
     context.commit('order.purchases.push-query', { page })
     context.dispatch('order.purchases.fetch')
