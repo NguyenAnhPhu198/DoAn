@@ -1,5 +1,3 @@
-import Vue from 'vue'
-import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
 import mixin from '@/mixins/lodash'
 
@@ -27,7 +25,5 @@ lodash.mixin({
   //...
   ...mixin,
 })
-
-Vue.use(VueLodash, { lodash: lodash })
 
 export default lodash

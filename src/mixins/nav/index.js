@@ -1,1 +1,5 @@
-export default []
+import purchase from './purchase'
+
+export default [
+  ...purchase,
+]

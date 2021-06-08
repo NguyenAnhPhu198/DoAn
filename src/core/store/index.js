@@ -9,6 +9,7 @@ import errors from "./errors";
 import users from "./auth/users";
 import roles from "./auth/roles";
 import user_statuses from "./auth/user_statuses";
+import modules from '@/store'
 
 Vue.use(Vuex);
 
@@ -22,5 +23,6 @@ export default new Vuex.Store({
     users,
     roles,
     user_statuses,
+    ...modules,
   }
 });

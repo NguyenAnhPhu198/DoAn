@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { brandSet as brands } from '@coreui/icons'
+import { brandSet as brands } from '@coreui/icons-pro'
 export default {
   name: 'Brands',
   brands,

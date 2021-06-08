@@ -21,10 +21,34 @@ axiosAuth.interceptors.request.use(function (config) {
   return config;
 })
 
+// Order service
+const axiosOrder = axios.create({
+  baseURL: process.env.VUE_APP_ORDER_SERVICE_HOST,
+})
+
+axiosOrder.interceptors.request.use(function (config) {
+  config.headers = defaultHeaders()
+  return config;
+})
+
+// Pruduct service
+const axiosProduct = axios.create({
+  baseURL: process.env.VUE_APP_PRODUCT_SERVICE_HOST,
+})
+
+axiosProduct.interceptors.request.use(function (config) {
+  config.headers = defaultHeaders()
+  return config;
+})
+
 const AuthService = new RESTApi(axiosAuth);
+const OrderService = new RESTApi(axiosOrder);
+const ProductService = new RESTApi(axiosProduct);
 
 // ... service
 
 export {
   AuthService,
+  OrderService,
+  ProductService,
 }

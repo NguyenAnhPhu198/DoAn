@@ -23,7 +23,7 @@ import {
   cibPaypal,
   cibGooglePay,
   cibCcAmex
-} from '@coreui/icons'
+} from '@coreui/icons-pro'
 import {
   cifUs,
   cifBr,
@@ -31,7 +31,7 @@ import {
   cifFr,
   cifEs,
   cifPl
-} from '@coreui/icons'
+} from '@coreui/icons-pro'
 import {
   cilAlignCenter,
   cilAlignLeft,
@@ -118,12 +118,15 @@ import {
   cilUserFollow,
   cilUserUnfollow,
   cilXCircle,
-  cilWarning
-} from '@coreui/icons'
+  cilWarning,
+  cilLibraryBooks,
+  //
+} from '@coreui/icons-pro'
 import { logo } from './logo'
 
-
 export const iconsSet = Object.assign({}, { logo }, {
+  //
+  cilLibraryBooks,
   cilAlignCenter,
   cilAlignLeft,
   cilAlignRight,

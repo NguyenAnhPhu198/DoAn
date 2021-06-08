@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { flagSet } from '@coreui/icons'
+import { flagSet } from '@coreui/icons-pro'
 export default {
   name: 'Flags',
   flagSet,

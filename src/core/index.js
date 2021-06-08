@@ -7,6 +7,9 @@ import CoreuiVuePro from '@coreui/vue-pro'
 import { iconsSet as icons } from '@/assets/icons/icons.js'
 import mixin from "@/mixins/vue"
 import redirect from './plugins/redirect'
+import tomoni from './services/tomoni'
+import lodash from './plugins/lodash'
+import VueLodash from 'vue-lodash'
 
 export const options = {
   router,
@@ -22,11 +25,19 @@ export default {
     Vue.use(CoreuiVuePro)
     Vue.prototype.$log = console.log.bind(console)
 
+    Vue.use(VueLodash, { lodash: lodash })
+
     Vue.mixin(mixin);
 
     Vue.use({
       install(Vue) {
         Vue.prototype.$redirect = redirect;
+      }
+    });
+
+    Vue.use({
+      install(Vue) {
+        Vue.prototype.$tomoni = tomoni;
       }
     });
   }

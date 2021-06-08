@@ -1,4 +1,4 @@
-const ignoredModules = ['@coreui/icons', '@coreui/utils'].join('|')
+const ignoredModules = ['@coreui/icons-pro', '@coreui/utils'].join('|')
 
 module.exports = {
   moduleFileExtensions: [
