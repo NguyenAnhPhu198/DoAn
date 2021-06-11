@@ -9,11 +9,14 @@
         :loading="loading"
         column-filter
       >
-        <template #id="{ item }">
+        <template #_="{ item }">
           <td>
-            <CLink :to="'purchases/' + item.id" class="font-weight-bold">
-              {{ item.id }}
-            </CLink>
+            <TListAction
+              :actions="['detail']"
+              path="purchases"
+              :slug="item.id"
+              store="order.purchases"
+            />
           </td>
         </template>
         <template #items="{ item }">
@@ -52,11 +55,29 @@
             {{ item.created_at }}
           </td>
         </template>
+        <template #_-filter>
+          <CButton
+            color="primary"
+            variant="ghost"
+            size="sm"
+            @click="clearFilter"
+            v-c-tooltip="{
+              content: 'Clear filter',
+              appendToBody: true,
+            }"
+          >
+            <CIcon name="cil-clear-all" />
+          </CButton>
+        </template>
         <template #id-filter>
-          <CInput @change="setFieldFilter($event, 'id')" class="m-0" />
+          <CInput :value.sync="filter.id" @change="filterChange" class="m-0" />
         </template>
         <template #buyer_id-filter>
-          <CInput @change="setFieldFilter($event, 'buyer_id')" class="m-0" />
+          <CInput
+            :value.sync="filter.buyer_id"
+            @change="filterChange"
+            class="m-0"
+          />
         </template>
       </CDataTable>
     </template>
@@ -70,7 +91,8 @@ export default {
   data() {
     return {
       fields: [
-        { key: "id", _classes: "text-truncate", filter: true },
+        { key: "_", label: "#", filter: true },
+        { key: "id", _classes: "text-truncate font-weight-bold", filter: true },
         {
           key: "items",
           label: "Items",
@@ -115,20 +137,19 @@ export default {
           return "warning";
       }
     },
-    setFieldFilter(value, field) {
-      if (this.lodash.isEmpty(value)) {
-        this.$delete(this.filter, field);
-      } else {
-        this.$set(this.filter, field, value);
-      }
-      const searchFieldItems = this.lodash.map(
-        this.filter,
-        (value, field) => `${field}:${value}`
-      );
-      const searchFields = this.lodash.join(searchFieldItems, ";");
+    filterChange() {
+      const searchFieldItems = this.lodash.map(this.filter, (value, field) => {
+        return this.lodash.isEmpty(value) ? null : `${field}:${value}`;
+      });
+      const searchFieldItemsFiled = this.lodash.filter(searchFieldItems);
+      const searchFields = this.lodash.join(searchFieldItemsFiled, ";");
       this.$store.dispatch("order.purchases.push-query", {
         search: searchFields,
       });
+    },
+    clearFilter() {
+      this.filter = {};
+      this.filterChange();
     },
   },
 };

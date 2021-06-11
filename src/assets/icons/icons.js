@@ -120,12 +120,18 @@ import {
   cilXCircle,
   cilWarning,
   cilLibraryBooks,
+  cilWindowMaximize,
+  cilDelete,
+  cilClearAll,
   //
 } from '@coreui/icons-pro'
 import { logo } from './logo'
 
 export const iconsSet = Object.assign({}, { logo }, {
   //
+  cilClearAll,
+  cilDelete,
+  cilWindowMaximize,
   cilLibraryBooks,
   cilAlignCenter,
   cilAlignLeft,
