@@ -69,7 +69,7 @@ export default {
       this.other = items.length - 1;
 
       // nếu đã có thông tin product
-      if (!!items[0].product) {
+      if (items[0].product) {
         this.product.name = items[0].product.name;
         this.product.image = items[0].product.images
           ? items[0].product.images.url

@@ -102,16 +102,16 @@ export default {
   methods: {
     getBadge(status) {
       switch (status) {
-      case "alive":
-        return "success";
-      case "Inactive":
-        return "secondary";
-      case "Pending":
-        return "warning";
-      case "locked":
-        return "danger";
-      default:
-        "primary";
+        case "alive":
+          return "success";
+        case "Inactive":
+          return "secondary";
+        case "Pending":
+          return "warning";
+        case "locked":
+          return "danger";
+        default:
+          "primary";
       }
     },
     rowClicked(item) {

@@ -194,25 +194,27 @@ export default {
     'reddit',
     'vimeo'
   ]
-  // labels: {
-  //   facebook: 'Facebook',
-  //   twitter: 'Twitter',
-  //   linkedin: 'LinkedIn',
-  //   flickr: 'Flickr',
-  //   tumblr: 'Tumblr',
-  //   xing: 'Xing',
-  //   github: 'Github',
-  //   stackoverflow: 'StackOverflow',
-  //   youtube: 'YouTube',
-  //   dribbble: 'Dribbble',
-  //   instagram: 'Instagram',
-  //   pinterest: 'Pinterest',
-  //   vk: 'VK',
-  //   yahoo: 'Yahoo',
-  //   behance: 'Behance',
-  //   reddit: 'Reddit',
-  //   vimeo: 'Vimeo'
-  // }
+  /*
+   * labels: {
+   *   facebook: 'Facebook',
+   *   twitter: 'Twitter',
+   *   linkedin: 'LinkedIn',
+   *   flickr: 'Flickr',
+   *   tumblr: 'Tumblr',
+   *   xing: 'Xing',
+   *   github: 'Github',
+   *   stackoverflow: 'StackOverflow',
+   *   youtube: 'YouTube',
+   *   dribbble: 'Dribbble',
+   *   instagram: 'Instagram',
+   *   pinterest: 'Pinterest',
+   *   vk: 'VK',
+   *   yahoo: 'Yahoo',
+   *   behance: 'Behance',
+   *   reddit: 'Reddit',
+   *   vimeo: 'Vimeo'
+   * }
+   */
 }
 </script>
 

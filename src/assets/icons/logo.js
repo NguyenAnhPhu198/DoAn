@@ -1,6 +1,8 @@
-// Example of SVG converted to js array, so it can be used with CIcon.
-// the first argument is two last values of svg viewBox,
-// the second argument is the SVG content stripped of SVG tags
+/*
+ * Example of SVG converted to js array, so it can be used with CIcon.
+ * the first argument is two last values of svg viewBox,
+ * the second argument is the SVG content stripped of SVG tags
+ */
 export const logo = ['642 134', `
 <g>
   <g style="fill:#8ddec9;">

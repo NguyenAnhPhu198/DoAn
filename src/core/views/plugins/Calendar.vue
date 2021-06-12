@@ -66,10 +66,12 @@ import {
   CalendarViewHeader,
   CalendarMathMixin
 } from 'vue-simple-calendar'
-  // import CalendarMathMixin from 'vue-simple-calendar/dist/calendar-math-mixin.js'
-  // The next two lines are processed by webpack. If you're using the component without webpack compilation,
-  // you should just create <link> elements for these as you would normally for CSS files. Both of these
-  // CSS files are optional, you can create your own theme if you prefer.
+  /*
+   * import CalendarMathMixin from 'vue-simple-calendar/dist/calendar-math-mixin.js'
+   * The next two lines are processed by webpack. If you're using the component without webpack compilation,
+   * you should just create <link> elements for these as you would normally for CSS files. Both of these
+   * CSS files are optional, you can create your own theme if you prefer.
+   */
 import 'vue-simple-calendar/static/css/default.css'
 import 'vue-simple-calendar/static/css/holidays-us.css'
 
@@ -205,8 +207,10 @@ export default {
     },
     onDrop(event, date) {
       this.message = `Moved: ${event.title || event.id} to ${date.toLocaleDateString()}`
-      // Determine the delta between the old start date and the date chosen,
-      // and apply that delta to both the start and end date to move the event.
+      /*
+       * Determine the delta between the old start date and the date chosen,
+       * and apply that delta to both the start and end date to move the event.
+       */
       const eLength = this.dayDiff(event.startDate, date)
       event.originalEvent.startDate = this.addDays(event.startDate, eLength)
       event.originalEvent.endDate = this.addDays(event.endDate, eLength)

@@ -53,15 +53,13 @@
 
 <script>
 import lodash from "@/core/plugins/lodash";
-import TPagination from "../Pagination.vue";
 export default {
-  components: {
-    TPagination,
-  },
   props: {
     actions: {
       type: Array,
-      default: [],
+      default: function () {
+        return ["detail", "quick-view", "remove"];
+      },
       validator: function (actions) {
         return lodash.hasAll(["detail", "quick-view", "remove"], actions);
       },
