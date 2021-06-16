@@ -10,22 +10,30 @@
       />
     </template>
     <CCol>
-      <CRow class="text-truncate-2">
-        <TLink :id="product.id" resource="products">
-          {{ product.name }}
-        </TLink>
+      <CRow>
+        <TLink
+          :id="product.id"
+          resource="products"
+          :content="product.name"
+          :messageOptions="{ truncate: 2 }"
+        />
       </CRow>
-      <CRow v-if="product.id" class="small text-truncate-1">
-        {{ product.id }}
+      <CRow v-if="product.id">
+        <CMessage :content="product.id" size="small" :truncate="1" />
       </CRow>
-      <CRow v-if="other" class="small text-muted text-truncate-1">
-        +{{ other }} other items
+      <CRow v-if="other">
+        <CMessage
+          content="other items"
+          size="small"
+          color="muted"
+          :truncate="1"
+        >
+          <template #prefix> +{{ other }} </template>
+        </CMessage>
       </CRow>
     </CCol>
   </CMedia>
-  <div v-else>
-    <em class="small text-muted">Empty</em>
-  </div>
+  <CMessageNotFound v-else slug="" />
 </template>
 
 <script>

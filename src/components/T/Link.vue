@@ -2,7 +2,9 @@
   <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div v-if="popover.active" v-c-popover="popover" />
     <CLink :to="`${resource}/${id}`">
-      <slot></slot>
+      <slot>
+        <CMessage :content="content" noTranslate v-bind="messageOptions" />
+      </slot>
     </CLink>
     <div v-if="popoverContent" v-show="false">
       <component
@@ -23,6 +25,10 @@ export default {
       type: [String, Number],
       required: true,
     },
+    content: {
+      type: String,
+      required: false,
+    },
     popoverContent: {
       type: Object,
       required: false,
@@ -32,6 +38,10 @@ export default {
       required: true,
     },
     popoverOptions: {
+      type: Object,
+      required: false,
+    },
+    messageOptions: {
       type: Object,
       required: false,
     },

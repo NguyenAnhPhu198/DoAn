@@ -39,12 +39,9 @@
               v-if="item.supplier"
               :id="item.supplier.id"
               resource="suppliers"
-            >
-              {{ item.supplier.name }}
-            </TLink>
-            <em v-else class="small text-muted"
-              >[{{ item.supplier_id }}] - Not found</em
-            >
+              :content="item.supplier.name"
+            />
+            <CMessageNotFound v-else :slug="item.supplier_id" />
           </td>
         </template>
         <template #buyer_id="{ item }">
@@ -52,19 +49,18 @@
             <TLink
               :id="item.buyer_id"
               resource="users"
-            >
-              {{ item.buyer_id }}
-            </TLink>
+              :content="item.buyer_id"
+            />
           </td>
         </template>
         <template #created_at="{ item }">
-          <td class="small">
-            {{ item.created_at }}
+          <td>
+            <CMessage :content="item.created_at" size="small" noTranslate />
           </td>
         </template>
         <template #_-filter>
           <CButton
-            color="primary"
+            color="info"
             variant="ghost"
             size="sm"
             @click="clearFilter"
