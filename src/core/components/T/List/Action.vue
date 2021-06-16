@@ -75,17 +75,17 @@ export default {
     /**
      * Route resource
      */
-    path: {
+    resource: {
       type: String,
       required: true,
     },
   },
   methods: {
     onClickDetail() {
-      this.$redirect.to({ path: `${this.path}/${this.slug}` });
+      this.$redirect.to({ path: `${this.resource}/${this.slug}` });
     },
     onClickQuickView() {
-      this.$redirect.to({ path: `${this.path}/${this.slug}/quick-view` });
+      this.$redirect.to({ path: `${this.resource}/${this.slug}/quick-view` });
     },
     onClickRemove() {
       this.$store.dispatch(`${this.store}.delete`, this.slug);

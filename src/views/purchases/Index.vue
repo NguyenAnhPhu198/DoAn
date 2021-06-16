@@ -13,7 +13,7 @@
           <td>
             <TListAction
               :actions="['detail']"
-              path="purchases"
+              resource="purchases"
               :slug="item.id"
               store="order.purchases"
             />
@@ -35,9 +35,13 @@
         </template>
         <template #supplier="{ item }">
           <td class="text-truncate">
-            <CLink v-if="item.supplier" :to="'suppliers/' + item.supplier.id">
+            <TLink
+              v-if="item.supplier"
+              :id="item.supplier.id"
+              resource="suppliers"
+            >
               {{ item.supplier.name }}
-            </CLink>
+            </TLink>
             <em v-else class="small text-muted"
               >[{{ item.supplier_id }}] - Not found</em
             >
@@ -45,9 +49,12 @@
         </template>
         <template #buyer_id="{ item }">
           <td>
-            <CLink :to="'users/' + item.buyer_id">
+            <TLink
+              :id="item.buyer_id"
+              resource="users"
+            >
               {{ item.buyer_id }}
-            </CLink>
+            </TLink>
           </td>
         </template>
         <template #created_at="{ item }">

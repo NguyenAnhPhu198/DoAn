@@ -11,9 +11,9 @@
     </template>
     <CCol>
       <CRow class="text-truncate-2">
-        <CLink :to="'products/' + product.id">
+        <TLink :id="product.id" resource="products">
           {{ product.name }}
-        </CLink>
+        </TLink>
       </CRow>
       <CRow v-if="product.id" class="small text-truncate-1">
         {{ product.id }}
