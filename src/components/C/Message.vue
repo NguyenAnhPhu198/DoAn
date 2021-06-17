@@ -4,7 +4,7 @@
     <slot>
       {{ getContent() }}
     </slot>
-    <slot name="surfix"></slot>
+    <slot name="suffix"></slot>
   </div>
 </template>
 
@@ -53,6 +53,11 @@ export default {
       required: false,
       default: 0, // 0 is not truncate
     },
+    noWrap: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     alignment: {
       type: String,
       required: false,
@@ -80,6 +85,7 @@ export default {
         this.uppercase ? "text-uppercase" : null,
         this.capitalize ? "text-capitalize" : null,
         this.truncate ? `text-truncate-${this.truncate}` : null,
+        this.noWrap ? "text-truncate" : null,
         this.alignment ? `text-${this.alignment}` : null,
         this.justify ? `text-justify` : null,
       ];

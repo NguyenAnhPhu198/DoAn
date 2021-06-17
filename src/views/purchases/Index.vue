@@ -53,9 +53,14 @@
             />
           </td>
         </template>
+        <template #balance="{ item }">
+          <td>
+            <CMessageMoney :amount="item.balance" />
+          </td>
+        </template>
         <template #created_at="{ item }">
           <td>
-            <CMessage :content="item.created_at" size="small" noTranslate />
+            <CMessageDateTime :content="item.created_at" />
           </td>
         </template>
         <template #_-filter>
@@ -95,7 +100,7 @@ export default {
     return {
       fields: [
         { key: "_", label: "#", filter: true },
-        { key: "id", _classes: "text-truncate font-weight-bold", filter: true },
+        { key: "id", _classes: "text-truncate", filter: true },
         {
           key: "items",
           label: "Items",
@@ -111,7 +116,7 @@ export default {
         },
         {
           key: "balance",
-          _classes: "font-weight-bold text-truncate",
+          _classes: "text-truncate",
           filter: false,
         },
         { key: "status", _classes: "text-truncate", filter: false },

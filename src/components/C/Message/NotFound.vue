@@ -1,6 +1,6 @@
 <template>
   <Message :content="getContent()" color="muted" size="small" italic>
-    <template #surfix v-if="slug">
+    <template #suffix v-if="slug">
       {{ `- [${slug}]` }}
     </template>
   </Message>
