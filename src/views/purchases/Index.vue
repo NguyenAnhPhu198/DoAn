@@ -1,95 +1,61 @@
 <template>
-  <TListResource store="order.purchases">
-    <template #list>
-      <CDataTable
-        border
-        :items="purchases"
-        :fields="fields"
-        :itemsPerPage="paginate.per"
-        :loading="loading"
-        column-filter
-      >
-        <template #_="{ item }">
-          <td>
-            <TListAction
-              :actions="['detail']"
-              resource="purchases"
-              :slug="item.id"
-              store="order.purchases"
-            />
-          </td>
-        </template>
-        <template #items="{ item }">
-          <td style="height: 90px; min-width: 400px">
-            <div v-if="item.items">
-              <ProductItems :items="item.items" />
-            </div>
-          </td>
-        </template>
-        <template #status="{ item }">
-          <td>
-            <CBadge v-if="item.status" :color="getBadge(item.status.id)">{{
-              item.status.name
-            }}</CBadge>
-          </td>
-        </template>
-        <template #supplier="{ item }">
-          <td class="text-truncate">
-            <TLink
-              v-if="item.supplier"
-              :id="item.supplier.id"
-              resource="suppliers"
-              :content="item.supplier.name"
-            />
-            <TMessageNotFound v-else :slug="item.supplier_id" />
-          </td>
-        </template>
-        <template #buyer_id="{ item }">
-          <td>
-            <TLink
-              :id="item.buyer_id"
-              resource="users"
-              :content="item.buyer_id"
-            />
-          </td>
-        </template>
-        <template #balance="{ item }">
-          <td>
-            <TMessageMoney :amount="item.balance" />
-          </td>
-        </template>
-        <template #created_at="{ item }">
-          <td>
-            <TMessageDateTime :content="item.created_at" />
-          </td>
-        </template>
-        <template #_-filter>
-          <CButton
-            color="info"
-            variant="ghost"
-            size="sm"
-            @click="clearFilter"
-            v-c-tooltip="{
-              content: 'Clear filter',
-              appendToBody: true,
-            }"
-          >
-            <CIcon name="cil-clear-all" />
-          </CButton>
-        </template>
-        <template #id-filter>
-          <CInput :value.sync="filter.id" @change="filterChange" class="m-0" />
-        </template>
-        <template #buyer_id-filter>
-          <CInput
-            :value.sync="filter.buyer_id"
-            @change="filterChange"
-            class="m-0"
-          />
-        </template>
-      </CDataTable>
+  <TTableAdvance
+    :items="purchases"
+    :fields="fields"
+    store="order.purchases"
+    @resetFilter="resetFilter"
+    resource="suppliers"
+    noPaginate
+  >
+    <template #items="{ item }">
+      <td>
+        <ProductItems :items="item.items" />
+      </td>
     </template>
-  </TListResource>
+    <template #status="{ item }">
+      <td>
+        <CBadge v-if="item.status" :color="getBadge(item.status.id)">{{
+          item.status.name
+        }}</CBadge>
+      </td>
+    </template>
+    <template #supplier="{ item }">
+      <td class="text-truncate">
+        <TLink
+          v-if="item.supplier"
+          :id="item.supplier.id"
+          resource="suppliers"
+          :content="item.supplier.name"
+        />
+        <TMessageNotFound v-else :slug="item.supplier_id" />
+      </td>
+    </template>
+    <template #buyer_id="{ item }">
+      <td>
+        <TLink :id="item.buyer_id" resource="users" :content="item.buyer_id" />
+      </td>
+    </template>
+    <template #balance="{ item }">
+      <td>
+        <TMessageMoney :amount="item.balance" />
+      </td>
+    </template>
+    <template #created_at="{ item }">
+      <td>
+        <TMessageDateTime :content="item.created_at" />
+      </td>
+    </template>
+    <template #id-filter>
+      <CInput :value.sync="filter.id" @change="filterChange" class="m-0" />
+    </template>
+    <template #buyer_id-filter>
+      <CInput
+        :value.sync="filter.buyer_id"
+        @change="filterChange"
+        class="m-0"
+      />
+    </template>
+  </TTableAdvance>
 </template>
 
 <script>
@@ -99,36 +65,20 @@ export default {
   data() {
     return {
       fields: [
-        { key: "_", label: "#", filter: true },
-        { key: "id", _classes: "text-truncate", filter: true },
-        {
-          key: "items",
-          label: "Items",
-          _classes: "text-truncate",
-          filter: false,
-        },
-        { key: "supplier", _classes: "text-truncate", filter: false },
-        {
-          key: "buyer_id",
-          label: "Buyer",
-          _classes: "text-truncate",
-          filter: true,
-        },
-        {
-          key: "balance",
-          _classes: "text-truncate",
-          filter: false,
-        },
-        { key: "status", _classes: "text-truncate", filter: false },
-        { key: "created_at", _classes: "text-truncate", filter: false },
+        { key: "_", label: "#" },
+        { key: "id" },
+        { key: "items", label: "Items" },
+        { key: "supplier" },
+        { key: "buyer_id", label: "Buyer" },
+        { key: "balance" },
+        { key: "status" },
+        { key: "created_at" },
       ],
       filter: {},
     };
   },
   computed: {
     ...mapGetters({
-      paginate: "order.purchases.paginate",
-      loading: "order.purchases.loading",
       purchases: "order.purchases.list",
     }),
   },
@@ -155,7 +105,7 @@ export default {
         search: searchFields,
       });
     },
-    clearFilter() {
+    resetFilter() {
       this.filter = {};
       this.filterChange();
     },

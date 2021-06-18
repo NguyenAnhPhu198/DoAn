@@ -1,5 +1,5 @@
 <template>
-  <CMedia v-if="this.items.length">
+  <CMedia v-if="this.items.length" style="height: 70px; min-width: 400px">
     <template #aside>
       <CImg
         :src="product.image"
@@ -33,7 +33,7 @@
       </CRow>
     </CCol>
   </CMedia>
-  <TMessageNotFound v-else slug="" />
+  <TMessageNotFound v-else slug="" style="height: 70px; min-width: 400px" />
 </template>
 
 <script>
