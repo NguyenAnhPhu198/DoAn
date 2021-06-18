@@ -19,21 +19,21 @@
         />
       </CRow>
       <CRow v-if="product.id">
-        <CMessage :content="product.id" size="small" :truncate="1" />
+        <TMessage :content="product.id" size="small" :truncate="1" />
       </CRow>
       <CRow v-if="other">
-        <CMessage
+        <TMessage
           content="other items"
           size="small"
           color="muted"
           :truncate="1"
         >
           <template #prefix> +{{ other }} </template>
-        </CMessage>
+        </TMessage>
       </CRow>
     </CCol>
   </CMedia>
-  <CMessageNotFound v-else slug="" />
+  <TMessageNotFound v-else slug="" />
 </template>
 
 <script>

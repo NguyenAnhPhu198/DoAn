@@ -1,6 +1,6 @@
 <template>
   <CRow>
-    <CSearchBoxSimple
+    <TSearchBoxSimple
       :fields="searchFields"
       @fieldChanged="searchFieldChanged"
       @valueChanged="searchValueChanged"

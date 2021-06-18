@@ -41,7 +41,7 @@
               resource="suppliers"
               :content="item.supplier.name"
             />
-            <CMessageNotFound v-else :slug="item.supplier_id" />
+            <TMessageNotFound v-else :slug="item.supplier_id" />
           </td>
         </template>
         <template #buyer_id="{ item }">
@@ -55,12 +55,12 @@
         </template>
         <template #balance="{ item }">
           <td>
-            <CMessageMoney :amount="item.balance" />
+            <TMessageMoney :amount="item.balance" />
           </td>
         </template>
         <template #created_at="{ item }">
           <td>
-            <CMessageDateTime :content="item.created_at" />
+            <TMessageDateTime :content="item.created_at" />
           </td>
         </template>
         <template #_-filter>

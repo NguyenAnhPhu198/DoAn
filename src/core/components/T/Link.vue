@@ -3,7 +3,7 @@
     <div v-if="popover.active" v-c-popover="popover" />
     <CLink :to="`${resource}/${id}`">
       <slot>
-        <CMessage :content="content" noTranslate v-bind="messageOptions" />
+        <TMessage :content="content" noTranslate v-bind="messageOptions" />
       </slot>
     </CLink>
     <div v-if="popoverContent" v-show="false">
