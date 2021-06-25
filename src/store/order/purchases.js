@@ -16,6 +16,33 @@ const state = {
     searchJoin: 'and',
   },
   order_purchases_query: {},
+  order_purchases_detail_selected: {
+    id: null,
+    supplier_id: null,
+    buyer_id: null,
+    expected_delivery: null,
+    payment_due_date: null,
+    additional_cost: 0,
+    created_at: null,
+    updated_at: null,
+    balance: 0,
+    items: [],
+    receipts: [],
+    status: {
+      id: null,
+      name: null,
+    },
+    type: {
+      id: null,
+      name: null
+    },
+    steps: []
+  },
+  order_purchases_detail_query: {
+    with: "items;receipts",
+    appends: "supplier",
+  },
+  order_purchases_detail_loading: false,
 };
 
 const getters = {
@@ -33,7 +60,13 @@ const getters = {
       ...state.order_purchases_default_query,
       ...state.order_purchases_query,
     };
-  }
+  },
+  ['order.purchases.detail.selected'](state) {
+    return state.order_purchases_detail_selected;
+  },
+  ['order.purchases.detail.loading'](state) {
+    return state.order_purchases_detail_loading;
+  },
 };
 
 const actions = {
@@ -76,6 +109,24 @@ const actions = {
     context.commit('order.purchases.push-query', query)
     context.dispatch('order.purchases.fetch')
   },
+  ['order.purchases.detail.select'](context, id) {
+    // if is loading then skip
+    if (context.getters['order.purchases.detail.loading']) {
+      return;
+    }
+    return new Promise((resolve) => {
+      context.commit('order.purchases.detail.set-loading', true);
+      tomoni.order.purchases.get(id, context.state.order_purchases_detail_query)
+        .then(({ data }) => {
+          context.commit('order.purchases.detail.set-selected', data)
+          context.commit('order.purchases.detail.set-loading', false);
+          resolve(data)
+        }).catch(({ response }) => {
+          context.commit('order.purchases.detail.set-loading', false);
+          context.dispatch('errors.push-http-error', response);
+        });
+    });
+  },
 };
 
 const mutations = {
@@ -97,6 +148,12 @@ const mutations = {
   },
   ['order.purchases.reset-query'](state) {
     state.order_purchases_query = {}
+  },
+  ['order.purchases.detail.set-loading'](state, loading) {
+    state.order_purchases_detail_loading = loading;
+  },
+  ['order.purchases.detail.set-selected'](state, purchase) {
+    state.order_purchases_detail_selected = purchase;
   },
 };
 

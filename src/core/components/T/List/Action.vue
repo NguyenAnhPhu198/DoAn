@@ -9,7 +9,6 @@
           @click="onClickDetail"
           v-c-tooltip="{
             content: 'Detail',
-            appendToBody: true,
           }"
         >
           <CIcon name="cil-arrow-right" />
@@ -65,7 +64,7 @@ export default {
       },
     },
     slug: {
-      type: String,
+      type: [String, Number],
       required: true,
     },
     store: {

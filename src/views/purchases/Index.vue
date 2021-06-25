@@ -4,8 +4,7 @@
     :fields="fields"
     store="order.purchases"
     @resetFilter="resetFilter"
-    resource="suppliers"
-    noPaginate
+    resource="purchases"
   >
     <template #items="{ item }">
       <td>
@@ -14,9 +13,7 @@
     </template>
     <template #status="{ item }">
       <td>
-        <CBadge v-if="item.status" :color="getBadge(item.status.id)">{{
-          item.status.name
-        }}</CBadge>
+        <TMessageStatus :id="item.status.id" />
       </td>
     </template>
     <template #supplier="{ item }">
@@ -83,18 +80,6 @@ export default {
     }),
   },
   methods: {
-    getBadge(status) {
-      switch (status) {
-        case "Newish":
-          return "secondary";
-        case "Finish":
-          return "success";
-        case "Cancelled":
-          return "danger";
-        default:
-          return "warning";
-      }
-    },
     filterChange() {
       const searchFieldItems = this.lodash.map(this.filter, (value, field) => {
         return this.lodash.isEmpty(value) ? null : `${field}:${value}`;

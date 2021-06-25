@@ -1,10 +1,14 @@
 <template>
-  <div :class="serializeClass">
-    <slot name="prefix"></slot>
-    <slot>
-      {{ getContent() }}
-    </slot>
-    <slot name="suffix"></slot>
+  <div :class="serializeOverClass">
+    <slot name="over-prefix"></slot>
+    <div :class="serializeClass">
+      <slot name="prefix"></slot>
+      <slot>
+        {{ getContent() }}
+      </slot>
+      <slot name="suffix"></slot>
+    </div>
+    <slot name="over-suffix"></slot>
   </div>
 </template>
 
@@ -73,6 +77,20 @@ export default {
       required: false,
       default: false,
     },
+    addClasses: {
+      type: Array,
+      required: false,
+      default: function () {
+        return [];
+      },
+    },
+    addOverClasses: {
+      type: Array,
+      required: false,
+      default: function () {
+        return [];
+      },
+    },
   },
   computed: {
     serializeClass() {
@@ -88,7 +106,12 @@ export default {
         this.noWrap ? "text-truncate" : null,
         this.alignment ? `text-${this.alignment}` : null,
         this.justify ? `text-justify` : null,
+        ...this.addClasses,
       ];
+      return this.lodash.arrayToString(properties);
+    },
+    serializeOverClass() {
+      const properties = [...this.addOverClasses];
       return this.lodash.arrayToString(properties);
     },
   },

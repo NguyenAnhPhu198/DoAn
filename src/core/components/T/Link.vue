@@ -1,7 +1,12 @@
 <template>
   <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div v-if="popover.active" v-c-popover="popover" />
-    <CLink :to="`${resource}/${id}`">
+    <CLink v-if="!href" :to="`${resource}/${id}`">
+      <slot>
+        <TMessage :content="content" noTranslate v-bind="messageOptions" />
+      </slot>
+    </CLink>
+    <CLink v-else :href="href">
       <slot>
         <TMessage :content="content" noTranslate v-bind="messageOptions" />
       </slot>
@@ -23,7 +28,7 @@ export default {
   props: {
     id: {
       type: [String, Number],
-      required: true,
+      required: false,
     },
     content: {
       type: String,
@@ -33,9 +38,13 @@ export default {
       type: Object,
       required: false,
     },
+    href: {
+      type: String,
+      required: false,
+    },
     resource: {
       type: String,
-      required: true,
+      required: false,
     },
     popoverOptions: {
       type: Object,
