@@ -123,12 +123,14 @@ import {
   cilWindowMaximize,
   cilDelete,
   cilClearAll,
+  cilPlus,
   //
 } from '@coreui/icons-pro'
 import { logo } from './logo'
 
 export const iconsSet = Object.assign({}, { logo }, {
   //
+  cilPlus,
   cilClearAll,
   cilDelete,
   cilWindowMaximize,

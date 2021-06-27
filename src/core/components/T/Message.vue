@@ -1,7 +1,30 @@
 <template>
   <div :class="serializeOverClass">
     <slot name="over-prefix"></slot>
-    <div :class="serializeClass">
+    <div
+      :class="serializeClass"
+      @mouseenter="showAction = true"
+      @mouseleave="showAction = false"
+    >
+      <div class="position-absolute" style="transform: translate(0, -90%)">
+        <slot name="actions" :showAction="showAction">
+          <TButtonActionCreate
+            v-if="creatable"
+            v-show="showAction"
+            @click="$emit('click-create')"
+          />
+          <TButtonActionEdit
+            v-if="editable"
+            v-show="showAction"
+            @click="$emit('click-edit')"
+          />
+          <TButtonActionRemove
+            v-if="removable"
+            v-show="showAction"
+            @click="$emit('click-remove')"
+          />
+        </slot>
+      </div>
       <slot name="prefix"></slot>
       <slot>
         {{ getContent() }}
@@ -13,7 +36,16 @@
 </template>
 
 <script>
+import TButtonActionEdit from "./Button/Action/Edit.vue";
+import TButtonActionRemove from "./Button/Action/Remove.vue";
+import TButtonActionCreate from "./Button/Action/Create.vue";
+
 export default {
+  components: {
+    TButtonActionEdit: TButtonActionEdit,
+    TButtonActionRemove: TButtonActionRemove,
+    TButtonActionCreate: TButtonActionCreate,
+  },
   props: {
     content: {
       type: [String, Number],
@@ -91,6 +123,26 @@ export default {
         return [];
       },
     },
+    editable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    removable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    creatable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      showAction: false,
+    };
   },
   computed: {
     serializeClass() {

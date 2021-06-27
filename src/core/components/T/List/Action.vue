@@ -52,6 +52,7 @@
 
 <script>
 import lodash from "@/core/plugins/lodash";
+
 export default {
   props: {
     actions: {

@@ -1,16 +1,46 @@
 <template>
-  <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+  <TMouseTimeout
+    @enter="activePopover"
+    @leave="inactivePopover"
+    :sure="!!popoverContent"
+  >
     <div v-if="popover.active" v-c-popover="popover" />
-    <CLink v-if="!href" :to="`${resource}/${id}`">
-      <slot>
-        <TMessage :content="content" noTranslate v-bind="messageOptions" />
-      </slot>
-    </CLink>
-    <CLink v-else :href="href">
-      <slot>
-        <TMessage :content="content" noTranslate v-bind="messageOptions" />
-      </slot>
-    </CLink>
+    <slot>
+      <TMessage
+        :content="content"
+        noTranslate
+        v-bind="messageOptions"
+        :creatable="creatable"
+        :editable="editable"
+        :removable="removable"
+        :addClasses="['btn-link']"
+      >
+        <template #actions="{ showAction }">
+          <TButtonActionEnter
+            v-show="showAction"
+            :slug="id"
+            :resource="resource"
+            :href="href"
+            @click="$emit('click-enter')"
+          />
+          <TButtonActionCreate
+            v-if="creatable"
+            v-show="showAction"
+            @click="$emit('click-create')"
+          />
+          <TButtonActionEdit
+            v-if="editable"
+            v-show="showAction"
+            @click="$emit('click-edit')"
+          />
+          <TButtonActionRemove
+            v-if="removable"
+            v-show="showAction"
+            @click="$emit('click-remove')"
+          />
+        </template>
+      </TMessage>
+    </slot>
     <div v-if="popoverContent" v-show="false">
       <component
         v-if="popover.active || hasBeenLoaded"
@@ -20,11 +50,18 @@
         ref="popover"
       ></component>
     </div>
-  </div>
+  </TMouseTimeout>
 </template>
 
 <script>
+import TButtonActionEnter from "./Button/Action/Enter.vue";
+import TMouseTimeout from "./MouseTimeout.vue";
+
 export default {
+  components: {
+    TButtonActionEnter: TButtonActionEnter,
+    TMouseTimeout: TMouseTimeout,
+  },
   props: {
     id: {
       type: [String, Number],
@@ -54,6 +91,21 @@ export default {
       type: Object,
       required: false,
     },
+    editable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    removable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    creatable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -64,7 +116,6 @@ export default {
         html: true,
         placement: "top-end",
       },
-      keepOn: false,
       hasBeenLoaded: false,
     };
   },
@@ -73,31 +124,11 @@ export default {
       this.popover.content = this.$refs.popover.$el.innerHTML;
     },
     activePopover() {
-      this.keepOn = true;
-      setTimeout(() => {
-        if (this.keepOn) {
-          this.popover.active = true;
-          this.hasBeenLoaded = true;
-        }
-      }, 1000);
+      this.popover.active = true;
+      this.hasBeenLoaded = true;
     },
     inactivePopover() {
-      this.keepOn = false;
-      setTimeout(() => {
-        if (!this.keepOn) {
-          this.popover.active = false;
-        }
-      }, 500);
-    },
-    onMouseEnter() {
-      if (this.popoverContent) {
-        this.activePopover();
-      }
-    },
-    onMouseLeave() {
-      if (this.popoverContent) {
-        this.inactivePopover();
-      }
+      this.popover.active = false;
     },
   },
 };

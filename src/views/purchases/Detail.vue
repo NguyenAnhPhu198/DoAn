@@ -24,7 +24,9 @@
             <tbody>
               <tr>
                 <td class="left p-1"><TMessage content="ID" bold /></td>
-                <td class="right p-1 align-middle">{{ purchase.id }}</td>
+                <td class="left p-1">
+                  <TMessage :content="purchase.id" />
+                </td>
               </tr>
               <tr>
                 <td class="left p-1"><TMessage content="Supplier" bold /></td>
@@ -34,6 +36,7 @@
                     :id="purchase.supplier.id"
                     resource="suppliers"
                     :content="purchase.supplier.name"
+                    :messageOptions="{ truncate: 1 }"
                   />
                   <TMessageNotFound v-else :slug="purchase.supplier_id" />
                 </td>
@@ -46,6 +49,7 @@
                     :id="purchase.buyer_id"
                     resource="users"
                     :content="purchase.buyer_id"
+                    :messageOptions="{ truncate: 1 }"
                   />
                 </td>
               </tr>
@@ -57,7 +61,7 @@
               </tr>
               <tr>
                 <td class="left p-1">
-                  <TMessage content="Latest updated" bold />
+                  <TMessage content="Latest updated" bold noWrap />
                 </td>
                 <td class="right p-1 align-middle">
                   <TMessageDateTime :content="purchase.updated_at" />
@@ -111,21 +115,28 @@
         <CCol>
           <TMessage
             content="Attachments:"
+            creatable
             uppercase
             :addOverClasses="['d-inline-flex']"
           >
-            <template #over-suffix>
-              <TLink
-                v-for="(receipt, index) in purchase.receipts"
-                :key="index"
-                :content="receipt.id"
-                :href="getUrlAttachment(receipt.path_file)"
-                :messageOptions="{
-                  italic: true,
-                  addOverClasses: ['ml-2'],
-                }"
-              />
-              <TMessageNotFound v-if="!purchase.receipts.length" class="ml-2" />
+            <template #suffix>
+              <div class="d-inline-flex">
+                <TLink
+                  v-for="(receipt, index) in purchase.receipts"
+                  :key="index"
+                  :content="receipt.id"
+                  :href="getUrlAttachment(receipt.path_file)"
+                  :messageOptions="{
+                    italic: true,
+                    addOverClasses: ['ml-2'],
+                  }"
+                  removable
+                />
+                <TMessageNotFound
+                  v-if="!purchase.receipts.length"
+                  class="ml-2"
+                />
+              </div>
             </template>
           </TMessage>
         </CCol>
