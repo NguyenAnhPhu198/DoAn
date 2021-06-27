@@ -3,7 +3,7 @@
     :items="purchases"
     :fields="fields"
     store="order.purchases"
-    @clear-filter="clearFilter"
+    @click-clear-filter="clearFilter"
     resource="purchases"
     enterable
     creatable

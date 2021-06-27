@@ -12,7 +12,7 @@
           <template v-if="creatable" #_-header>
             <CRow>
               <CCol v-if="creatable" class="pl-1 pr-1 ml-1" col="12">
-                <TButtonCreate @click="$emit('create')" />
+                <TButtonCreate @click="$emit('click-create')" />
               </CCol>
             </CRow>
           </template>
@@ -23,7 +23,7 @@
                   <TButtonEnter :slug="item[slugKey]" :resource="resource" />
                 </CCol>
                 <CCol v-if="quickViewable" class="pl-1 pr-1 ml-1" col="12">
-                  <TButtonQuickView @click="$emit('quick-view')" />
+                  <TButtonQuickView @click="$emit('click-quick-view')" />
                 </CCol>
                 <CCol v-if="removable" class="pl-1 pr-1 ml-1" col="12">
                   <TButtonRemove @click="remove(item[slugKey])" />
@@ -32,7 +32,7 @@
             </td>
           </template>
           <template #_-filter>
-            <TButtonClear @click="$emit('clear-filter')" />
+            <TButtonClear @click="$emit('click-clear-filter')" />
           </template>
           <template
             v-for="(_, name) in $scopedSlots"
