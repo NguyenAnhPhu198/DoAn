@@ -19,104 +19,56 @@
     <CCardBody>
       <CRow class="mb-4">
         <CCol sm="4">
-          <TMessage content="Details:" uppercase :addClasses="['mb-3']" />
-          <table class="table table-clear">
-            <tbody>
-              <tr>
-                <td class="left p-1"><TMessage content="ID" bold /></td>
-                <td class="left p-1">
-                  <TMessage :content="purchase.id" />
-                </td>
-              </tr>
-              <tr>
-                <td class="left p-1"><TMessage content="Supplier" bold /></td>
-                <td class="right p-1 align-middle">
-                  <TLink
-                    v-if="purchase.supplier"
-                    :id="purchase.supplier.id"
-                    resource="suppliers"
-                    :content="purchase.supplier.name"
-                    :messageOptions="{ truncate: 1 }"
-                  />
-                  <TMessageNotFound v-else :slug="purchase.supplier_id" />
-                </td>
-              </tr>
-              <tr>
-                <td class="left p-1"><TMessage content="Buyer" bold /></td>
-                <td class="right p-1 align-middle">
-                  <TLink
-                    v-if="purchase.buyer_id"
-                    :id="purchase.buyer_id"
-                    resource="users"
-                    :content="purchase.buyer_id"
-                    :messageOptions="{ truncate: 1 }"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="left p-1"><TMessage content="Created" bold /></td>
-                <td class="right p-1 align-middle">
-                  <TMessageDateTime :content="purchase.created_at" />
-                </td>
-              </tr>
-              <tr>
-                <td class="left p-1">
-                  <TMessage content="Latest updated" bold noWrap />
-                </td>
-                <td class="right p-1 align-middle">
-                  <TMessageDateTime :content="purchase.updated_at" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <TTableAsForm title="Details" :data="purchase" :fields="detailFields">
+            <template #id="{ value }">
+              <TMessage :content="value" noTranslate />
+            </template>
+            <template #supplier_id="{ value, data }">
+              <TLink
+                v-if="data.supplier"
+                :id="value"
+                resource="suppliers"
+                :content="data.supplier.name"
+                :messageOptions="{ truncate: 1 }"
+              />
+              <TMessageNotFound v-else :slug="value" />
+            </template>
+            <template #buyer_id="{ value }">
+              <TLink
+                v-if="value"
+                :id="value"
+                resource="users"
+                :content="value"
+                :messageOptions="{ truncate: 1 }"
+              />
+            </template>
+            <template #created_at="{ value }">
+              <TMessageDateTime :content="value" />
+            </template>
+            <template #updated_at="{ value }">
+              <TMessageDateTime :content="value" />
+            </template>
+          </TTableAsForm>
         </CCol>
         <CCol sm="4">
-          <TMessage content="Dates:" uppercase :addClasses="['mb-3']" />
-          <table class="table table-clear">
-            <tbody>
-              <tr>
-                <td class="left p-1">
-                  <TMessage content="Expected delivery" bold />
-                </td>
-                <td class="right p-1 align-middle">
-                  <TMessageDateTime
-                    :content="purchase.expected_delivery"
-                    editable
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="left p-1">
-                  <TMessage content="Due payment" bold />
-                </td>
-                <td class="right p-1 align-middle">
-                  <TMessageDateTime
-                    :content="purchase.payment_due_date"
-                    editable
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <TTableAsForm title="Dates" :data="purchase" :fields="dateFields">
+            <template #expected_delivery="{ value }">
+              <TMessageDateTime :content="value" editable />
+            </template>
+            <template #payment_due_date="{ value }">
+              <TMessageDateTime :content="value" editable />
+            </template>
+          </TTableAsForm>
         </CCol>
         <CCol sm="4">
-          <TMessage content="Costs:" uppercase :addClasses="['mb-3']" />
-          <table class="table table-clear">
-            <tbody>
-              <tr>
-                <td class="left p-1"><TMessage content="Additional" bold /></td>
-                <td class="right p-1 align-middle">
-                  <TMessageMoney :amount="purchase.additional_cost" editable />
-                </td>
-              </tr>
-              <tr>
-                <td class="left p-1"><TMessage content="Balance" bold /></td>
-                <td class="right p-1 align-middle">
-                  <TMessageMoney :amount="purchase.balance" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <TTableAsForm title="Costs" :data="purchase" :fields="costFields">
+            <template #additional_cost="{ value }">
+              <TMessageMoney :amount="value" editable />
+            </template>
+            <template #balance="{ value }">
+              <TMessageMoney :amount="value" />
+            </template>
+          </TTableAsForm>
         </CCol>
         <CCol>
           <TMessage
@@ -152,7 +104,7 @@
           <TMessage content="Items:" uppercase :addClasses="['mb-3']" />
           <TTableAdvance
             :items="purchase.items"
-            :fields="fields"
+            :fields="itemFields"
             store="order.purchases"
             resource="purchases"
             noFilter
@@ -178,7 +130,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      fields: [
+      itemFields: [
         { key: "_", label: "#" },
         { key: "product_id", label: "Product" },
         { key: "tracking_id", label: "Tracking" },
@@ -190,6 +142,21 @@ export default {
         { key: "tax" },
         { key: "balance" },
         { key: "received" },
+      ],
+      detailFields: [
+        { key: "id", label: "ID" },
+        { key: "supplier_id", label: "Supplier" },
+        { key: "buyer_id", label: "Buyer" },
+        { key: "created_at", label: "Created at" },
+        { key: "updated_at", label: "Latest update" },
+      ],
+      dateFields: [
+        { key: "expected_delivery", label: "Expected delivery" },
+        { key: "payment_due_date", label: "Due payment" },
+      ],
+      costFields: [
+        { key: "additional_cost", label: "Additional" },
+        { key: "balance", label: "Balance" },
       ],
     };
   },

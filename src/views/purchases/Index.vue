@@ -41,7 +41,7 @@
     </template>
     <template #created_at="{ item }">
       <td>
-        <TMessageDateTime :content="item.created_at" />
+        <TMessageDateTime :content="item.created_at" small />
       </td>
     </template>
     <template #id-filter>

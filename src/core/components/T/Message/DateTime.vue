@@ -1,7 +1,7 @@
 <template>
   <TMessage
     :content="content"
-    size="small"
+    :size="small ? 'small' : null"
     noTranslate
     :creatable="creatable"
     :editable="editable"
@@ -40,6 +40,10 @@ export default {
     content: {
       type: [String, Number],
       required: false,
+    },
+    small: {
+      type: Boolean,
+      default: false,
     },
   },
 };
