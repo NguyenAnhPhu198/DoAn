@@ -79,7 +79,10 @@
                   <TMessage content="Expected delivery" bold />
                 </td>
                 <td class="right p-1 align-middle">
-                  <TMessageDateTime :content="purchase.expected_delivery" />
+                  <TMessageDateTime
+                    :content="purchase.expected_delivery"
+                    editable
+                  />
                 </td>
               </tr>
               <tr>
@@ -87,7 +90,10 @@
                   <TMessage content="Due payment" bold />
                 </td>
                 <td class="right p-1 align-middle">
-                  <TMessageDateTime :content="purchase.payment_due_date" />
+                  <TMessageDateTime
+                    :content="purchase.payment_due_date"
+                    editable
+                  />
                 </td>
               </tr>
             </tbody>
@@ -100,7 +106,7 @@
               <tr>
                 <td class="left p-1"><TMessage content="Additional" bold /></td>
                 <td class="right p-1 align-middle">
-                  <TMessageMoney :amount="purchase.additional_cost" />
+                  <TMessageMoney :amount="purchase.additional_cost" editable />
                 </td>
               </tr>
               <tr>
@@ -149,9 +155,11 @@
             :fields="fields"
             store="order.purchases"
             resource="purchases"
-            :actions="['quick-view', 'remove']"
             noFilter
             noPaginate
+            quickViewable
+            removable
+            creatable
           >
             <template #product_id="{ item }">
               <td>
@@ -201,6 +209,9 @@ export default {
   methods: {
     getUrlAttachment(path_file) {
       return process.env.VUE_APP_ORDER_SERVICE_HOST + "/files/" + path_file;
+    },
+    asd() {
+      console.log("xxx");
     },
   },
 };

@@ -16,24 +16,24 @@
         :addClasses="['btn-link']"
       >
         <template #actions="{ showAction }">
-          <TButtonActionEnter
+          <TButtonEnter
             v-show="showAction"
             :slug="id"
             :resource="resource"
             :href="href"
             @click="$emit('click-enter')"
           />
-          <TButtonActionCreate
+          <TButtonCreate
             v-if="creatable"
             v-show="showAction"
             @click="$emit('click-create')"
           />
-          <TButtonActionEdit
+          <TButtonEdit
             v-if="editable"
             v-show="showAction"
             @click="$emit('click-edit')"
           />
-          <TButtonActionRemove
+          <TButtonRemove
             v-if="removable"
             v-show="showAction"
             @click="$emit('click-remove')"
@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import TButtonActionEnter from "./Button/Action/Enter.vue";
 import TMouseTimeout from "./MouseTimeout.vue";
+import actions from "./Button/mixin";
 
 export default {
+  mixins: [actions],
   components: {
-    TButtonActionEnter: TButtonActionEnter,
     TMouseTimeout: TMouseTimeout,
   },
   props: {
@@ -90,21 +90,6 @@ export default {
     messageOptions: {
       type: Object,
       required: false,
-    },
-    editable: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    removable: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    creatable: {
-      type: Boolean,
-      required: false,
-      default: false,
     },
   },
   data() {

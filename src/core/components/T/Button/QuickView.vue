@@ -5,10 +5,9 @@
     variant="ghost"
     :size="size"
     @click="$emit('click')"
-    v-c-tooltip="{ content: 'Edit' }"
-    shape="pill"
+    v-c-tooltip="{ content: 'Quick view', appendToBody: true }"
   >
-    <CIcon name="cil-pencil" size="sm" />
+    <CIcon name="cil-fullscreen" :size="size" />
   </CButton>
 </template>
 

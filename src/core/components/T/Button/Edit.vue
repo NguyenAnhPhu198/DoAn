@@ -1,14 +1,13 @@
 <template>
   <CButton
     class="py-0"
-    color="danger"
+    color="info"
     variant="ghost"
     :size="size"
     @click="$emit('click')"
-    v-c-tooltip="{ content: 'Delete' }"
-    shape="pill"
+    v-c-tooltip="{ content: 'Edit', appendToBody: true }"
   >
-    <CIcon name="cil-delete" size="sm" />
+    <CIcon name="cil-pencil" :size="size" />
   </CButton>
 </template>
 

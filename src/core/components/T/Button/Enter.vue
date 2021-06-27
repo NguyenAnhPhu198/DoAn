@@ -7,11 +7,10 @@
       class="py-0"
       @click="$emit('click')"
       v-c-tooltip="{
-        content: 'Open',
+        content: 'Enter',
       }"
-      shape="pill"
     >
-      <CIcon name="cil-arrow-right" size="sm" />
+      <CIcon name="cil-arrow-right" :size="size" />
     </CButton>
   </CLink>
   <CLink v-else :href="href">
@@ -22,11 +21,10 @@
       class="py-0"
       @click="$emit('click')"
       v-c-tooltip="{
-        content: 'Open',
+        content: 'Enter',
       }"
-      shape="pill"
     >
-      <CIcon name="cil-arrow-right" size="sm" />
+      <CIcon name="cil-arrow-right" :size="size" />
     </CButton>
   </CLink>
 </template>

@@ -1,16 +1,44 @@
 <template>
-  <Message :content="content" size="small" noTranslate />
+  <TMessage
+    :content="content"
+    size="small"
+    noTranslate
+    :creatable="creatable"
+    :editable="editable"
+    :removable="removable"
+  >
+    <template #actions="{ showAction }">
+      <TButtonCreate
+        v-if="creatable"
+        v-show="showAction"
+        @click="$emit('click-create')"
+      />
+      <TButtonEdit
+        v-if="editable"
+        v-show="showAction"
+        @click="$emit('click-edit')"
+      />
+      <TButtonRemove
+        v-if="removable"
+        v-show="showAction"
+        @click="$emit('click-remove')"
+      />
+    </template>
+  </TMessage>
 </template>
 
 <script>
-import Message from "../Message.vue";
+import actions from "../Button/mixin";
+import TMessage from "../Message.vue";
+
 export default {
+  mixins: [actions],
   components: {
-    Message,
+    TMessage,
   },
   props: {
     content: {
-      type: String,
+      type: [String, Number],
       required: false,
     },
   },

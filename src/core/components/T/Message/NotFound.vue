@@ -1,16 +1,17 @@
 <template>
-  <Message :content="getContent()" color="muted" size="small" italic>
+  <TMessage :content="getContent()" color="muted" size="small" italic>
     <template #suffix v-if="slug">
       {{ `- [${slug}]` }}
     </template>
-  </Message>
+  </TMessage>
 </template>
 
 <script>
-import Message from "../Message.vue";
+import TMessage from "../Message.vue";
+
 export default {
   components: {
-    Message,
+    TMessage,
   },
   props: {
     slug: {

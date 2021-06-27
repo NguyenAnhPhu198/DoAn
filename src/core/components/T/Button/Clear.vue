@@ -2,8 +2,11 @@
   <CButton
     color="info"
     variant="ghost"
-    size="sm"
-    v-c-tooltip="tooltipOption()"
+    :size="size"
+    v-c-tooltip="{
+      content: 'Clear',
+      appendToBody: true,
+    }"
     @click="$emit('click')"
   >
     <CIcon name="cil-clear-all" />
@@ -13,18 +16,10 @@
 <script>
 export default {
   props: {
-    tooltip: {
+    size: {
       type: String,
       required: false,
-      default: "Reset filter",
-    },
-  },
-  methods: {
-    tooltipOption() {
-      return {
-        content: this.tooltip,
-        appendToBody: true,
-      };
+      default: "sm",
     },
   },
 };

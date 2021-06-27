@@ -9,18 +9,30 @@
           :loading="loading"
           :column-filter="!noFilter"
         >
+          <template v-if="creatable" #_-header>
+            <CRow>
+              <CCol v-if="creatable" class="pl-1 pr-1 ml-1" col="12">
+                <TButtonCreate @click="$emit('create')" />
+              </CCol>
+            </CRow>
+          </template>
           <template #_="{ item }">
             <td>
-              <TListAction
-                :actions="actions"
-                :resource="resource"
-                :slug="item[slugKey]"
-                :store="store"
-              />
+              <CRow>
+                <CCol v-if="enterable" class="pl-1 pr-1 ml-1" col="12">
+                  <TButtonEnter :slug="item[slugKey]" :resource="resource" />
+                </CCol>
+                <CCol v-if="quickViewable" class="pl-1 pr-1 ml-1" col="12">
+                  <TButtonQuickView @click="$emit('quick-view')" />
+                </CCol>
+                <CCol v-if="removable" class="pl-1 pr-1 ml-1" col="12">
+                  <TButtonRemove @click="remove(item[slugKey])" />
+                </CCol>
+              </CRow>
             </td>
           </template>
           <template #_-filter>
-            <TButtonResetFilter @click="$emit('resetFilter')" />
+            <TButtonClear @click="$emit('clear-filter')" />
           </template>
           <template
             v-for="(_, name) in $scopedSlots"
@@ -41,14 +53,12 @@
 
 <script>
 import TPagination from "../Pagination.vue";
-import TButtonResetFilter from "../Button/ResetFilter.vue";
-import TListAction from "../List/Action.vue";
+import actions from "../Button/mixin";
 
 export default {
+  mixins: [actions],
   components: {
     TPagination,
-    TButtonResetFilter,
-    TListAction,
   },
   props: {
     slugKey: {
@@ -77,13 +87,6 @@ export default {
       required: false,
       default: false,
     },
-    actions: {
-      type: Array,
-      required: false,
-      default: function () {
-        return ["detail"];
-      },
-    },
     noPaginate: {
       type: Boolean,
       required: false,
@@ -106,6 +109,11 @@ export default {
       return this.lodash.map(this.fields, (field) => {
         return { filter: false, _classes: "text-truncate", ...field };
       });
+    },
+  },
+  methods: {
+    remove(slug) {
+      this.$store.dispatch(`${this.store}.delete`, slug);
     },
   },
 };

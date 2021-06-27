@@ -1,17 +1,17 @@
 <template>
-  <CBadge v-if="!noBadge" :color="getBadge">
-    <Message :content="name" />
+  <CBadge v-if="!noBadge" :color="getBadge" :noTranslate="noTranslate">
+    <TMessage :content="name" />
   </CBadge>
-  <Message v-else :content="name" />
+  <TMessage v-else :content="name" />
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import Message from "../Message.vue";
+import TMessage from "../Message.vue";
 
 export default {
   components: {
-    Message,
+    TMessage,
   },
   props: {
     id: {
@@ -22,6 +22,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    noTranslate: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   computed: {

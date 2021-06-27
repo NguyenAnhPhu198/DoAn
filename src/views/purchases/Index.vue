@@ -3,8 +3,10 @@
     :items="purchases"
     :fields="fields"
     store="order.purchases"
-    @resetFilter="resetFilter"
+    @clear-filter="clearFilter"
     resource="purchases"
+    enterable
+    creatable
   >
     <template #items="{ item }">
       <td>
@@ -90,7 +92,7 @@ export default {
         search: searchFields,
       });
     },
-    resetFilter() {
+    clearFilter() {
       this.filter = {};
       this.filterChange();
     },
