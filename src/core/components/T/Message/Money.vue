@@ -1,41 +1,62 @@
 <template>
-  <TMessage
-    :content="amountMasked()"
-    bold
-    noTranslate
-    noWrap
-    :creatable="creatable"
-    :editable="editable"
-    :removable="removable"
-  >
-    <template #actions="{ showAction }">
-      <TButtonCreate
-        v-if="creatable"
-        v-show="showAction"
-        @click="$emit('click-create')"
-      />
-      <TButtonEdit
-        v-if="editable"
-        v-show="showAction"
-        @click="$emit('click-edit')"
-      />
-      <TButtonRemove
-        v-if="removable"
-        v-show="showAction"
-        @click="$emit('click-remove')"
-      />
-    </template>
-  </TMessage>
+  <div>
+    <slot name="edit" :editing="editing" :setEditing="setEditing">
+      <TInputEditable
+        v-if="editing"
+        :value="amount"
+        @change="
+          $emit('change', $event);
+          setEditing(false);
+        "
+        @close="setEditing(false)"
+      >
+        <template #input="{ setInput, value }">
+          <TInputMoney :value="value" @input="setInput" />
+        </template>
+      </TInputEditable>
+    </slot>
+    <TMessage
+      v-show="!editing || dontHideWhenEditing"
+      :content="amountMasked()"
+      bold
+      noTranslate
+      noWrap
+      :creatable="creatable"
+      :editable="editable"
+      :removable="removable"
+      @click-edit="showEdit()"
+    >
+      <template #actions="{ showAction }">
+        <TButtonCreate
+          v-if="creatable"
+          v-show="showAction"
+          @click="$emit('click-create')"
+        />
+        <TButtonEdit
+          v-if="editable"
+          v-show="showAction"
+          @click="$emit('click-edit')"
+        />
+        <TButtonRemove
+          v-if="removable"
+          v-show="showAction"
+          @click="$emit('click-remove')"
+        />
+      </template>
+    </TMessage>
+  </div>
 </template>
 
 <script>
 import actions from "../Button/mixin";
 import TMessage from "../Message.vue";
+import TInputMoney from "../Input/Money.vue";
 
 export default {
   mixins: [actions],
   components: {
     TMessage,
+    TInputMoney,
   },
   props: {
     amount: {
@@ -52,6 +73,11 @@ export default {
       required: false,
       default: 6,
     },
+  },
+  data() {
+    return {
+      value: this.amount,
+    };
   },
   methods: {
     amountMasked() {

@@ -41,24 +41,26 @@ lodash.mixin({
     }
   },
 
+  moneyMask({ currency, decimalLimit = 6, noSymbol = false }) {
+    return createNumberMask({
+      prefix: "",
+      suffix: noSymbol ? '' : " " + this.symbolCurrency(currency),
+      allowDecimal: true,
+      decimalLimit: decimalLimit,
+    });
+  },
+
   /**
    * 
    * @param {Number} amount 
    * @param {Object} options 
    * @returns 
    */
-  toMoney(amount, { currency, decimalLimit }) {
-    const mask = createNumberMask({
-      prefix: "",
-      suffix: " " + this.symbolCurrency(currency),
-      allowDecimal: true,
-      decimalLimit: decimalLimit,
-    });
-
+  toMoney(amount, { currency, decimalLimit = 6 }) {
     if (!decimalLimit) {
       amount = amount.toFixed(0);
     }
-    return conformToMask(amount.toString(), mask)
+    return conformToMask(amount.toString(), this.moneyMask({ currency, decimalLimit }))
       .conformedValue;
   },
 

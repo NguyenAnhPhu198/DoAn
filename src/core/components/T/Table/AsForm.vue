@@ -9,11 +9,16 @@
           <tr v-for="(field, index) in fields" :key="index">
             <td class="left p-1">
               <slot :name="field.key + '-header'" :label="getLabel(field)">
-                <TMessage :content="getLabel(field)" capitalize bold />
+                <TMessage :content="getLabel(field)" capitalize bold noWrap />
               </slot>
             </td>
             <td class="right p-1 align-middle">
-              <slot :name="field.key" :value="getValue(field.key)" :data="data">
+              <slot
+                :name="field.key"
+                :value="getValue(field.key)"
+                :label="getLabel(field)"
+                :data="data"
+              >
                 <TMessage :content="getValue(field.key)" />
               </slot>
             </td>

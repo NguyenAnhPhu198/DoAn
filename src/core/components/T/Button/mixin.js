@@ -4,6 +4,8 @@ import TButtonCreate from './Create.vue'
 import TButtonEnter from './Enter.vue'
 import TButtonQuickView from './QuickView.vue'
 import TButtonClear from './Clear.vue'
+import TButtonSave from './Save.vue'
+import TButtonClose from './Close.vue'
 
 export default {
   components: {
@@ -13,6 +15,8 @@ export default {
     TButtonEnter,
     TButtonQuickView,
     TButtonClear,
+    TButtonSave,
+    TButtonClose,
   },
   props: {
     editable: {
@@ -39,6 +43,36 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    savable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    closable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    dontHideWhenEditing: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      editing: false,
+    };
+  },
+  methods: {
+    showEdit() {
+      this.editing = true
+    },
+    hideEdit() {
+      this.editing = false
+    },
+    setEditing(show) {
+      this.editing = show;
     },
   },
 }

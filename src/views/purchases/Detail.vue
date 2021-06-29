@@ -18,7 +18,7 @@
     </CCardHeader>
     <CCardBody>
       <CRow class="mb-4">
-        <CCol sm="4">
+        <CCol sm="12" md="4">
           <TTableAsForm title="Details" :data="purchase" :fields="detailFields">
             <template #id="{ value }">
               <TMessage :content="value" noTranslate />
@@ -50,7 +50,7 @@
             </template>
           </TTableAsForm>
         </CCol>
-        <CCol sm="4">
+        <CCol sm="12" md="4">
           <TTableAsForm title="Dates" :data="purchase" :fields="dateFields">
             <template #expected_delivery="{ value }">
               <TMessageDateTime :content="value" editable />
@@ -60,7 +60,7 @@
             </template>
           </TTableAsForm>
         </CCol>
-        <CCol sm="4">
+        <CCol sm="12" md="4">
           <TTableAsForm title="Costs" :data="purchase" :fields="costFields">
             <template #additional_cost="{ value }">
               <TMessageMoney :amount="value" editable />
