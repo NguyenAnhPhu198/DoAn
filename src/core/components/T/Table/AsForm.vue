@@ -1,30 +1,26 @@
 <template>
-  <div>
+  <div class="mb-3">
     <slot name="title">
-      <TMessage :content="title + ': '" uppercase :addClasses="['mb-3']" />
+      <TMessage :content="title + ': '" uppercase :addClasses="['mb-2']" />
     </slot>
     <slot>
-      <table class="table table-clear">
-        <tbody>
-          <tr v-for="(field, index) in fields" :key="index">
-            <td class="left p-1">
-              <slot :name="field.key + '-header'" :label="getLabel(field)">
-                <TMessage :content="getLabel(field)" capitalize bold noWrap />
-              </slot>
-            </td>
-            <td class="right p-1 align-middle">
-              <slot
-                :name="field.key"
-                :value="getValue(field.key)"
-                :label="getLabel(field)"
-                :data="data"
-              >
-                <TMessage :content="getValue(field.key)" />
-              </slot>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <CRow v-for="(field, index) in fields" :key="index" class="p-1">
+        <CCol col="5">
+          <slot :name="field.key + '-header'" :label="getLabel(field)">
+            <TMessage :content="getLabel(field)" capitalize bold noWrap />
+          </slot>
+        </CCol>
+        <CCol col="7">
+          <slot
+            :name="field.key"
+            :value="getValue(field.key)"
+            :label="getLabel(field)"
+            :data="data"
+          >
+            <TMessage :content="getValue(field.key)" />
+          </slot>
+        </CCol>
+      </CRow>
     </slot>
   </div>
 </template>

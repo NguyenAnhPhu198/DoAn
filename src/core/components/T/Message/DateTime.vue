@@ -4,7 +4,7 @@
       <TInputEditable
         v-if="editing"
         :value="content"
-        type="date"
+        :inputOptions="{ type: 'date' }"
         @change="
           $emit('change', $event);
           setEditing(false);

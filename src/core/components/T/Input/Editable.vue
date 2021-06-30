@@ -2,7 +2,12 @@
   <div class="d-inline-flex" style="max-width: 100%">
     <div class="input-group">
       <slot name="input" :setInput="setInput" :value="value">
-        <CInput :value="value" :type="type" @change="setInput" class="mb-0" />
+        <CInput
+          :value="value"
+          v-bind="inputOptions"
+          @change="setInput"
+          class="mb-0"
+        />
       </slot>
     </div>
     <div class="input-group-append">
@@ -23,9 +28,9 @@ export default {
     value: {
       required: false,
     },
-    type: {
-      type: String,
-      default: "text",
+    inputOptions: {
+      type: Object,
+      required: false,
     },
   },
   data() {

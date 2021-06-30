@@ -66,12 +66,13 @@ export default {
   },
   methods: {
     showEdit() {
-      this.editing = true
+      this.setEditing(true);
     },
     hideEdit() {
-      this.editing = false
+      this.setEditing(false);
     },
     setEditing(show) {
+      this.$emit('update:editing', show);
       this.editing = show;
     },
   },
