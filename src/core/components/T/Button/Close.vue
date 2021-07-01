@@ -1,7 +1,7 @@
 <template>
   <CButton
     class="py-0"
-    color="secondary"
+    color="dark"
     variant="ghost"
     :size="size"
     @click="$emit('click')"

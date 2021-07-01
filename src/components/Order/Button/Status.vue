@@ -1,13 +1,18 @@
 <template>
-  <CBadge v-if="!noBadge" :color="getBadge" :noTranslate="noTranslate">
-    <TMessage :content="name" />
-  </CBadge>
-  <TMessage v-else :content="name" />
+  <CButton
+    :color="color"
+    variant="outline"
+    size="sm"
+    class="ml-1"
+    @click="$emit('click')"
+  >
+    <TMessage :content="name" noTranslate />
+  </CButton>
 </template>
 
 <script>
+import TMessage from "@/core/components/T/Message.vue";
 import { mapGetters } from "vuex";
-import TMessage from "../Message.vue";
 
 export default {
   components: {
@@ -17,11 +22,6 @@ export default {
     id: {
       type: String,
       required: false,
-    },
-    noBadge: {
-      type: Boolean,
-      required: false,
-      default: false,
     },
     noTranslate: {
       type: Boolean,
@@ -40,7 +40,7 @@ export default {
       }
       return status.name;
     },
-    getBadge() {
+    color() {
       switch (this.id) {
         case "Newish":
           return "dark";

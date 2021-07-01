@@ -4,16 +4,11 @@
       <strong>{{ purchase.id }} </strong>
       <TMessageStatus :id="purchase.status.id" />
       <div class="float-right">
-        <CButton
+        <OrderButtonStatus
           v-for="(status, index) in purchase.steps"
           :key="index"
-          color="primary"
-          variant="outline"
-          size="sm"
-          class="ml-1"
-        >
-          <TMessageStatus :id="status" noBadge />
-        </CButton>
+          :id="status"
+        />
       </div>
     </CCardHeader>
     <CCardBody>
