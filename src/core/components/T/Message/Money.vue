@@ -26,23 +26,6 @@
       :removable="removable"
       @click-edit="showEdit()"
     >
-      <template #actions="{ showAction }">
-        <TButtonCreate
-          v-if="creatable"
-          v-show="showAction"
-          @click="$emit('click-create')"
-        />
-        <TButtonEdit
-          v-if="editable"
-          v-show="showAction"
-          @click="$emit('click-edit')"
-        />
-        <TButtonRemove
-          v-if="removable"
-          v-show="showAction"
-          @click="$emit('click-remove')"
-        />
-      </template>
     </TMessage>
   </div>
 </template>

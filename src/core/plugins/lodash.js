@@ -4,27 +4,7 @@ import mixin from '@/mixins/lodash'
 import { conformToMask } from "vue-text-mask";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
-lodash.mixin({
-  /**
-   * 
-   * @param {array} source 
-   * @param {array} target 
-   * @returns 
-   */
-  hasAll: function (source, target) {
-    return target.filter(i => source.includes(i)).length === target.length
-  },
-
-  /**
-   * 
-   * @param {array} source 
-   * @param {array} target 
-   * @returns 
-   */
-  hasAny: function (source, target) {
-    return target.filter(i => source.includes(i)).length > 0
-  },
-
+export const masks = {
   /**
    * 
    * @param {String} currency 
@@ -64,6 +44,47 @@ lodash.mixin({
       .conformedValue;
   },
 
+  numberMask({ allowDecimal = true, decimalLimit = 2, integerLimit = 12, suffix = "" }) {
+    return createNumberMask({
+      prefix: "",
+      suffix: suffix,
+      allowDecimal: allowDecimal,
+      decimalLimit: decimalLimit,
+      integerLimit: integerLimit,
+    });
+  },
+
+  toPercent(number, options = {}) {
+    if (!options.decimalLimit) {
+      number = number.toFixed(0);
+    }
+    return conformToMask(number.toString(), this.numberMask({ suffix: '%', ...options }))
+      .conformedValue;
+  },
+}
+
+lodash.mixin({
+  /**
+   * 
+   * @param {array} source 
+   * @param {array} target 
+   * @returns 
+   */
+  hasAll: function (source, target) {
+    return target.filter(i => source.includes(i)).length === target.length
+  },
+
+  /**
+   * 
+   * @param {array} source 
+   * @param {array} target 
+   * @returns 
+   */
+  hasAny: function (source, target) {
+    return target.filter(i => source.includes(i)).length > 0
+  },
+
+  ...masks,
   //...
   ...mixin,
 })

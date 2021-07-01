@@ -1,5 +1,5 @@
 <template>
-  <div class="d-inline-flex" style="max-width: 100%">
+  <div class="d-inline-flex mw-100" style="min-width: 200px">
     <div class="input-group">
       <slot name="input" :setInput="setInput" :value="value">
         <CInput

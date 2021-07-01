@@ -118,6 +118,46 @@
                 <ProductItems :items="[item]" />
               </td>
             </template>
+            <template #tracking_id="{ item }">
+              <td>
+                <OrderMessageTracking :value="item.tracking_id" editable />
+              </td>
+            </template>
+            <template #price="{ item }">
+              <td>
+                <TMessageMoney :amount="item.price" editable />
+              </td>
+            </template>
+            <template #quantity="{ item }">
+              <td>
+                <TMessageNumber :value="item.quantity" editable />
+              </td>
+            </template>
+            <template #tax_percent="{ item }">
+              <td>
+                <TMessagePercent :value="item.tax_percent" editable />
+              </td>
+            </template>
+            <template #note="{ item }">
+              <td>
+                <TMessageText :value="item.note" editable />
+              </td>
+            </template>
+            <template #amount="{ item }">
+              <td>
+                <TMessageMoney :amount="item.amount" editable />
+              </td>
+            </template>
+            <template #tax="{ item }">
+              <td>
+                <TMessageMoney :amount="item.tax" editable />
+              </td>
+            </template>
+            <template #balance="{ item }">
+              <td>
+                <TMessageMoney :amount="item.balance" />
+              </td>
+            </template>
           </TTableAdvance>
         </CCol>
       </CRow>
@@ -136,12 +176,11 @@ export default {
         { key: "tracking_id", label: "Tracking" },
         { key: "price" },
         { key: "quantity" },
+        { key: "amount", label: "Sub total" },
         { key: "tax_percent" },
-        { key: "note" },
-        { key: "amount" },
         { key: "tax" },
         { key: "balance" },
-        { key: "received" },
+        { key: "note" },
       ],
       detailFields: [
         { key: "id", label: "ID" },

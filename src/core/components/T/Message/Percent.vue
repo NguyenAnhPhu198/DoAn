@@ -3,19 +3,25 @@
     <slot name="edit" :editing="editing" :setEditing="setEditing">
       <TInputEditable
         v-if="editing"
-        :value="content"
-        :inputOptions="{ type: 'date' }"
+        :value="value"
         @change="
           $emit('change', $event);
           setEditing(false);
         "
         @close="setEditing(false)"
-      />
+      >
+        <template #input="{ setInput, value }">
+          <TInputNumber
+            :value="value"
+            @input="setInput"
+            :maskOptions="{ integerLimit: 2 }"
+          />
+        </template>
+      </TInputEditable>
     </slot>
     <TMessage
       v-show="!editing || dontHideWhenEditing"
-      :content="content"
-      :size="small ? 'small' : null"
+      :content="percentMasked()"
       noTranslate
       :creatable="creatable"
       :editable="editable"
@@ -29,20 +35,24 @@
 <script>
 import actions from "../Button/mixin";
 import TMessage from "../Message.vue";
+import TInputNumber from "../Input/Number.vue";
 
 export default {
   mixins: [actions],
   components: {
     TMessage,
+    TInputNumber,
   },
   props: {
-    content: {
-      type: [String, Number],
+    value: {
+      type: Number,
       required: false,
+      default: 0,
     },
-    small: {
-      type: Boolean,
-      default: false,
+  },
+  methods: {
+    percentMasked() {
+      return this.lodash.toPercent(this.value);
     },
   },
 };

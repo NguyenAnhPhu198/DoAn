@@ -148,6 +148,9 @@ export default {
   },
   methods: {
     getContent() {
+      if (typeof this.content == "number") {
+        return this.content;
+      }
       return this.content || "...";
     },
   },

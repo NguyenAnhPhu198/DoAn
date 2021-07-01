@@ -3,19 +3,18 @@
     <slot name="edit" :editing="editing" :setEditing="setEditing">
       <TInputEditable
         v-if="editing"
-        :value="content"
-        :inputOptions="{ type: 'date' }"
+        :value="value"
         @change="
           $emit('change', $event);
           setEditing(false);
         "
         @close="setEditing(false)"
-      />
+      >
+      </TInputEditable>
     </slot>
     <TMessage
       v-show="!editing || dontHideWhenEditing"
-      :content="content"
-      :size="small ? 'small' : null"
+      :content="value"
       noTranslate
       :creatable="creatable"
       :editable="editable"
@@ -36,13 +35,10 @@ export default {
     TMessage,
   },
   props: {
-    content: {
-      type: [String, Number],
+    value: {
+      type: Number,
       required: false,
-    },
-    small: {
-      type: Boolean,
-      default: false,
+      default: 0,
     },
   },
 };
