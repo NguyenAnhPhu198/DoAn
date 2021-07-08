@@ -107,6 +107,7 @@
             quickViewable
             removable
             creatable
+            @click-create="showCreateItem = true"
           >
             <template #product_id="{ item }">
               <td>
@@ -154,6 +155,7 @@
               </td>
             </template>
           </TTableAdvance>
+          <AddItem :show.sync="showCreateItem" :purchase_id="id" />
         </CCol>
       </CRow>
     </CCardBody>
@@ -161,8 +163,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import AddItem from "./components/AddItem.vue";
 
 export default {
+  components: {
+    AddItem,
+  },
   data() {
     return {
       itemFields: [
@@ -192,27 +198,25 @@ export default {
         { key: "additional_cost", label: "Additional" },
         { key: "balance", label: "Balance" },
       ],
+      showCreateItem: false,
     };
   },
   created() {
-    if (this.$route.params.id) {
-      this.$store.dispatch(
-        "order.purchases.detail.select",
-        this.$route.params.id
-      );
+    if (this.id) {
+      this.$store.dispatch("order.purchases.detail.select", this.id);
     }
   },
   computed: {
     ...mapGetters({
       purchase: "order.purchases.detail.selected",
     }),
+    id() {
+      return this.$route.params.id;
+    },
   },
   methods: {
     getUrlAttachment(path_file) {
       return process.env.VUE_APP_ORDER_SERVICE_HOST + "/files/" + path_file;
-    },
-    asd() {
-      console.log("xxx");
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <MaskedInput
     class="form-control"
-    v-model="input"
+    :value="input"
     :mask="lodash.numberMask(maskOptions)"
     :guide="false"
     @input="setValue"
@@ -30,15 +30,15 @@ export default {
       },
     },
   },
-  data() {
-    return {
-      input: this.value ? this.value.toString() : "",
-    };
+  computed: {
+    input() {
+      return this.value ? this.value.toString() : "";
+    },
   },
   methods: {
     setValue(value) {
       this.$emit(
-        "input",
+        "update:value",
         Number.parseFloat(this.lodash.replace(value, /[^0-9.]/g, "")) || 0
       );
     },

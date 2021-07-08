@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import actions from "@/core/components/T/Button/mixin";
+import actions from "@/core/components/T/Button/actions";
 import TMessage from "@/core/components/T/Message.vue";
 
 export default {

@@ -1,24 +1,19 @@
 <template>
   <CButton
-    class="py-0"
     color="danger"
-    variant="ghost"
+    :variant="variant"
     :size="size"
     @click="$emit('click')"
     v-c-tooltip="{ content: 'Delete', appendToBody: true }"
   >
-    <CIcon name="cil-delete" :size="size" />
+    <CIcon name="cil-delete" />
   </CButton>
 </template>
 
 <script>
+import mixin from "./mixin";
+
 export default {
-  props: {
-    size: {
-      type: String,
-      required: false,
-      default: "sm",
-    },
-  },
+  mixins: [mixin],
 };
 </script>

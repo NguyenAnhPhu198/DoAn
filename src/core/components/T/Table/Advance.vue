@@ -53,7 +53,7 @@
 
 <script>
 import TPagination from "../Pagination.vue";
-import actions from "../Button/mixin";
+import actions from "../Button/actions";
 
 export default {
   mixins: [actions],

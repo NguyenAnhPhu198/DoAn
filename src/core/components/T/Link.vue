@@ -55,7 +55,7 @@
 
 <script>
 import TMouseTimeout from "./MouseTimeout.vue";
-import actions from "./Button/mixin";
+import actions from "./Button/actions";
 
 export default {
   mixins: [actions],

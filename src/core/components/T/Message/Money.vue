@@ -11,7 +11,7 @@
         @close="setEditing(false)"
       >
         <template #input="{ setInput, value }">
-          <TInputMoney :value="value" @input="setInput" />
+          <TInputMoney :value="value" @update:value="setInput" />
         </template>
       </TInputEditable>
     </slot>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import actions from "../Button/mixin";
+import actions from "../Button/actions";
 import TMessage from "../Message.vue";
 import TInputMoney from "../Input/Money.vue";
 
@@ -44,12 +44,16 @@ export default {
   props: {
     amount: {
       type: Number,
-      required: true,
+      required: false,
+      default: 0,
     },
     currency: {
       type: String,
       required: false,
       default: "JPY",
+      validator(value) {
+        return ["JPY", "VND", "USD"].includes(value);
+      },
     },
     decimalLimit: {
       type: Number,

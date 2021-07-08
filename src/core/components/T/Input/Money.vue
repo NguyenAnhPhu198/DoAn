@@ -1,8 +1,8 @@
 <template>
   <MaskedInput
     class="form-control"
-    v-model="input"
-    :mask="lodash.moneyMask({ currency: 'JPY', noSymbol: true })"
+    :value="input"
+    :mask="lodash.moneyMask({ noSymbol: true })"
     :guide="false"
     @input="setValue"
     placeholder="0"
@@ -23,15 +23,15 @@ export default {
       default: 0,
     },
   },
-  data() {
-    return {
-      input: this.value ? this.value.toString() : "",
-    };
+  computed: {
+    input() {
+      return this.value ? this.value.toString() : "";
+    },
   },
   methods: {
     setValue(value) {
       this.$emit(
-        "input",
+        "update:value",
         Number.parseFloat(this.lodash.replace(value, /[^0-9.]/g, "")) || 0
       );
     },

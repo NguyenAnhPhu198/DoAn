@@ -49,7 +49,7 @@ const apis = {}
         return service.get(prefix + resource, id, query);
       },
       create(params) {
-        return service.get(prefix + resource, params);
+        return service.post(prefix + resource, params);
       },
       update(id, params) {
         return service.update(prefix + resource, id, params);

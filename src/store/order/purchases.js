@@ -155,6 +155,9 @@ const mutations = {
   ['order.purchases.detail.set-selected'](state, purchase) {
     state.order_purchases_detail_selected = purchase;
   },
+  ['order.purchases.detail.items.push'](state, item) {
+    state.order_purchases_detail_selected.items.push(item);
+  },
 };
 
 export default {

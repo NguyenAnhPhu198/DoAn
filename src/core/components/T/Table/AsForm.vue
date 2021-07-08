@@ -1,6 +1,6 @@
 <template>
   <div class="mb-3">
-    <slot name="title">
+    <slot name="title" v-if="!!title">
       <TMessage :content="title + ': '" uppercase :addClasses="['mb-2']" />
     </slot>
     <slot>
@@ -30,7 +30,7 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     fields: {
       type: Array,

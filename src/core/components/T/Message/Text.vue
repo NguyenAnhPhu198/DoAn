@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import actions from "../Button/mixin";
+import actions from "../Button/actions";
 import TMessage from "../Message.vue";
 
 export default {
@@ -36,7 +36,7 @@ export default {
   },
   props: {
     value: {
-      type: Number,
+      type: [String, Number],
       required: false,
       default: 0,
     },

@@ -1,24 +1,19 @@
 <template>
   <CButton
-    class="py-0"
     color="info"
-    variant="ghost"
+    :variant="variant"
     :size="size"
     @click="$emit('click')"
     v-c-tooltip="{ content: 'Edit' }"
   >
-    <CIcon name="cil-pencil" :size="size" />
+    <CIcon name="cil-pencil" />
   </CButton>
 </template>
 
 <script>
+import mixin from "./mixin";
+
 export default {
-  props: {
-    size: {
-      type: String,
-      required: false,
-      default: "sm",
-    },
-  },
+  mixins: [mixin],
 };
 </script>

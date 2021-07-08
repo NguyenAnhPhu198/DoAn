@@ -1,7 +1,7 @@
 <template>
   <CButton
     color="info"
-    variant="ghost"
+    :variant="variant"
     :size="size"
     v-c-tooltip="{
       content: 'Save',
@@ -13,13 +13,9 @@
 </template>
 
 <script>
+import mixin from "./mixin";
+
 export default {
-  props: {
-    size: {
-      type: String,
-      required: false,
-      default: "sm",
-    },
-  },
+  mixins: [mixin],
 };
 </script>

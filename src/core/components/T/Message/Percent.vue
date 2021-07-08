@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import actions from "../Button/mixin";
+import actions from "../Button/actions";
 import TMessage from "../Message.vue";
 import TInputNumber from "../Input/Number.vue";
 

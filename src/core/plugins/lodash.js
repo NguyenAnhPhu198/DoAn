@@ -37,6 +37,9 @@ export const masks = {
    * @returns 
    */
   toMoney(amount, { currency, decimalLimit = 6 }) {
+    if (typeof amount != 'number') {
+      amount = 0;
+    }
     if (!decimalLimit) {
       amount = amount.toFixed(0);
     }

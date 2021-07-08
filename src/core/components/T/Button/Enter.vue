@@ -1,10 +1,9 @@
 <template>
-  <CLink v-if="!href" :to="`${resource}/${slug}`">
+  <CLink v-if="!href" :to="`/${resource}/${slug}`">
     <CButton
       color="info"
-      variant="ghost"
+      :variant="variant"
       :size="size"
-      class="py-0"
       @click="$emit('click')"
       v-c-tooltip="{
         content: 'Enter',
@@ -16,21 +15,23 @@
   <CLink v-else :href="href">
     <CButton
       color="info"
-      variant="ghost"
+      :variant="variant"
       :size="size"
-      class="py-0"
       @click="$emit('click')"
       v-c-tooltip="{
         content: 'Enter',
       }"
     >
-      <CIcon name="cil-arrow-right" :size="size" />
+      <CIcon name="cil-arrow-right" />
     </CButton>
   </CLink>
 </template>
 
 <script>
+import mixin from "./mixin";
+
 export default {
+  mixins: [mixin],
   props: {
     slug: {
       type: [String, Number],
@@ -43,11 +44,6 @@ export default {
     resource: {
       type: String,
       required: false,
-    },
-    size: {
-      type: String,
-      required: false,
-      default: "sm",
     },
   },
 };
