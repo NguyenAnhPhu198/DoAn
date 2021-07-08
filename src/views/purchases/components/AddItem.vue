@@ -9,16 +9,16 @@
       <template #append-product-selected="{ product }">
         <TTableAsForm :data="product" :fields="itemFields">
           <template #price="{ value }">
-            <TInputNumber :value="value" @input="item.price = $event" />
+            <TInputNumber :value="value" @update:value="item.price = $event" />
           </template>
           <template #quantity="{ value }">
-            <TInputNumber :value="value" @input="item.quantity = $event" />
+            <TInputNumber :value="value" @update:value="item.quantity = $event" />
           </template>
           <template #tax_percent>
             <TInputNumber
               :value="product.tax ? product.tax.percent : 0"
               :maskOptions="{ integerLimit: 2 }"
-              @input="item.tax_percent = $event"
+              @update:value="item.tax_percent = $event"
             />
           </template>
           <template #note="{ value }">

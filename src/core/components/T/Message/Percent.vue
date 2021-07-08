@@ -13,7 +13,7 @@
         <template #input="{ setInput, value }">
           <TInputNumber
             :value="value"
-            @input="setInput"
+            @update:value="setInput"
             :maskOptions="{ integerLimit: 2 }"
           />
         </template>

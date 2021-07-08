@@ -11,7 +11,7 @@
         @close="setEditing(false)"
       >
         <template #input="{ setInput, value }">
-          <TInputNumber :value="value" @input="setInput" />
+          <TInputNumber :value="value" @update:value="setInput" />
         </template>
       </TInputEditable>
     </slot>
