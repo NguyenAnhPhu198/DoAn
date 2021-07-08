@@ -1,13 +1,10 @@
 <template>
-  <CModal :show="show" @update:show="$emit('update:show', $event)">
-    <template #header>
-      <TMessage content="Add item" capitalize />
-      <TButtonClose
-        variant="outline"
-        class="py-0"
-        @click="$emit('update:show', false)"
-      />
-    </template>
+  <TModal
+    title="Add item"
+    :show="show"
+    @update:show="$emit('update:show', $event)"
+    @click-create="create()"
+  >
     <ProductSelect :id="item.product_id" @update:id="item.product_id = $event">
       <template #append-product-selected="{ product }">
         <TTableAsForm :data="product" :fields="itemFields">
@@ -30,10 +27,7 @@
         </TTableAsForm>
       </template>
     </ProductSelect>
-    <template #footer>
-      <TButtonCreate variant="outline" @click="create()" />
-    </template>
-  </CModal>
+  </TModal>
 </template>
 
 <script>
