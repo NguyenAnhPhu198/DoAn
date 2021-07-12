@@ -44,6 +44,7 @@ export default {
       switch (this.id) {
         case "Newish":
           return "dark";
+        case "Paid":
         case "Finish":
           return "success";
         case "OutOfStock":

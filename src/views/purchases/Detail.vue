@@ -8,6 +8,12 @@
           v-for="(status, index) in purchase.steps"
           :key="index"
           :id="status"
+          @click="
+            $store.dispatch('order.purchases.detail.update', {
+              status: status,
+            })
+          "
+          :disabled="updating"
         />
       </div>
     </CCardHeader>
@@ -58,7 +64,15 @@
         <CCol sm="12" md="6" lg="4">
           <TTableAsForm title="Costs" :data="purchase" :fields="costFields">
             <template #additional_cost="{ value }">
-              <TMessageMoney :amount="value" editable />
+              <TMessageMoney
+                :amount="value"
+                editable
+                @change="
+                  $store.dispatch('order.purchases.detail.update', {
+                    additional_cost: $event,
+                  })
+                "
+              />
             </template>
             <template #balance="{ value }">
               <TMessageMoney :amount="value" />
@@ -100,7 +114,7 @@
           <TTableAdvance
             :items="purchase.items"
             :fields="itemFields"
-            store="order.purchases"
+            store="order.purchases.detail.items"
             resource="purchases"
             noFilter
             noPaginate
@@ -121,7 +135,18 @@
             </template>
             <template #price="{ item }">
               <td>
-                <TMessageMoney :amount="item.price" editable />
+                <TMessageMoney
+                  :amount="item.price"
+                  editable
+                  @change="
+                    $store.dispatch('order.purchases.detail.items.update', {
+                      id: item.id,
+                      attributes: {
+                        price: $event,
+                      },
+                    })
+                  "
+                />
               </td>
             </template>
             <template #quantity="{ item }">
@@ -209,6 +234,7 @@ export default {
   computed: {
     ...mapGetters({
       purchase: "order.purchases.detail.selected",
+      updating: "order.purchases.detail.updating",
     }),
     id() {
       return this.$route.params.id;

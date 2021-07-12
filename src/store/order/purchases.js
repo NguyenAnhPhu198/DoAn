@@ -43,6 +43,7 @@ const state = {
     appends: "supplier",
   },
   order_purchases_detail_loading: false,
+  order_purchases_detail_updating: false,
 };
 
 const getters = {
@@ -66,6 +67,9 @@ const getters = {
   },
   ['order.purchases.detail.loading'](state) {
     return state.order_purchases_detail_loading;
+  },
+  ['order.purchases.detail.updating'](state) {
+    return state.order_purchases_detail_updating;
   },
 };
 
@@ -127,11 +131,59 @@ const actions = {
         });
     });
   },
+  ['order.purchases.detail.update'](context, attributes) {
+    return new Promise((resolve) => {
+      context.commit('order.purchases.detail.set-updating', true);
+      tomoni.order.purchases.update(context.state.order_purchases_detail_selected.id, attributes)
+        .then(({ data }) => {
+          context.commit('order.purchases.detail.set-updating', false);
+          context.commit('order.purchases.detail.merge', data)
+          context.commit("toasts.push", {
+            message: "Updated",
+            type: "success",
+          });
+          resolve(data)
+        }).catch(({ response }) => {
+          context.commit('order.purchases.detail.set-updating', false);
+          context.dispatch('errors.push-http-error', response);
+        });
+    });
+  },
+  ['order.purchases.detail.items.update'](context, { id, attributes }) {
+    return new Promise((resolve) => {
+      tomoni.order.purchase_items.update(id, attributes)
+        .then(({ data }) => {
+          context.commit('order.purchases.detail.items.merge', { id, data })
+          context.commit("toasts.push", {
+            message: "Updated",
+            type: "success",
+          });
+          resolve(data)
+        }).catch(({ response }) => {
+          context.dispatch('errors.push-http-error', response);
+        });
+    });
+  },
+  ['order.purchases.detail.items.delete'](context, id) {
+    return new Promise((resolve) => {
+      tomoni.order.purchase_items.delete(id)
+        .then(({ data }) => {
+          context.commit('order.purchases.detail.items.remove', id)
+          context.commit("toasts.push", {
+            message: "Deleted",
+            type: "success",
+          });
+          resolve(data)
+        }).catch(({ response }) => {
+          context.dispatch('errors.push-http-error', response);
+        });
+    });
+  },
 };
 
 const mutations = {
-  ['order.purchases.set-list'](state, users) {
-    state.order_purchases_list = users;
+  ['order.purchases.set-list'](state, list) {
+    state.order_purchases_list = list;
   },
   ['order.purchases.set-loading'](state, loading) {
     state.order_purchases_loading = loading;
@@ -152,11 +204,42 @@ const mutations = {
   ['order.purchases.detail.set-loading'](state, loading) {
     state.order_purchases_detail_loading = loading;
   },
+  ['order.purchases.detail.set-updating'](state, loading) {
+    state.order_purchases_detail_updating = loading;
+  },
   ['order.purchases.detail.set-selected'](state, purchase) {
     state.order_purchases_detail_selected = purchase;
   },
+  ['order.purchases.detail.merge'](state, purchase) {
+    state.order_purchases_detail_selected = { ...state.order_purchases_detail_selected, ...purchase }
+
+    // update item in list
+    state.order_purchases_list = state.order_purchases_list.map((item) => {
+      if (item.id == purchase.id) {
+        item = { ...item, ...purchase }
+      }
+      return item
+    })
+  },
   ['order.purchases.detail.items.push'](state, item) {
     state.order_purchases_detail_selected.items.push(item);
+  },
+  ['order.purchases.detail.items.remove'](state, item_id) {
+    let deleteIndex = state.order_purchases_detail_selected.items.findIndex((item) => item.id == item_id)
+    state.order_purchases_detail_selected.items.splice(deleteIndex, 1)
+  },
+  ['order.purchases.detail.items.merge'](state, { id, data }) {
+    state.order_purchases_detail_selected.items = state.order_purchases_detail_selected.items.map((item) => {
+      if (item.id == id) {
+        item = data
+      }
+      return item
+    })
+
+    // update detail
+    if (data.purchase) {
+      this.commit('order.purchases.detail.merge', data.purchase)
+    }
   },
 };
 

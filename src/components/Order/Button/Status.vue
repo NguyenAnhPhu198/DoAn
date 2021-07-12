@@ -5,6 +5,7 @@
     size="sm"
     class="ml-1"
     @click="$emit('click')"
+    :disabled="disabled"
   >
     <TMessage :content="name" noTranslate />
   </CButton>
@@ -28,6 +29,11 @@ export default {
       required: false,
       default: true,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   computed: {
     ...mapGetters({
@@ -44,6 +50,7 @@ export default {
       switch (this.id) {
         case "Newish":
           return "dark";
+        case "Paid":
         case "Finish":
           return "success";
         case "OutOfStock":
