@@ -233,7 +233,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      purchase: "order.purchases.detail.selected",
+      purchase: "order.purchases.detail",
       updating: "order.purchases.detail.updating",
     }),
     id() {

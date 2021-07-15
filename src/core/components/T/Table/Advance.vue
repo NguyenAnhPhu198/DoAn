@@ -6,7 +6,7 @@
           border
           :items="items"
           :fields="advanceFields"
-          :loading="loading"
+          :loading="fetching"
           :column-filter="!noFilter"
         >
           <template v-if="creatable" #_-header>
@@ -102,8 +102,8 @@ export default {
     paginate() {
       return this.$store.getters[this.store + ".paginate"];
     },
-    loading() {
-      return this.$store.getters[this.store + ".loading"];
+    fetching() {
+      return this.$store.getters[this.store + ".fetching"];
     },
     advanceFields() {
       return this.lodash.map(this.fields, (field) => {

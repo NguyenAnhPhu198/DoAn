@@ -2,7 +2,7 @@ import tomoni from '../../services/tomoni'
 
 const state = {
   auth_user_statuses_list: [],
-  auth_user_statuses_loading: false,
+  auth_user_statuses_fetching: false,
   auth_user_statuses_default_query: {},
   auth_user_statuses_query: {},
 };
@@ -11,8 +11,8 @@ const getters = {
   ['auth.user_statuses.list'](state) {
     return state.auth_user_statuses_list;
   },
-  ['auth.user_statuses.loading'](state) {
-    return state.auth_user_statuses_loading;
+  ['auth.user_statuses.fetching'](state) {
+    return state.auth_user_statuses_fetching;
   },
   ['auth.user_statuses.query'](state) {
     return {
@@ -24,20 +24,20 @@ const getters = {
 
 const actions = {
   ['auth.user_statuses.fetch'](context) {
-    // if is loading then skip
-    if (context.getters['auth.user_statuses.loading']) {
+    // if is fetching then skip
+    if (context.getters['auth.user_statuses.fetching']) {
       return;
     }
     return new Promise((resolve) => {
-      context.commit('auth.user_statuses.set-loading', true);
+      context.commit('auth.user_statuses.set-fetching', true);
       tomoni.auth['user-statuses']
         .all(context.getters['auth.user_statuses.query'])
         .then(({ data }) => {
           context.commit('auth.user_statuses.set-list', data)
-          context.commit('auth.user_statuses.set-loading', false);
+          context.commit('auth.user_statuses.set-fetching', false);
           resolve(data)
         }).catch(({ response }) => {
-          context.commit('auth.user_statuses.set-loading', false);
+          context.commit('auth.user_statuses.set-fetching', false);
           context.dispatch('errors.push-http-error', response);
         });
     });
@@ -57,8 +57,8 @@ const mutations = {
   ['auth.user_statuses.set-list'](state, statuses) {
     state.auth_user_statuses_list = statuses;
   },
-  ['auth.user_statuses.set-loading'](state, loading) {
-    state.auth_user_statuses_loading = loading;
+  ['auth.user_statuses.set-fetching'](state, fetching) {
+    state.auth_user_statuses_fetching = fetching;
   },
   ['auth.user_statuses.push-query'](state, query) {
     state.auth_user_statuses_query = { ...state.auth_user_statuses_query, ...query }

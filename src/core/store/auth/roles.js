@@ -2,7 +2,7 @@ import tomoni from '../../services/tomoni'
 
 const state = {
   auth_roles_list: [],
-  auth_roles_loading: false,
+  auth_roles_fetching: false,
   auth_roles_default_query: {
     with: 'fullChilds',
   },
@@ -13,8 +13,8 @@ const getters = {
   ['auth.roles.list'](state) {
     return state.auth_roles_list;
   },
-  ['auth.roles.loading'](state) {
-    return state.auth_roles_loading;
+  ['auth.roles.fetching'](state) {
+    return state.auth_roles_fetching;
   },
   ['auth.roles.query'](state) {
     return {
@@ -26,20 +26,20 @@ const getters = {
 
 const actions = {
   ['auth.roles.fetch'](context) {
-    // if is loading then skip
-    if (context.getters['auth.roles.loading']) {
+    // if is fetching then skip
+    if (context.getters['auth.roles.fetching']) {
       return;
     }
     return new Promise((resolve) => {
-      context.commit('auth.roles.set-loading', true);
+      context.commit('auth.roles.set-fetching', true);
       tomoni.auth.roles
         .all(context.getters['auth.roles.query'])
         .then(({ data }) => {
           context.commit('auth.roles.set-list', data)
-          context.commit('auth.roles.set-loading', false);
+          context.commit('auth.roles.set-fetching', false);
           resolve(data)
         }).catch(({ response }) => {
-          context.commit('auth.roles.set-loading', false);
+          context.commit('auth.roles.set-fetching', false);
           context.dispatch('errors.push-http-error', response);
         });
     });
@@ -59,8 +59,8 @@ const mutations = {
   ['auth.roles.set-list'](state, roles) {
     state.auth_roles_list = roles;
   },
-  ['auth.roles.set-loading'](state, loading) {
-    state.auth_roles_loading = loading;
+  ['auth.roles.set-fetching'](state, fetching) {
+    state.auth_roles_fetching = fetching;
   },
   ['auth.roles.push-query'](state, query) {
     state.auth_roles_query = { ...state.auth_roles_query, ...query }

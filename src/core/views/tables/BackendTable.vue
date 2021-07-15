@@ -75,9 +75,9 @@ export default {
   },
   methods: {
     onTableChange () {
-      this.loading = true
+      this.fetching = true
       setTimeout(() => {
-        this.loading = false
+        this.fetching = false
         const agent = this.$refs.externalAgent
         this.loadedItems = agent.currentItems
         this.pages = Math.ceil(agent.sortedItems.length / 5)

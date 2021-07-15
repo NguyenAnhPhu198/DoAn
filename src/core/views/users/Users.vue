@@ -12,7 +12,7 @@
         :items="users"
         :fields="fields"
         :itemsPerPage="paginate.per"
-        :loading="loading"
+        :loading="fetching"
         clickable-rows
         @row-clicked="rowClicked"
       >
@@ -73,7 +73,7 @@ export default {
   computed: {
     ...mapGetters({
       paginate: 'auth.users.paginate',
-      loading: 'auth.users.loading',
+      fetching: 'auth.users.fetching',
       users: 'auth.users.list',
     }),
     searchQuery() {

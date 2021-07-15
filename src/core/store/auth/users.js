@@ -7,7 +7,7 @@ const state = {
     last: 1,
     per: 15,
   },
-  auth_users_loading: false,
+  auth_users_fetching: false,
   auth_users_default_query: {
     with: "status;role",
     orderBy: "created_at",
@@ -23,8 +23,8 @@ const getters = {
   ['auth.users.paginate'](state) {
     return state.auth_users_paginate;
   },
-  ['auth.users.loading'](state) {
-    return state.auth_users_loading;
+  ['auth.users.fetching'](state) {
+    return state.auth_users_fetching;
   },
   ['auth.users.query'](state) {
     return {
@@ -36,21 +36,21 @@ const getters = {
 
 const actions = {
   ['auth.users.fetch'](context) {
-    // if is loading then skip
-    if (context.getters['auth.users.loading']) {
+    // if is fetching then skip
+    if (context.getters['auth.users.fetching']) {
       return;
     }
     return new Promise((resolve) => {
-      context.commit('auth.users.set-loading', true);
+      context.commit('auth.users.set-fetching', true);
       tomoni.auth.users
         .all(context.getters['auth.users.query'])
         .then(({ data }) => {
           context.commit('auth.users.set-list', data.data)
           context.commit('auth.users.set-paginate', data)
-          context.commit('auth.users.set-loading', false);
+          context.commit('auth.users.set-fetching', false);
           resolve(data)
         }).catch(({ response }) => {
-          context.commit('auth.users.set-loading', false);
+          context.commit('auth.users.set-fetching', false);
           context.dispatch('errors.push-http-error', response);
         });
     });
@@ -74,8 +74,8 @@ const mutations = {
   ['auth.users.set-list'](state, users) {
     state.auth_users_list = users;
   },
-  ['auth.users.set-loading'](state, loading) {
-    state.auth_users_loading = loading;
+  ['auth.users.set-fetching'](state, fetching) {
+    state.auth_users_fetching = fetching;
   },
   ['auth.users.set-paginate'](state, { current_page, last_page, per_page }) {
     state.auth_users_paginate = {

@@ -2,7 +2,7 @@ import tomoni from '@/core/services/tomoni'
 
 const state = {
   order_statuses_list: [],
-  order_statuses_loading: false,
+  order_statuses_fetching: false,
   order_statuses_default_query: {},
   order_statuses_query: {},
 };
@@ -11,8 +11,8 @@ const getters = {
   ['order.statuses.list'](state) {
     return state.order_statuses_list;
   },
-  ['order.statuses.loading'](state) {
-    return state.order_statuses_loading;
+  ['order.statuses.fetching'](state) {
+    return state.order_statuses_fetching;
   },
   ['order.statuses.query'](state) {
     return {
@@ -24,20 +24,20 @@ const getters = {
 
 const actions = {
   ['order.statuses.fetch'](context) {
-    // if is loading then skip
-    if (context.getters['order.statuses.loading']) {
+    // if is fetching then skip
+    if (context.getters['order.statuses.fetching']) {
       return;
     }
     return new Promise((resolve) => {
-      context.commit('order.statuses.set-loading', true);
+      context.commit('order.statuses.set-fetching', true);
       tomoni.order.statuses
         .all(context.getters['order.statuses.query'])
         .then(({ data }) => {
           context.commit('order.statuses.set-list', data)
-          context.commit('order.statuses.set-loading', false);
+          context.commit('order.statuses.set-fetching', false);
           resolve(data)
         }).catch(({ response }) => {
-          context.commit('order.statuses.set-loading', false);
+          context.commit('order.statuses.set-fetching', false);
           context.dispatch('errors.push-http-error', response);
         });
     });
@@ -63,8 +63,8 @@ const mutations = {
   ['order.statuses.set-list'](state, list) {
     state.order_statuses_list = list;
   },
-  ['order.statuses.set-loading'](state, loading) {
-    state.order_statuses_loading = loading;
+  ['order.statuses.set-fetching'](state, fetching) {
+    state.order_statuses_fetching = fetching;
   },
   ['order.statuses.push-query'](state, query) {
     state.order_statuses_query = { ...state.order_statuses_query, ...query }
