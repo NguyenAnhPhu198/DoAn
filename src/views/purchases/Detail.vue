@@ -99,10 +99,7 @@
                   }"
                   removable
                 />
-                <TMessageNotFound
-                  v-if="!purchase.receipts.length"
-                  class="ml-2"
-                />
+                <TMessageNotFound v-if="!purchase.receipts.length" class="ml-2" />
               </div>
             </template>
           </TMessage>
@@ -228,7 +225,7 @@ export default {
   },
   created() {
     if (this.id) {
-      this.$store.dispatch("order.purchases.detail.select", this.id);
+      this.$store.dispatch("order.purchases.detail.fetch", this.id);
     }
   },
   computed: {

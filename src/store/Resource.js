@@ -45,7 +45,7 @@ export default class Resource {
     },
     query = {},
     detail_query = {},
-    detail = {},
+    default_detail = {},
   }, { PREFIX_STATE }) {
     return {
       [PREFIX_STATE + '_list']: [],
@@ -54,7 +54,8 @@ export default class Resource {
       [PREFIX_STATE + '_query']: {},
       [PREFIX_STATE + '_fetching']: false,
       [PREFIX_STATE + '_creating']: false,
-      [PREFIX_STATE + '_detail']: detail,
+      [PREFIX_STATE + '_default_detail']: default_detail,
+      [PREFIX_STATE + '_detail']: {},
       [PREFIX_STATE + '_detail_query']: detail_query,
       [PREFIX_STATE + '_detail_fetching']: false,
       [PREFIX_STATE + '_detail_updating']: false,
@@ -83,7 +84,10 @@ export default class Resource {
         }
       },
       [PREFIX + '.detail'](state) {
-        return state[PREFIX_STATE + '_detail']
+        return {
+          ...state[PREFIX_STATE + '_default_detail'],
+          ...state[PREFIX_STATE + '_detail'],
+        }
       },
       [PREFIX + '.detail.id'](state) {
         return state[PREFIX_STATE + '_detail'][PRIMARY_KEY]
@@ -138,6 +142,10 @@ export default class Resource {
       },
       [PREFIX + '.detail.set-detail'](state, data) {
         state[PREFIX_STATE + '_detail'] = data;
+      },
+      [PREFIX + '.detail.select'](state, id) {
+        const selected = state[PREFIX_STATE + '_list'].find((item) => item[PRIMARY_KEY] == id)
+        this.commit(PREFIX + '.detail.set-detail', selected);
       },
       [PREFIX + '.detail.merge'](state, data) {
         state[PREFIX_STATE + '_detail'] = { ...state[PREFIX_STATE + '_detail'], ...data };
@@ -196,7 +204,7 @@ export default class Resource {
         context.commit(PREFIX + '.push-query', query)
         context.dispatch(PREFIX + '.fetch')
       },
-      [PREFIX + '.detail.select'](context, id) {
+      [PREFIX + '.detail.fetch'](context, id) {
         // if is fetching then skip
         if (context.getters[PREFIX + '.detail.fetching']) {
           return;

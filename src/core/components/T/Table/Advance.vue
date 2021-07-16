@@ -8,6 +8,7 @@
           :fields="advanceFields"
           :loading="fetching"
           :column-filter="!noFilter"
+          @row-clicked="selectItem"
         >
           <template v-if="creatable" #_-header>
             <CRow>
@@ -112,6 +113,9 @@ export default {
     },
   },
   methods: {
+    selectItem(row) {
+      this.$store.commit(`${this.store}.detail.select`, row[this.slugKey]);
+    },
     remove(slug) {
       this.$store.dispatch(`${this.store}.delete`, slug);
     },

@@ -23,7 +23,7 @@ const resource = new Resource(
       with: "items;receipts",
       appends: "supplier",
     },
-    detail: {
+    default_detail: {
       id: null,
       supplier_id: null,
       buyer_id: null,
