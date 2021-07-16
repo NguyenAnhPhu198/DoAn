@@ -2,13 +2,14 @@ import tomoni from '@/core/services/tomoni'
 
 export default class Resource {
 
-  constructor({ service, resource, primary_key = 'id' }, defaults = {}) {
+  constructor({ service, resource, primary_key = 'id', paginate = true }, defaults = {}) {
     this.config = {
       SERVICE: service,
       RESOURCE: resource,
       PREFIX: service + '.' + resource,
       PREFIX_STATE: service + '_' + resource,
       PRIMARY_KEY: primary_key,
+      PAGINATE: paginate,
     }
     this.defaults = defaults
 
@@ -164,7 +165,7 @@ export default class Resource {
     }
   }
 
-  actions({ PREFIX, PREFIX_STATE, SERVICE, RESOURCE }) {
+  actions({ PREFIX, PREFIX_STATE, SERVICE, RESOURCE, PAGINATE }) {
     return {
       [PREFIX + '.fetch'](context) {
         if (context.getters[PREFIX + '.fetching']) {
@@ -175,8 +176,12 @@ export default class Resource {
           tomoni[SERVICE][RESOURCE]
             .all(context.getters[PREFIX + '.query'])
             .then(({ data }) => {
-              context.commit(PREFIX + '.set-list', data.data)
-              context.commit(PREFIX + '.set-paginate', data)
+              if (PAGINATE) {
+                context.commit(PREFIX + '.set-list', data.data)
+                context.commit(PREFIX + '.set-paginate', data)
+              } else {
+                context.commit(PREFIX + '.set-list', data)
+              }
               context.commit(PREFIX + '.set-fetching', false);
               resolve(data)
             }).catch(({ response }) => {
