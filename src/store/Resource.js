@@ -2,7 +2,7 @@ import tomoni from '@/core/services/tomoni'
 
 export default class Resource {
 
-  constructor({ service, resource, primary_key = 'id' }, defaults) {
+  constructor({ service, resource, primary_key = 'id' }, defaults = {}) {
     this.config = {
       SERVICE: service,
       RESOURCE: resource,
@@ -55,7 +55,7 @@ export default class Resource {
       [PREFIX_STATE + '_fetching']: false,
       [PREFIX_STATE + '_creating']: false,
       [PREFIX_STATE + '_default_detail']: default_detail,
-      [PREFIX_STATE + '_detail']: {},
+      [PREFIX_STATE + '_detail']: default_detail,
       [PREFIX_STATE + '_detail_query']: detail_query,
       [PREFIX_STATE + '_detail_fetching']: false,
       [PREFIX_STATE + '_detail_updating']: false,
@@ -143,7 +143,7 @@ export default class Resource {
       [PREFIX + '.detail.set-detail'](state, data) {
         state[PREFIX_STATE + '_detail'] = data;
       },
-      [PREFIX + '.detail.select'](state, id) {
+      [PREFIX + '.select'](state, id) {
         const selected = state[PREFIX_STATE + '_list'].find((item) => item[PRIMARY_KEY] == id)
         this.commit(PREFIX + '.detail.set-detail', selected);
       },
@@ -281,7 +281,7 @@ export default class Resource {
 }
 
 export class SubResource {
-  constructor({ service, resource, bind_resource_key, sub_key = 'items', primary_key = 'id' }) {
+  constructor({ service, resource, bind_resource_key, sub_key = 'items', primary_key = 'id' }, defaults = {}) {
     this.config = {
       SERVICE: service,
       RESOURCE: resource,
@@ -291,18 +291,44 @@ export class SubResource {
       BIND_RESOURCE_KEY: bind_resource_key,
       PRIMARY_KEY: primary_key,
     }
+    this.defaults = defaults
     return this
   }
 
   store() {
     return {
+      state: this.state(this.defaults, this.config),
       mutations: this.mutations(this.config),
       actions: this.actions(this.config),
     }
   }
 
+  state({
+    default_sub = {},
+  }, { PREFIX_STATE, SUB_KEY }) {
+    return {
+      [`${PREFIX_STATE}_detail_${SUB_KEY}_default_selected`]: default_sub,
+      [`${PREFIX_STATE}_detail_${SUB_KEY}_selected`]: default_sub,
+    }
+  }
+
+  getters({ PREFIX, PREFIX_STATE, SUB_KEY }) {
+    return {
+      [`${PREFIX}.detail.${SUB_KEY}.selected`](state) {
+        return {
+          ...state[`${PREFIX_STATE}_detail_${SUB_KEY}_default_selected`],
+          ...state[`${PREFIX_STATE}_detail_${SUB_KEY}_selected`],
+        }
+      },
+    }
+  }
+
   mutations({ PREFIX, PREFIX_STATE, SUB_KEY, BIND_RESOURCE_KEY, PRIMARY_KEY }) {
     return {
+      [`${PREFIX}.detail.${SUB_KEY}.select`](state, item_id) {
+        const selected = state[PREFIX_STATE + '_detail'][SUB_KEY].find((item) => item[PRIMARY_KEY] == item_id)
+        state[`${PREFIX_STATE}_detail_${SUB_KEY}_selected`] = selected
+      },
       [`${PREFIX}.detail.${SUB_KEY}.push`](state, item) {
         state[PREFIX_STATE + '_detail'][SUB_KEY].push(item)
 

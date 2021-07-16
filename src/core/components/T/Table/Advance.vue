@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     selectItem(row) {
-      this.$store.commit(`${this.store}.detail.select`, row[this.slugKey]);
+      this.$store.commit(`${this.store}.select`, row[this.slugKey]);
     },
     remove(slug) {
       this.$store.dispatch(`${this.store}.delete`, slug);
