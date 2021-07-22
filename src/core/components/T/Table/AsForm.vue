@@ -4,13 +4,17 @@
       <TMessage :content="title + ': '" uppercase :addClasses="['mb-2']" />
     </slot>
     <slot>
-      <CRow v-for="(field, index) in fields" :key="index" class="p-1">
-        <CCol col="5">
+      <CRow
+        v-for="(field, index) in fields"
+        :key="index"
+        :class="addRowClasses"
+      >
+        <CCol :col="splitLeft">
           <slot :name="field.key + '-header'" :label="getLabel(field)">
             <TMessage :content="getLabel(field)" capitalize bold noWrap />
           </slot>
         </CCol>
-        <CCol col="7">
+        <CCol :col="12 - splitLeft">
           <slot
             :name="field.key"
             :value="getValue(field.key)"
@@ -39,6 +43,18 @@ export default {
     data: {
       type: Object,
       required: false,
+    },
+    splitLeft: {
+      type: Number,
+      required: false,
+      default: 5,
+    },
+    addRowClasses: {
+      type: Array,
+      required: false,
+      default: function () {
+        return ["p-1"];
+      },
     },
   },
   methods: {

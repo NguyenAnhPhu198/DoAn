@@ -6,6 +6,7 @@ import TButtonQuickView from './QuickView.vue'
 import TButtonClear from './Clear.vue'
 import TButtonSave from './Save.vue'
 import TButtonClose from './Close.vue'
+import TButtonAdd from './Add.vue'
 
 export default {
   components: {
@@ -17,6 +18,7 @@ export default {
     TButtonClear,
     TButtonSave,
     TButtonClose,
+    TButtonAdd,
   },
   props: {
     editable: {
@@ -45,6 +47,11 @@ export default {
       default: false,
     },
     savable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    addable: {
       type: Boolean,
       required: false,
       default: false,

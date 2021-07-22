@@ -25,16 +25,28 @@ export default class Resource {
     }
   }
 
-  pair(sub) {
-    const { state, getters, actions, mutations } = this.store()
-    sub.config.PREFIX = this.config.PREFIX
-    sub.config.PREFIX_STATE = this.config.PREFIX_STATE
-    const sub_store = sub.store()
+  pair(subs) {
+    let store = this.store()
+    if (!Array.isArray(subs)) {
+      subs = [subs]
+    }
+
+    subs.forEach((sub) => {
+      sub.config.PREFIX = this.config.PREFIX
+      sub.config.PREFIX_STATE = this.config.PREFIX_STATE
+      store = this.merge(store, sub.store())
+    })
+
+    return store
+  }
+
+  merge(source, target) {
+    const { state, getters, actions, mutations } = source
     return {
-      state: { ...state, ...sub_store.state },
-      getters: { ...getters, ...sub_store.getters },
-      actions: { ...actions, ...sub_store.actions },
-      mutations: { ...mutations, ...sub_store.mutations },
+      state: { ...state, ...target.state },
+      getters: { ...getters, ...target.getters },
+      actions: { ...actions, ...target.actions },
+      mutations: { ...mutations, ...target.mutations },
     }
   }
 
@@ -247,10 +259,10 @@ export default class Resource {
       },
       [PREFIX + '.create'](context, attributes) {
         return new Promise((resolve) => {
-          context.commit(PREFIX + '.set-creating', true);
+          context.commit(PREFIX + '.detail.set-creating', true);
           tomoni[SERVICE][RESOURCE].create(attributes)
             .then(({ data }) => {
-              context.commit(PREFIX + '.set-creating', false);
+              context.commit(PREFIX + '.detail.set-creating', false);
               context.commit(PREFIX + '.detail.merge', data)
               context.commit("toasts.push", {
                 message: "Created",
@@ -258,17 +270,17 @@ export default class Resource {
               });
               resolve(data)
             }).catch(({ response }) => {
-              context.commit(PREFIX + '.set-creating', false);
+              context.commit(PREFIX + '.detail.set-creating', false);
               context.dispatch('errors.push-http-error', response);
             });
         });
       },
       [PREFIX + '.detail.delete'](context) {
         return new Promise((resolve) => {
-          context.commit(PREFIX + '.set-deleting', true);
+          context.commit(PREFIX + '.detail.set-deleting', true);
           tomoni[SERVICE][RESOURCE].delete(context.getters[PREFIX + '.detail.id'])
             .then(({ data }) => {
-              context.commit(PREFIX + '.set-deleting', false);
+              context.commit(PREFIX + '.detail.set-deleting', false);
               context.commit(PREFIX + '.detail.delete', context.getters[PREFIX + '.detail.id']);
               context.commit("toasts.push", {
                 message: "Created",
@@ -276,7 +288,7 @@ export default class Resource {
               });
               resolve(data)
             }).catch(({ response }) => {
-              context.commit(PREFIX + '.set-deleting', false);
+              context.commit(PREFIX + '.detail.set-deleting', false);
               context.dispatch('errors.push-http-error', response);
             });
         });
@@ -303,6 +315,7 @@ export class SubResource {
   store() {
     return {
       state: this.state(this.defaults, this.config),
+      getters: this.getters(this.config),
       mutations: this.mutations(this.config),
       actions: this.actions(this.config),
     }

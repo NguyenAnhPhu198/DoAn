@@ -99,7 +99,7 @@
                   }"
                   removable
                 />
-                <TMessageNotFound v-if="!purchase.receipts.length" class="ml-2" />
+                <TMessageNotFound v-if="!purchase.receipts" class="ml-2" />
               </div>
             </template>
           </TMessage>
@@ -107,19 +107,23 @@
       </CRow>
       <CRow class="mb-4">
         <CCol>
-          <TMessage content="Items:" uppercase :addClasses="['mb-3']" />
           <TTableAdvance
             :items="purchase.items"
             :fields="itemFields"
             store="order.purchases.detail.items"
             resource="purchases"
+            title="Items:"
             noFilter
             noPaginate
-            quickViewable
             removable
             creatable
             @click-create="showCreateItem = true"
           >
+            <template #append-actions="{ item }">
+              <CCol class="pl-1 pr-1 ml-1" col="12">
+                <OrderButtonDistribution @click="clickDistribution(item.id)" />
+              </CCol>
+            </template>
             <template #product_id="{ item }">
               <td>
                 <ProductItems :items="[item]" />
@@ -148,17 +152,40 @@
             </template>
             <template #quantity="{ item }">
               <td>
-                <TMessageNumber :value="item.quantity" editable />
+                <TTableAsForm
+                  :data="item"
+                  :fields="[
+                    { key: 'quantity', label: 'Purchase' },
+                    {
+                      key: 'quantity_in_order_product_purchase',
+                      label: 'Distributed',
+                    },
+                    {
+                      key: 'quantity_available_in_order_product_purchase',
+                      label: 'Remaining',
+                    },
+                  ]"
+                  :splitLeft="7"
+                  style="min-width: 250px"
+                  :addRowClasses="[]"
+                >
+                  <template #quantity="{ value }">
+                    <TMessageNumber :value="value" editable />
+                  </template>
+                  <template #quantity_distributed="{ value }">
+                    <TMessageNumber :value="value" />
+                  </template>
+                  <template
+                    #quantity_available_in_order_product_purchase="{ value }"
+                  >
+                    <TMessageNumber :value="value" />
+                  </template>
+                </TTableAsForm>
               </td>
             </template>
             <template #tax_percent="{ item }">
               <td>
                 <TMessagePercent :value="item.tax_percent" editable />
-              </td>
-            </template>
-            <template #note="{ item }">
-              <td>
-                <TMessageText :value="item.note" editable />
               </td>
             </template>
             <template #amount="{ item }">
@@ -176,8 +203,26 @@
                 <TMessageMoney :amount="item.balance" />
               </td>
             </template>
+            <template #note="{ item }">
+              <td>
+                <TMessageText
+                  :value="item.note"
+                  editable
+                  :messageOptions="{ truncate: 3 }"
+                  @change="
+                    $store.dispatch('order.purchases.detail.items.update', {
+                      id: item.id,
+                      attributes: {
+                        note: $event,
+                      },
+                    })
+                  "
+                />
+              </td>
+            </template>
           </TTableAdvance>
           <AddItem :show.sync="showCreateItem" :purchase_id="id" />
+          <Distribution :show.sync="showDistribution" :purchase_item="id" />
         </CCol>
       </CRow>
     </CCardBody>
@@ -186,10 +231,12 @@
 <script>
 import { mapGetters } from "vuex";
 import AddItem from "./components/AddItem.vue";
+import Distribution from "./components/Distribution.vue";
 
 export default {
   components: {
     AddItem,
+    Distribution,
   },
   data() {
     return {
@@ -198,7 +245,7 @@ export default {
         { key: "product_id", label: "Product" },
         { key: "tracking_id", label: "Tracking" },
         { key: "price" },
-        { key: "quantity" },
+        { key: "quantity", label: "Quantities" },
         { key: "amount", label: "Sub total" },
         { key: "tax_percent" },
         { key: "tax" },
@@ -221,6 +268,7 @@ export default {
         { key: "balance", label: "Balance" },
       ],
       showCreateItem: false,
+      showDistribution: false,
     };
   },
   created() {
@@ -240,6 +288,10 @@ export default {
   methods: {
     getUrlAttachment(path_file) {
       return process.env.VUE_APP_ORDER_SERVICE_HOST + "/files/" + path_file;
+    },
+    clickDistribution(item_id) {
+      this.$store.commit("order.purchases.detail.items.select", item_id);
+      this.showDistribution = true;
     },
   },
 };

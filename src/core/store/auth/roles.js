@@ -4,7 +4,7 @@ const state = {
   auth_roles_list: [],
   auth_roles_fetching: false,
   auth_roles_default_query: {
-    with: 'fullChilds',
+    with: 'fullChildren',
   },
   auth_roles_query: {},
 };

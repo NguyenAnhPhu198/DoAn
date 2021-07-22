@@ -23,6 +23,7 @@
             v-show="showAction"
             @click="$emit('click-remove')"
           />
+          <slot name="append-actions" :showAction="showAction"></slot>
         </slot>
       </div>
       <slot name="prefix"></slot>

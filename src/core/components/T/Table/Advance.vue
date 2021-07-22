@@ -1,5 +1,8 @@
 <template>
   <CRow>
+    <CCol v-if="title" col="12" class="mb-3">
+      <TMessage :content="title" uppercase />
+    </CCol>
     <CCol col="12">
       <slot name="table">
         <CDataTable
@@ -20,15 +23,22 @@
           <template #_="{ item }">
             <td>
               <CRow>
-                <CCol v-if="enterable" class="pl-1 pr-1 ml-1" col="12">
-                  <TButtonEnter :slug="item[slugKey]" :resource="resource" />
-                </CCol>
-                <CCol v-if="quickViewable" class="pl-1 pr-1 ml-1" col="12">
-                  <TButtonQuickView @click="$emit('click-quick-view')" />
-                </CCol>
-                <CCol v-if="removable" class="pl-1 pr-1 ml-1" col="12">
-                  <TButtonRemove @click="remove(item[slugKey])" />
-                </CCol>
+                <slot name="actions">
+                  <slot name="prepend-actions"></slot>
+                  <CCol v-if="enterable" class="pl-1 pr-1 ml-1" col="12">
+                    <TButtonEnter :slug="item[slugKey]" :resource="resource" />
+                  </CCol>
+                  <CCol v-if="quickViewable" class="pl-1 pr-1 ml-1" col="12">
+                    <TButtonQuickView @click="$emit('click-quick-view')" />
+                  </CCol>
+                  <CCol v-if="removable" class="pl-1 pr-1 ml-1" col="12">
+                    <TButtonRemove @click="remove(item)" />
+                  </CCol>
+                  <CCol v-if="addable" class="pl-1 pr-1 ml-1" col="12">
+                    <TButtonAdd @click="$emit('click-add', item)" />
+                  </CCol>
+                  <slot name="append-actions" :item="item"></slot>
+                </slot>
               </CRow>
             </td>
           </template>
@@ -75,6 +85,10 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: false,
+    },
     items: {
       type: Array,
       required: true,
@@ -93,11 +107,11 @@ export default {
       required: false,
       default: false,
     },
-  },
-  created() {
-    if (this.noPaginate) {
-      this.$store.dispatch(`${this.store}.fetch.if-first-time`);
-    }
+    autoFetching: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   computed: {
     paginate() {
@@ -116,8 +130,13 @@ export default {
     selectItem(row) {
       this.$store.commit(`${this.store}.select`, row[this.slugKey]);
     },
-    remove(slug) {
-      this.$store.dispatch(`${this.store}.delete`, slug);
+    remove(row) {
+      this.selectItem(row);
+      this.$store
+        .dispatch(`${this.store}.detail.delete`, row[this.slugKey])
+        .then(() => {
+          this.$emit("row-removed", row);
+        });
     },
   },
 };

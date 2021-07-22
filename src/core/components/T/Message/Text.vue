@@ -14,6 +14,7 @@
     </slot>
     <TMessage
       v-show="!editing || dontHideWhenEditing"
+      v-bind="messageOptions"
       :content="value"
       noTranslate
       :creatable="creatable"
@@ -39,6 +40,10 @@ export default {
       type: [String, Number],
       required: false,
       default: 0,
+    },
+    messageOptions: {
+      type: Object,
+      required: false,
     },
   },
 };
