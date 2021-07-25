@@ -4,13 +4,20 @@
       <TInputEditable
         v-if="editing"
         :value="content"
-        :inputOptions="{ type: 'date' }"
         @change="
           $emit('change', $event);
           setEditing(false);
         "
         @close="setEditing(false)"
-      />
+      >
+        <template #input="{ value, setInput }">
+          <TInputDateTime
+            :value="value"
+            @update:value="setInput"
+            :dateOnly="content.indexOf(' ') < 0"
+          />
+        </template>
+      </TInputEditable>
     </slot>
     <TMessage
       v-show="!editing || dontHideWhenEditing"
@@ -29,15 +36,17 @@
 <script>
 import actions from "../Button/actions";
 import TMessage from "../Message.vue";
+import TInputDateTime from "../Input/DateTime.vue";
 
 export default {
   mixins: [actions],
   components: {
     TMessage,
+    TInputDateTime,
   },
   props: {
     content: {
-      type: [String, Number],
+      type: String,
       required: false,
     },
     small: {
