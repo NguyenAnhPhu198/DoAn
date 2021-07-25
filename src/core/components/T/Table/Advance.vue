@@ -7,6 +7,7 @@
       <slot name="table">
         <CDataTable
           border
+          :key="tableKey"
           :items="items"
           :fields="advanceFields"
           :loading="fetching"
@@ -54,7 +55,7 @@
         </CDataTable>
       </slot>
     </CCol>
-    <CCol v-if="!noPaginate" col="12" class="mt-2">
+    <CCol v-if="!noPaginate" v-show="paginate.last > 1" col="12" class="mt-2">
       <slot name="pagination">
         <TPagination :store="store" />
       </slot>
@@ -113,6 +114,11 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      tableKey: "thisistablekey",
+    };
+  },
   computed: {
     paginate() {
       return this.$store.getters[this.store + ".paginate"];
@@ -126,6 +132,14 @@ export default {
       });
     },
   },
+  watch: {
+    // fix not rerender when init no items
+    ["items.length"](newLength, oldLength) {
+      if (newLength === 1 && oldLength <= 0) {
+        this.refreshTable();
+      }
+    },
+  },
   methods: {
     selectItem(row) {
       this.$store.commit(`${this.store}.select`, row[this.slugKey]);
@@ -137,6 +151,9 @@ export default {
         .then(() => {
           this.$emit("row-removed", row);
         });
+    },
+    refreshTable() {
+      this.tableKey = "" + this.lodash.random(10000, 100000);
     },
   },
 };
