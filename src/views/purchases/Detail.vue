@@ -108,13 +108,12 @@
       <CRow class="mb-4">
         <CCol>
           <TTableAdvance
-            :items="purchase.items"
+            :items="purchaseItems"
             :fields="itemFields"
-            store="order.purchases.detail.items"
+            store="order.purchase_items"
             resource="purchases"
             title="Items:"
             noFilter
-            noPaginate
             removable
             creatable
             @click-create="showCreateItem = true"
@@ -140,11 +139,8 @@
                   :amount="item.price"
                   editable
                   @change="
-                    $store.dispatch('order.purchases.detail.items.update', {
-                      id: item.id,
-                      attributes: {
-                        price: $event,
-                      },
+                    $store.dispatch('order.purchase_items.detail.update', {
+                      price: $event,
                     })
                   "
                 />
@@ -157,11 +153,11 @@
                   :fields="[
                     { key: 'quantity', label: 'Purchase' },
                     {
-                      key: 'quantity_in_order_product_purchase',
+                      key: 'distributed_quantity',
                       label: 'Distributed',
                     },
                     {
-                      key: 'quantity_available_in_order_product_purchase',
+                      key: 'remaining_distributed_quantity',
                       label: 'Remaining',
                     },
                   ]"
@@ -175,9 +171,7 @@
                   <template #quantity_distributed="{ value }">
                     <TMessageNumber :value="value" />
                   </template>
-                  <template
-                    #quantity_available_in_order_product_purchase="{ value }"
-                  >
+                  <template #remaining_distributed_quantity="{ value }">
                     <TMessageNumber :value="value" />
                   </template>
                 </TTableAsForm>
@@ -210,11 +204,8 @@
                   editable
                   :messageOptions="{ truncate: 3 }"
                   @change="
-                    $store.dispatch('order.purchases.detail.items.update', {
-                      id: item.id,
-                      attributes: {
-                        note: $event,
-                      },
+                    $store.dispatch('order.purchase_items.detail.update', {
+                      note: $event,
                     })
                   "
                 />
@@ -274,11 +265,15 @@ export default {
   created() {
     if (this.id) {
       this.$store.dispatch("order.purchases.detail.fetch", this.id);
+      this.$store.dispatch("order.purchase_items.push-query", {
+        search: `purchase_id:${this.id}`,
+      });
     }
   },
   computed: {
     ...mapGetters({
       purchase: "order.purchases.detail",
+      purchaseItems: "order.purchase_items.list",
       updating: "order.purchases.detail.updating",
     }),
     id() {
@@ -290,7 +285,7 @@ export default {
       return process.env.VUE_APP_ORDER_SERVICE_HOST + "/files/" + path_file;
     },
     clickDistribution(item_id) {
-      this.$store.commit("order.purchases.detail.items.select", item_id);
+      this.$store.commit("order.purchase_items.select", item_id);
       this.showDistribution = true;
     },
   },

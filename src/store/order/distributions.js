@@ -1,4 +1,8 @@
-import Resource from '../Resource';
+import Resource, { Touch } from '../Resource';
+
+const touchs = [
+  new Touch({ key: 'purchase_item', store: 'order.purchase_items' })
+]
 
 const resource = new Resource(
   {
@@ -6,7 +10,8 @@ const resource = new Resource(
     resource: 'distributions'
   },
   {
-    query: {
+    default_query: {
+      searchJoin: 'and',
       with: "orderItem",
     },
     default_detail: {
@@ -16,7 +21,8 @@ const resource = new Resource(
       price: null,
       quantity: null,
     }
-  }
+  },
+  touchs,
 ).store()
 
 export default resource

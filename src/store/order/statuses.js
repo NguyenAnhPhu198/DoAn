@@ -7,6 +7,9 @@ const resource = new Resource(
     paginate: false,
   },
   {
+    default_query: {
+      searchJoin: 'and',
+    },
     default_detail: {
       id: null,
       name: null,

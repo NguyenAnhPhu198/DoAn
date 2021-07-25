@@ -24,6 +24,9 @@
       :removable="removable"
       @click-edit="showEdit()"
     >
+      <template #suffix>
+        <slot name="suffix"></slot>
+      </template>
     </TMessage>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <TModal
     title="Distribution"
     :show="show"
-    size="lg"
+    size="xl"
     @update:show="$emit('update:show', $event)"
     @click-create="create()"
   >
@@ -49,23 +49,46 @@
             {{ item.order_item.order_id }}
           </td>
         </template>
+        <template #order_quantity="{ item }">
+          <td>
+            <TMessageNumber :value="item.order_item.quantity" />
+          </td>
+        </template>
         <template #remaining_quantity="{ item }">
           <td>
             <TMessageNumber
-              :value="
-                item.order_item.quantity_available_in_order_product_purchase
-              "
+              :value="item.order_item.remaining_distributed_quantity"
             />
           </td>
         </template>
         <template #distribution_quantity="{ item }">
           <td>
-            <TMessageNumber :value="item.quantity" />
+            <TMessageNumber
+              :value="item.quantity"
+              editable
+              @change="onUpdateQuantity"
+            >
+              <template #suffix>
+                <label
+                  class="small text-muted"
+                  v-if="purchaseItem.remaining_distributed_quantity > 0"
+                  v-c-tooltip="{
+                    content: 'Remaining distributable',
+                  }"
+                >
+                  (+{{ purchaseItem.remaining_distributed_quantity }})</label
+                >
+              </template>
+            </TMessageNumber>
           </td>
         </template>
         <template #supply_sale_price="{ item }">
           <td>
-            <TMessageMoney :amount="item.price" />
+            <TMessageMoney
+              :amount="item.price"
+              editable
+              @change="onUpdatePrice"
+            />
           </td>
         </template>
       </TTableAdvance>
@@ -90,11 +113,11 @@ export default {
         { key: "order_id", label: "Order" },
         { key: "quantity", label: "Order quantity" },
         {
-          key: "quantity_in_order_product_purchase",
+          key: "distributed_quantity",
           label: "Distributed quantity",
         },
         {
-          key: "quantity_available_in_order_product_purchase",
+          key: "remaining_distributed_quantity",
           label: "Remaining quantity",
         },
         { key: "distribution_quantity", label: "Distribution quantity" },
@@ -104,7 +127,7 @@ export default {
       distributionFields: [
         { key: "_", label: "#" },
         { key: "order_id", label: "Order" },
-        { key: "quantity", label: "Order quantity" },
+        { key: "order_quantity", label: "Order quantity" },
         {
           key: "remaining_quantity",
           label: "Remaining quantity",
@@ -120,7 +143,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      item: "order.purchases.detail.items.selected",
+      purchaseItem: "order.purchase_items.detail",
       distributions: "order.distributions.list",
     }),
   },
@@ -136,9 +159,9 @@ export default {
     fetchOrderItems() {
       this.$tomoni.order.order_items
         .all({
-          criteria: "OrderProductAvailableForPurchase",
-          search: `product_id:${this.item.product_id}`,
-          with: "orderItemPurchases",
+          criteria: "OrderItemsForDistribution",
+          search: `product_id:${this.purchaseItem.product_id}`,
+          with: "distributes",
         })
         .then(({ data }) => {
           // - paginate
@@ -150,24 +173,37 @@ export default {
     },
     fetchDistributions() {
       this.$store.dispatch("order.distributions.push-query", {
-        search: `purchase_product_id:${this.item.id}`,
+        search: `purchase_product_id:${this.purchaseItem.id}`,
       });
     },
     addDistribution(orderItem) {
-      console.log(orderItem);
-      this.$tomoni.order.distributions
-        .create({
+      this.$store
+        .dispatch("order.distributions.create", {
           order_product_id: orderItem.id,
-          purchase_product_id: this.item.id,
-          quantity: orderItem.supply_sale_price,
-          price: orderItem.distribution_quantity,
+          purchase_product_id: this.purchaseItem.id,
+          quantity: orderItem.distribution_quantity,
+          price: orderItem.supply_sale_price,
         })
         .then(() => {
           this.fetchOrderItems();
-          this.fetchDistributions();
+        });
+    },
+    onUpdateQuantity(value) {
+      this.$store
+        .dispatch("order.distributions.detail.update", {
+          quantity: value,
         })
-        .catch(({ response }) => {
-          this.$store.dispatch("errors.push-http-error", response);
+        .then(() => {
+          this.fetchOrderItems();
+        });
+    },
+    onUpdatePrice(value) {
+      this.$store
+        .dispatch("order.distributions.detail.update", {
+          price: value,
+        })
+        .then(() => {
+          this.fetchOrderItems();
         });
     },
   },

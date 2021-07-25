@@ -1,8 +1,15 @@
 import tomoni from '@/core/services/tomoni'
 
+export class Touch {
+  constructor({ key, store }) {
+    this.KEY = key
+    this.STORE = store
+  }
+}
+
 export default class Resource {
 
-  constructor({ service, resource, primary_key = 'id', paginate = true }, defaults = {}) {
+  constructor({ service, resource, primary_key = 'id', paginate = true }, defaults = {}, touches = []) {
     this.config = {
       SERVICE: service,
       RESOURCE: resource,
@@ -12,6 +19,7 @@ export default class Resource {
       PAGINATE: paginate,
     }
     this.defaults = defaults
+    this.touches = touches ?? []
 
     return this
   }
@@ -20,33 +28,8 @@ export default class Resource {
     return {
       state: this.state(this.defaults, this.config),
       getters: this.getters(this.config),
-      mutations: this.mutations(this.config),
-      actions: this.actions(this.config),
-    }
-  }
-
-  pair(subs) {
-    let store = this.store()
-    if (!Array.isArray(subs)) {
-      subs = [subs]
-    }
-
-    subs.forEach((sub) => {
-      sub.config.PREFIX = this.config.PREFIX
-      sub.config.PREFIX_STATE = this.config.PREFIX_STATE
-      store = this.merge(store, sub.store())
-    })
-
-    return store
-  }
-
-  merge(source, target) {
-    const { state, getters, actions, mutations } = source
-    return {
-      state: { ...state, ...target.state },
-      getters: { ...getters, ...target.getters },
-      actions: { ...actions, ...target.actions },
-      mutations: { ...mutations, ...target.mutations },
+      mutations: this.mutations(this.config, this.touches),
+      actions: this.actions(this.config, this.touches),
     }
   }
 
@@ -56,14 +39,14 @@ export default class Resource {
       last: 1,
       per: 15,
     },
-    query = {},
+    default_query = {},
     detail_query = {},
     default_detail = {},
   }, { PREFIX_STATE }) {
     return {
       [PREFIX_STATE + '_list']: [],
       [PREFIX_STATE + '_paginate']: paginate,
-      [PREFIX_STATE + '_default_query']: query,
+      [PREFIX_STATE + '_default_query']: default_query,
       [PREFIX_STATE + '_query']: {},
       [PREFIX_STATE + '_fetching']: false,
       [PREFIX_STATE + '_creating']: false,
@@ -117,10 +100,35 @@ export default class Resource {
     }
   }
 
-  mutations({ PREFIX, PREFIX_STATE, PRIMARY_KEY }) {
+  mutations({ PREFIX, PREFIX_STATE, PRIMARY_KEY }, touches) {
     return {
       [PREFIX + '.set-list'](state, list) {
         state[PREFIX_STATE + '_list'] = list;
+      },
+      [PREFIX + '.push-list'](state, item) {
+        state[PREFIX_STATE + '_list'].push(item)
+
+        // touch to relations
+        touches.forEach((touch) => {
+          this.commit(touch.STORE + '.merge', item[touch.KEY])
+        })
+      },
+      [PREFIX + '.merge'](state, data) {
+        if (state[PREFIX_STATE + '_detail'][PRIMARY_KEY] == data[PRIMARY_KEY]) {
+          this.commit(PREFIX + '.detail.merge', data)
+        }
+
+        state[PREFIX_STATE + '_list'] = state[PREFIX_STATE + '_list'].map((item) => {
+          if (item[PRIMARY_KEY] == data[PRIMARY_KEY]) {
+            item = { ...item, ...data }
+
+            // touch to relations
+            touches.forEach((touch) => {
+              this.commit(touch.STORE + '.merge', item[touch.KEY])
+            })
+          }
+          return item
+        })
       },
       [PREFIX + '.set-fetching'](state, fetching) {
         state[PREFIX_STATE + '_fetching'] = fetching;
@@ -161,18 +169,25 @@ export default class Resource {
         this.commit(PREFIX + '.detail.set-detail', selected);
       },
       [PREFIX + '.detail.merge'](state, data) {
+        if (state[PREFIX_STATE + '_detail'] == data) {
+          return
+        }
+
+        // merge detail
         state[PREFIX_STATE + '_detail'] = { ...state[PREFIX_STATE + '_detail'], ...data };
 
-        // update item in list
-        state[PREFIX_STATE + '_list'] = state[PREFIX_STATE + '_list'].map((item) => {
-          if (item[PRIMARY_KEY] == data[PRIMARY_KEY]) {
-            item = { ...item, ...data }
-          }
-          return item
-        })
+        // merge list
+        this.commit(PREFIX + '.merge', state[PREFIX_STATE + '_detail'])
       },
-      [PREFIX + '.detail.delete'](state, id) {
+      [PREFIX + '.delete'](state, { id, data }) {
         state[PREFIX_STATE + '_list'] = state[PREFIX_STATE + '_list'].filter((item) => item[PRIMARY_KEY] != id)
+
+        // touch to relations
+        if (data) {
+          touches.forEach((touch) => {
+            this.commit(touch.STORE + '.merge', data[touch.KEY])
+          })
+        }
       },
     }
   }
@@ -221,6 +236,54 @@ export default class Resource {
         context.commit(PREFIX + '.push-query', query)
         context.dispatch(PREFIX + '.fetch')
       },
+      [PREFIX + '.create'](context, attributes) {
+        return new Promise((resolve) => {
+          context.commit(PREFIX + '.detail.set-creating', true);
+          tomoni[SERVICE][RESOURCE].create(attributes)
+            .then(({ data }) => {
+              context.commit(PREFIX + '.detail.set-creating', false);
+              context.commit(PREFIX + '.push-list', data)
+              context.commit("toasts.push", {
+                message: "Created",
+                type: "success",
+              });
+              resolve(data)
+            }).catch(({ response }) => {
+              context.commit(PREFIX + '.detail.set-creating', false);
+              context.dispatch('errors.push-http-error', response);
+            });
+        });
+      },
+      [PREFIX + '.update'](context, { id, attributes }) {
+        return new Promise((resolve) => {
+          tomoni[SERVICE][RESOURCE].update(id, attributes)
+            .then(({ data }) => {
+              context.commit(PREFIX + '.merge', data)
+              context.commit("toasts.push", {
+                message: "Updated",
+                type: "success",
+              });
+              resolve(data)
+            }).catch(({ response }) => {
+              context.dispatch('errors.push-http-error', response);
+            });
+        });
+      },
+      [PREFIX + '.delete'](context, id) {
+        return new Promise((resolve) => {
+          tomoni[SERVICE][RESOURCE].delete(id)
+            .then(({ data }) => {
+              context.commit(PREFIX + '.delete', id);
+              context.commit("toasts.push", {
+                message: "Created",
+                type: "success",
+              });
+              resolve(data)
+            }).catch(({ response }) => {
+              context.dispatch('errors.push-http-error', response);
+            });
+        });
+      },
       [PREFIX + '.detail.fetch'](context, id) {
         // if is fetching then skip
         if (context.getters[PREFIX + '.detail.fetching']) {
@@ -257,31 +320,13 @@ export default class Resource {
             });
         });
       },
-      [PREFIX + '.create'](context, attributes) {
-        return new Promise((resolve) => {
-          context.commit(PREFIX + '.detail.set-creating', true);
-          tomoni[SERVICE][RESOURCE].create(attributes)
-            .then(({ data }) => {
-              context.commit(PREFIX + '.detail.set-creating', false);
-              context.commit(PREFIX + '.detail.merge', data)
-              context.commit("toasts.push", {
-                message: "Created",
-                type: "success",
-              });
-              resolve(data)
-            }).catch(({ response }) => {
-              context.commit(PREFIX + '.detail.set-creating', false);
-              context.dispatch('errors.push-http-error', response);
-            });
-        });
-      },
       [PREFIX + '.detail.delete'](context) {
         return new Promise((resolve) => {
           context.commit(PREFIX + '.detail.set-deleting', true);
           tomoni[SERVICE][RESOURCE].delete(context.getters[PREFIX + '.detail.id'])
             .then(({ data }) => {
               context.commit(PREFIX + '.detail.set-deleting', false);
-              context.commit(PREFIX + '.detail.delete', context.getters[PREFIX + '.detail.id']);
+              context.commit(PREFIX + '.delete', { id: context.getters[PREFIX + '.detail.id'], data });
               context.commit("toasts.push", {
                 message: "Created",
                 type: "success",
@@ -289,122 +334,6 @@ export default class Resource {
               resolve(data)
             }).catch(({ response }) => {
               context.commit(PREFIX + '.detail.set-deleting', false);
-              context.dispatch('errors.push-http-error', response);
-            });
-        });
-      },
-    }
-  }
-}
-
-export class SubResource {
-  constructor({ service, resource, bind_resource_key, sub_key = 'items', primary_key = 'id' }, defaults = {}) {
-    this.config = {
-      SERVICE: service,
-      RESOURCE: resource,
-      PREFIX: service + '.' + resource,
-      PREFIX_STATE: service + '_' + resource,
-      SUB_KEY: sub_key,
-      BIND_RESOURCE_KEY: bind_resource_key,
-      PRIMARY_KEY: primary_key,
-    }
-    this.defaults = defaults
-    return this
-  }
-
-  store() {
-    return {
-      state: this.state(this.defaults, this.config),
-      getters: this.getters(this.config),
-      mutations: this.mutations(this.config),
-      actions: this.actions(this.config),
-    }
-  }
-
-  state({
-    default_sub = {},
-  }, { PREFIX_STATE, SUB_KEY }) {
-    return {
-      [`${PREFIX_STATE}_detail_${SUB_KEY}_default_selected`]: default_sub,
-      [`${PREFIX_STATE}_detail_${SUB_KEY}_selected`]: default_sub,
-    }
-  }
-
-  getters({ PREFIX, PREFIX_STATE, SUB_KEY }) {
-    return {
-      [`${PREFIX}.detail.${SUB_KEY}.selected`](state) {
-        return {
-          ...state[`${PREFIX_STATE}_detail_${SUB_KEY}_default_selected`],
-          ...state[`${PREFIX_STATE}_detail_${SUB_KEY}_selected`],
-        }
-      },
-    }
-  }
-
-  mutations({ PREFIX, PREFIX_STATE, SUB_KEY, BIND_RESOURCE_KEY, PRIMARY_KEY }) {
-    return {
-      [`${PREFIX}.detail.${SUB_KEY}.select`](state, item_id) {
-        const selected = state[PREFIX_STATE + '_detail'][SUB_KEY].find((item) => item[PRIMARY_KEY] == item_id)
-        state[`${PREFIX_STATE}_detail_${SUB_KEY}_selected`] = selected
-      },
-      [`${PREFIX}.detail.${SUB_KEY}.push`](state, item) {
-        state[PREFIX_STATE + '_detail'][SUB_KEY].push(item)
-
-        // merge bind_resource to detail
-        if (BIND_RESOURCE_KEY) {
-          this.commit(PREFIX + '.detail.merge', item[BIND_RESOURCE_KEY])
-        }
-      },
-      [`${PREFIX}.detail.${SUB_KEY}.remove`](state, item_id) {
-        let deleteIndex = state[PREFIX_STATE + '_detail'][SUB_KEY].findIndex((item) => item[PRIMARY_KEY] == item_id)
-        state[PREFIX_STATE + '_detail'][SUB_KEY].splice(deleteIndex, 1)
-
-        // - merge bind_resource into detail
-      },
-      [`${PREFIX}.detail.${SUB_KEY}.merge`](state, { id, data }) {
-        state[PREFIX_STATE + '_detail'][SUB_KEY] = state[PREFIX_STATE + '_detail'][SUB_KEY].map((item) => {
-          if (item[PRIMARY_KEY] == id) {
-            return data
-          }
-          return item
-        })
-
-        // merge bind_resource into detail
-        if (BIND_RESOURCE_KEY) {
-          this.commit(PREFIX + '.detail.merge', data[BIND_RESOURCE_KEY])
-        }
-      },
-    }
-  }
-
-  actions({ PREFIX, SUB_KEY, SERVICE, RESOURCE }) {
-    return {
-      [`${PREFIX}.detail.${SUB_KEY}.update`](context, { id, attributes }) {
-        return new Promise((resolve) => {
-          tomoni[SERVICE][RESOURCE].update(id, attributes)
-            .then(({ data }) => {
-              context.commit(`${PREFIX}.detail.${SUB_KEY}.merge`, { id, data })
-              context.commit("toasts.push", {
-                message: "Updated",
-                type: "success",
-              });
-              resolve(data)
-            }).catch(({ response }) => {
-              context.dispatch('errors.push-http-error', response);
-            });
-        });
-      },
-      [`${PREFIX}.detail.${SUB_KEY}.delete`](context, id) {
-        return new Promise((resolve) => {
-          tomoni[SERVICE][RESOURCE].delete(id)
-            .then(({ data }) => {
-              context.commit(`${PREFIX}.detail.${SUB_KEY}.remove`, id)
-              context.commit("toasts.push", {
-                message: "Deleted",
-                type: "success",
-              });
-              resolve(data)
-            }).catch(({ response }) => {
               context.dispatch('errors.push-http-error', response);
             });
         });

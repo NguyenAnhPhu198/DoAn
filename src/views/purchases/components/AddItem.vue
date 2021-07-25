@@ -12,7 +12,10 @@
             <TInputNumber :value="value" @update:value="item.price = $event" />
           </template>
           <template #quantity="{ value }">
-            <TInputNumber :value="value" @update:value="item.quantity = $event" />
+            <TInputNumber
+              :value="value"
+              @update:value="item.quantity = $event"
+            />
           </template>
           <template #tax_percent>
             <TInputNumber
@@ -63,19 +66,11 @@ export default {
   },
   methods: {
     create() {
-      this.$tomoni.order.purchase_items
-        .create(this.item)
-        .then(({ data }) => {
-          this.$store.commit("toasts.push", {
-            message: "Created",
-            type: "success",
-          });
-          this.$store.commit("order.purchases.detail.items.push", data);
+      this.$store
+        .dispatch("order.purchase_items.create", this.item)
+        .then(() => {
           this.item = this.defaultItem();
           this.$emit("update:show", false);
-        })
-        .catch(({ response }) => {
-          this.$store.dispatch("errors.push-http-error", response);
         });
     },
     defaultItem() {

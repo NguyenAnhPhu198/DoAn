@@ -1,10 +1,4 @@
-import Resource, { SubResource } from '../Resource';
-
-const items = new SubResource({
-  service: 'order',
-  resource: 'purchase_items',
-  bind_resource_key: 'purchase',
-})
+import Resource from '../Resource';
 
 const resource = new Resource(
   {
@@ -12,7 +6,7 @@ const resource = new Resource(
     resource: 'purchases'
   },
   {
-    query: {
+    default_query: {
       with: "items",
       appends: "supplier",
       orderBy: "created_at",
@@ -20,7 +14,7 @@ const resource = new Resource(
       searchJoin: 'and',
     },
     detail_query: {
-      with: "items;receipts",
+      with: "receipts",
       appends: "supplier",
     },
     default_detail: {
@@ -45,7 +39,7 @@ const resource = new Resource(
       },
       steps: []
     }
-  }
-).pair(items)
+  },
+).store()
 
 export default resource
