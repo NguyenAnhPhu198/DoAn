@@ -19,10 +19,10 @@ export default {
     $route: {
       immediate: true,
       handler(route) {
-        if (route.query && route.query.page) {
+        if (route.query && route.query[this.store + "-page"]) {
           this.$store.dispatch(
             `${this.store}.change-page`,
-            Number(route.query.page)
+            Number(route.query[this.store + "-page"])
           );
         } else {
           this.$store.dispatch(`${this.store}.fetch.if-first-time`);
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     pageChange(val) {
-      this.$router.push({ query: { page: val } });
+      this.$router.push({ query: { [this.store + "-page"]: val } });
     },
   },
 };
