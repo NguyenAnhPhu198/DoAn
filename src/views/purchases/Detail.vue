@@ -54,10 +54,26 @@
         <CCol sm="12" md="6" lg="4">
           <TTableAsForm title="Dates" :data="purchase" :fields="dateFields">
             <template #expected_delivery="{ value }">
-              <TMessageDateTime :content="value" editable />
+              <TMessageDateTime
+                :content="value"
+                editable
+                @change="
+                  $store.dispatch('order.purchases.detail.update', {
+                    expected_delivery: $event,
+                  })
+                "
+              />
             </template>
             <template #payment_due_date="{ value }">
-              <TMessageDateTime :content="value" editable />
+              <TMessageDateTime
+                :content="value"
+                editable
+                @change="
+                  $store.dispatch('order.purchases.detail.update', {
+                    payment_due_date: $event,
+                  })
+                "
+              />
             </template>
           </TTableAsForm>
         </CCol>
@@ -130,7 +146,15 @@
             </template>
             <template #tracking_id="{ item }">
               <td>
-                <OrderMessageTracking :value="item.tracking_id" editable />
+                <OrderMessageTracking
+                  :value="item.tracking_id"
+                  editable
+                  @change="
+                    $store.dispatch('order.purchase_items.detail.update', {
+                      tracking_id: $event,
+                    })
+                  "
+                />
               </td>
             </template>
             <template #price="{ item }">
@@ -166,7 +190,15 @@
                   :addRowClasses="[]"
                 >
                   <template #quantity="{ value }">
-                    <TMessageNumber :value="value" editable />
+                    <TMessageNumber
+                      :value="value"
+                      editable
+                      @change="
+                        $store.dispatch('order.purchase_items.detail.update', {
+                          quantity: $event,
+                        })
+                      "
+                    />
                   </template>
                   <template #quantity_distributed="{ value }">
                     <TMessageNumber :value="value" />
@@ -179,17 +211,25 @@
             </template>
             <template #tax_percent="{ item }">
               <td>
-                <TMessagePercent :value="item.tax_percent" editable />
+                <TMessagePercent
+                  :value="item.tax_percent"
+                  editable
+                  @change="
+                    $store.dispatch('order.purchase_items.detail.update', {
+                      tax_percent: $event,
+                    })
+                  "
+                />
               </td>
             </template>
             <template #amount="{ item }">
               <td>
-                <TMessageMoney :amount="item.amount" editable />
+                <TMessageMoney :amount="item.amount" />
               </td>
             </template>
             <template #tax="{ item }">
               <td>
-                <TMessageMoney :amount="item.tax" editable />
+                <TMessageMoney :amount="item.tax" />
               </td>
             </template>
             <template #balance="{ item }">

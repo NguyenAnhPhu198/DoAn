@@ -11,7 +11,7 @@
       </slot>
     </div>
     <div class="input-group-append">
-      <slot name="action">
+      <slot name="action" :input="input">
         <TButtonSave @click="onChange" />
         <TButtonClose @click="$emit('close')" />
       </slot>

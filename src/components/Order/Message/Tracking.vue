@@ -1,15 +1,13 @@
 <template>
   <div>
-    <slot name="edit" :editing="editing" :setEditing="setEditing">
-      <TInputEditable
-        v-if="editing"
-        :value="id"
-        @change="
-          $emit('change', $event);
-          setEditing(false);
-        "
-        @close="setEditing(false)"
-      />
+    <slot name="edit" :editing="editing">
+      <TInputEditable v-if="editing" :value="value">
+        <template #action="{ input }">
+          <TButtonSave @click="save(input)" />
+          <TButtonCreate @click="create(input)" />
+          <TButtonClose @click="close" />
+        </template>
+      </TInputEditable>
     </slot>
     <TMessage
       v-show="!editing || dontHideWhenEditing"
@@ -47,12 +45,11 @@ export default {
   },
   data() {
     return {
-      id: this.value,
       checked: false,
     };
   },
   created() {
-    this.applyTracking(this.id);
+    this.applyTracking(this.value);
   },
   watch: {
     value(value) {
@@ -61,7 +58,7 @@ export default {
   },
   computed: {
     status() {
-      return this.checked ? "ReceivedAtWarehouse" : "Approved";
+      return this.checked ? "ReceivedAtWarehouse" : "WaitingToReceive";
     },
   },
   methods: {
@@ -72,6 +69,25 @@ export default {
       this.$tomoni.order.trackings.get(id).then(({ data }) => {
         this.checked = data.checked;
       });
+    },
+    save(value) {
+      this.setEditing(false);
+      this.$emit("change", value);
+    },
+    create(value) {
+      this.$tomoni.order.trackings
+        .create({ id: value })
+        .then(({ data }) => {
+          this.setEditing(false);
+          this.$emit("change", data.id);
+        })
+        .catch(({ response }) => {
+          this.$store.dispatch("errors.push-http-error", response);
+        });
+    },
+    close() {
+      this.setEditing(false);
+      this.$emit("close");
     },
   },
 };
