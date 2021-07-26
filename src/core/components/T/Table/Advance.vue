@@ -12,7 +12,9 @@
           :fields="advanceFields"
           :loading="fetching"
           :column-filter="!noFilter"
+          :sorter="{ external: true, resetable: false }"
           @row-clicked="selectItem"
+          @update:sorter-value="$emit('update:sorter-value', $event)"
         >
           <template v-if="creatable" #_-header>
             <CRow>
@@ -128,7 +130,12 @@ export default {
     },
     advanceFields() {
       return this.lodash.map(this.fields, (field) => {
-        return { filter: false, _classes: "text-truncate", ...field };
+        return {
+          sorter: false,
+          filter: false,
+          _classes: "text-truncate",
+          ...field,
+        };
       });
     },
   },

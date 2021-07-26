@@ -4,6 +4,7 @@
     :fields="fields"
     store="order.purchases"
     @click-clear-filter="clearFilter"
+    @update:sorter-value="setSorter"
     resource="purchases"
     enterable
     creatable
@@ -85,7 +86,7 @@ export default {
         { key: "buyer_id", label: "Buyer" },
         { key: "balance" },
         { key: "status" },
-        { key: "created_at" },
+        { key: "created_at", sorter: true },
       ],
       filter: {},
     };
@@ -111,6 +112,12 @@ export default {
         ["director.status.id"]: "",
       };
       this.filterChange();
+    },
+    setSorter(sorter) {
+      this.$store.dispatch("order.purchases.push-query", {
+        orderBy: sorter.column,
+        sortedBy: sorter.asc ? "asc" : "desc",
+      });
     },
   },
 };
