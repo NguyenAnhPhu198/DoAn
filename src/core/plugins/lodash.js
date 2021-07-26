@@ -87,6 +87,24 @@ lodash.mixin({
     return target.filter(i => source.includes(i)).length > 0
   },
 
+  /**
+   * Convert data for CSelect
+   * 
+   * @param {Array} source 
+   * @param {Object} targets 
+   * @param {Object} keys 
+   * @return {Object}
+   */
+  'normalizeCSelect': function (source, targets = { value: 'id', label: 'name' }, keys = { value: 'id', label: 'label' }) {
+    const result = !source ? null : source.map(function (item) {
+      return {
+        [keys.value]: item[targets.value],
+        [keys.label]: item[targets.label]
+      }
+    })
+    return result
+  },
+
   ...masks,
   //...
   ...mixin,

@@ -47,11 +47,25 @@
     <template #id-filter>
       <CInput :value.sync="filter.id" @change="filterChange" class="m-0" />
     </template>
+    <template #items-filter>
+      <CInput
+        :value.sync="filter['items.product_id']"
+        @change="filterChange"
+        class="m-0"
+        placeholder="jancode"
+      />
+    </template>
     <template #buyer_id-filter>
       <CInput
         :value.sync="filter.buyer_id"
         @change="filterChange"
         class="m-0"
+      />
+    </template>
+    <template #status-filter>
+      <OrderSelectStatus
+        :value.sync="filter['director.status.id']"
+        @change="filterChange"
       />
     </template>
   </TTableAdvance>
@@ -93,7 +107,9 @@ export default {
       });
     },
     clearFilter() {
-      this.filter = {};
+      this.filter = {
+        ["director.status.id"]: "",
+      };
       this.filterChange();
     },
   },

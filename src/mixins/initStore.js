@@ -7,4 +7,5 @@
 
 export default [
   'order.statuses',
+  'order.purchase_statuses',
 ]

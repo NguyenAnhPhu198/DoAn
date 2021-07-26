@@ -9,12 +9,12 @@ export class Touch {
 
 export default class Resource {
 
-  constructor({ service, resource, primary_key = 'id', paginate = true }, defaults = {}, touches = []) {
+  constructor({ prefix = null, prefix_state = null, service, resource, primary_key = 'id', paginate = true }, defaults = {}, touches = []) {
     this.config = {
       SERVICE: service,
       RESOURCE: resource,
-      PREFIX: service + '.' + resource,
-      PREFIX_STATE: service + '_' + resource,
+      PREFIX: prefix ?? service + '.' + resource,
+      PREFIX_STATE: prefix_state ?? service + '_' + resource,
       PRIMARY_KEY: primary_key,
       PAGINATE: paginate,
     }
