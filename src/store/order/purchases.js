@@ -12,6 +12,7 @@ const resource = new Resource(
       orderBy: "created_at",
       sortedBy: "desc",
       searchJoin: 'and',
+      searchFields: 'created_at:between',
     },
     detail_query: {
       with: "receipts",

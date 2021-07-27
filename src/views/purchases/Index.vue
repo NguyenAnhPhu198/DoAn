@@ -53,7 +53,7 @@
         :value.sync="filter['items.product_id']"
         @change="filterChange"
         class="m-0"
-        placeholder="jancode"
+        placeholder="Jancode"
       />
     </template>
     <template #buyer_id-filter>
@@ -67,6 +67,12 @@
       <OrderSelectStatus
         :value.sync="filter['director.status.id']"
         @change="filterChange"
+      />
+    </template>
+    <template #created_at-filter>
+      <TInputDateTimeRange
+        :value.sync="dateRange"
+        @update:value="setCreatedAtFilter"
       />
     </template>
   </TTableAdvance>
@@ -89,6 +95,10 @@ export default {
         { key: "created_at", sorter: true },
       ],
       filter: {},
+      dateRange: {
+        start: null,
+        end: null,
+      },
     };
   },
   computed: {
@@ -107,7 +117,15 @@ export default {
         search: searchFields,
       });
     },
+    setCreatedAtFilter({ start, end }) {
+      this.filter.created_at = `${start},${end}`;
+      this.filterChange();
+    },
     clearFilter() {
+      this.dateRange = {
+        start: null,
+        end: null,
+      };
       this.filter = {
         ["director.status.id"]: "",
       };
