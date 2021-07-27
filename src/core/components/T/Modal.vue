@@ -6,8 +6,12 @@
     </template>
     <slot></slot>
     <template #footer>
-      <slot name="actions">
-        <TButtonCreate variant="outline" @click="$emit('click-create')" />
+      <slot name="actions" :creating="creating">
+        <TButtonCreate
+          :options="{ disabled: creating }"
+          variant="outline"
+          @click="$emit('click-create')"
+        />
       </slot>
     </template>
   </CModal>
@@ -27,6 +31,10 @@ export default {
     size: {
       type: String,
       required: false,
+    },
+    creating: {
+      type: Boolean,
+      default: false,
     },
   },
 };

@@ -9,6 +9,10 @@ export default {
       type: String,
       required: false,
       default: "ghost",
+    },
+    options: {
+      type: Object,
+      required: false,
     }
   },
 }

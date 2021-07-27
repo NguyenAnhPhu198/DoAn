@@ -49,9 +49,17 @@ const apis = {}
         return service.get(prefix + resource, id, query);
       },
       create(params) {
-        return service.post(prefix + resource, params);
+        let formData = new FormData();
+        Object.entries(params).forEach(param => {
+          formData.append(param[0], param[1])
+        })
+        return service.post(prefix + resource, formData);
       },
       update(id, params) {
+        let formData = new FormData();
+        Object.entries(params).forEach(param => {
+          formData.append(param[0], param[1])
+        })
         return service.update(prefix + resource, id, params);
       },
       delete(id) {

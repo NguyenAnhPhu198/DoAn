@@ -156,7 +156,7 @@ export default class Resource {
         state[PREFIX_STATE + '_detail_updating'] = updating;
       },
       [PREFIX + '.detail.set-creating'](state, creating) {
-        state[PREFIX_STATE + '_detail_creating'] = creating;
+        state[PREFIX_STATE + '_creating'] = creating;
       },
       [PREFIX + '.detail.set-deleting'](state, deleting) {
         state[PREFIX_STATE + '_detail_deleting'] = deleting;
@@ -273,9 +273,9 @@ export default class Resource {
         return new Promise((resolve) => {
           tomoni[SERVICE][RESOURCE].delete(id)
             .then(({ data }) => {
-              context.commit(PREFIX + '.delete', id);
+              context.commit(PREFIX + '.delete', { id, data });
               context.commit("toasts.push", {
-                message: "Created",
+                message: "Deleted",
                 type: "success",
               });
               resolve(data)

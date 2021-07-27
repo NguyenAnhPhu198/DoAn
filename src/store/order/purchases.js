@@ -15,7 +15,6 @@ const resource = new Resource(
       searchFields: 'created_at:between',
     },
     detail_query: {
-      with: "receipts",
       appends: "supplier",
     },
     default_detail: {

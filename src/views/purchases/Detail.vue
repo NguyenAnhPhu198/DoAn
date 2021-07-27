@@ -96,29 +96,7 @@
           </TTableAsForm>
         </CCol>
         <CCol>
-          <TMessage
-            content="Attachments:"
-            creatable
-            uppercase
-            :addOverClasses="['d-inline-flex']"
-          >
-            <template #suffix>
-              <div class="d-inline-flex">
-                <TLink
-                  v-for="(receipt, index) in purchase.receipts"
-                  :key="index"
-                  :content="receipt.id"
-                  :href="getUrlAttachment(receipt.path_file)"
-                  :messageOptions="{
-                    italic: true,
-                    addOverClasses: ['ml-2'],
-                  }"
-                  removable
-                />
-                <TMessageNotFound v-if="!purchase.receipts" class="ml-2" />
-              </div>
-            </template>
-          </TMessage>
+          <Attachments :purchase_id="id"/>
         </CCol>
       </CRow>
       <CRow class="mb-4">
@@ -262,12 +240,14 @@
 <script>
 import { mapGetters } from "vuex";
 import AddItem from "./components/AddItem.vue";
+import Attachments from "./components/Attachments.vue";
 import Distribution from "./components/Distribution.vue";
 
 export default {
   components: {
     AddItem,
     Distribution,
+    Attachments,
   },
   data() {
     return {
@@ -321,9 +301,6 @@ export default {
     },
   },
   methods: {
-    getUrlAttachment(path_file) {
-      return process.env.VUE_APP_ORDER_SERVICE_HOST + "/files/" + path_file;
-    },
     clickDistribution(item_id) {
       this.$store.commit("order.purchase_items.select", item_id);
       this.showDistribution = true;

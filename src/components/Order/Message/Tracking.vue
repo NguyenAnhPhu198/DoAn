@@ -76,7 +76,7 @@ export default {
     },
     create(value) {
       this.$tomoni.order.trackings
-        .create({ id: value })
+        .create(value ? { id: value } : {})
         .then(({ data }) => {
           this.setEditing(false);
           this.$emit("change", data.id);
