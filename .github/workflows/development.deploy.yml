@@ -1,0 +1,30 @@
+name: Development deploy
+
+on:
+  push:
+    branches: [ tomoniservice ]
+env:
+  NODE_ENV: 'development'
+  VUE_APP_DOMAIN: 'admin.tomonisolution.com'
+  VUE_APP_HOST: 'http://admin.tomonisolution.com:84'
+  VUE_APP_OAUTH_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+  VUE_APP_OAUTH_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+  WORKING_DIR: /var/www/admin-dev/_work/coreui-vue-pro/coreui-vue-pro
+jobs:
+  build:
+    runs-on: [self-hosted, dev]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup env
+      run: |
+        cp .env.example .env
+        echo -e "\nNODE_ENV=$NODE_ENV" >> .env
+        echo -e "\nVUE_APP_DOMAIN=$VUE_APP_DOMAIN" >> .env
+        echo -e "\nVUE_APP_HOST=$VUE_APP_HOST" >> .env
+        echo -e "\nVUE_APP_OAUTH_CLIENT_ID=$VUE_APP_OAUTH_CLIENT_ID" >> .env
+        echo -e "\nVUE_APP_OAUTH_CLIENT_SECRET=$VUE_APP_OAUTH_CLIENT_SECRET" >> .env
+    - name: Building
+      working-directory: ../../../../../laradock
+      run: |
+        docker-compose exec -T -w $WORKING_DIR workspace npm install --prefer-offline --no-audit --progress=false --unsafe-perm=true
+        docker-compose exec -T -w $WORKING_DIR workspace npm run build
