@@ -17,12 +17,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: Setup env
       run: |
-        cp .env.example .env
-        echo -e "\nNODE_ENV=$NODE_ENV" >> .env
-        echo -e "\nVUE_APP_DOMAIN=$VUE_APP_DOMAIN" >> .env
-        echo -e "\nVUE_APP_HOST=$VUE_APP_HOST" >> .env
-        echo -e "\nVUE_APP_OAUTH_CLIENT_ID=$VUE_APP_OAUTH_CLIENT_ID" >> .env
-        echo -e "\nVUE_APP_OAUTH_CLIENT_SECRET=$VUE_APP_OAUTH_CLIENT_SECRET" >> .env
+        cp .env.development .env.production
+        echo -e "\nNODE_ENV=$NODE_ENV" >> .env.production
+        echo -e "\nVUE_APP_DOMAIN=$VUE_APP_DOMAIN" >> .env.production
+        echo -e "\nVUE_APP_HOST=$VUE_APP_HOST" >> .env.production
+        echo -e "\nVUE_APP_OAUTH_CLIENT_ID=$VUE_APP_OAUTH_CLIENT_ID" >> .env.production
+        echo -e "\nVUE_APP_OAUTH_CLIENT_SECRET=$VUE_APP_OAUTH_CLIENT_SECRET" >> .env.production
     - name: Building
       working-directory: ../../../../../laradock
       run: |
