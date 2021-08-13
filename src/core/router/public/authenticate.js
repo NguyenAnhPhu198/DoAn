@@ -1,5 +1,5 @@
 const Login = () => import('@/core/views/authenticate/Login')
-const Register = () => import('@/core/views/authenticate/Register')
+const ForgotPassword = () => import('@/core/views/authenticate/ForgotPassword')
 const Page404 = () => import('@/core/views/pages/Page404')
 
 export default [
@@ -9,9 +9,9 @@ export default [
     component: Login,
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: Register,
+    path: '/forgot-password',
+    name: 'Forgot password',
+    component: ForgotPassword,
   },
   {
     path: '*',

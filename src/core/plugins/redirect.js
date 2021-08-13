@@ -33,6 +33,9 @@ export default {
   toHome() {
     this.to({ path: '/' });
   },
+  toForgotPassword() {
+    this.to({ path: '/forgot-password' });
+  },
 
   /**
    * more

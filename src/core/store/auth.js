@@ -75,16 +75,29 @@ const actions = {
     })
   },
   ['auth.logout'](context) {
-    firebaseAuth.signOut().then(() => {
+    return firebaseAuth.signOut().then(() => {
       context.commit('auth.me.purge');
     })
   },
-  ['auth.register'](context, user) {
-
+  ['auth.reset_password'](context, email) {
+    return new Promise((resolve, reject) => {
+      firebaseAuth.sendPasswordResetEmail(email).then(() => {
+        context.commit("toasts.push", {
+          title: "Password reset email sent",
+          message: "Check your mail",
+          type: "success",
+        })
+        resolve()
+      }).catch((error) => {
+        context.dispatch("errors.push", { error, notify: true });
+        reject(error)
+      })
+    })
   },
   ['auth.verify'](context) {
+    var unsubscribe // stop listening auth change when it log out
     return new Promise((resolve, reject) => {
-      firebaseAuth.onAuthStateChanged((user) => {
+      unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
         // not logged in
         if (!user) {
           reject({
@@ -117,6 +130,9 @@ const actions = {
           })
         }
       })
+    }).then((result) => {
+      unsubscribe()
+      return result
     })
   },
 };

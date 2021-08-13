@@ -3,12 +3,15 @@ import facebook from './facebook'
 import google from './google'
 import password from './password'
 
-const getIdToken = async () => {
-  return await firebase.auth().currentUser.getIdToken()
-}
-
 const currentUser = () => {
   return firebase.auth().currentUser
+}
+
+const getIdToken = async () => {
+  if (!currentUser()) {
+    return null;
+  }
+  return await currentUser().getIdToken()
 }
 
 const signOut = () => {
@@ -19,6 +22,10 @@ const onAuthStateChanged = (callback) => {
   return firebase.auth().onAuthStateChanged(callback)
 }
 
+const sendPasswordResetEmail = (email) => {
+  return firebase.auth().sendPasswordResetEmail(email);
+}
+
 export default {
   facebook,
   google,
@@ -27,4 +34,5 @@ export default {
   currentUser,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
 }
