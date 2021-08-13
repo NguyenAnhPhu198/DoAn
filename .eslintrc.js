@@ -19,7 +19,6 @@ module.exports = {
     'no-multiple-empty-lines': "error",
     'no-trailing-spaces': ["warn", { ignoreComments: true }],
     'no-whitespace-before-property': "error",
-    'multiline-comment-style': ["warn"],
   },
   parserOptions: {
     parser: 'babel-eslint'

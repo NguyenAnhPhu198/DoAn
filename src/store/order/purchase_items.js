@@ -1,4 +1,4 @@
-import Resource, { Touch } from '../Resource';
+import Resource, { Touch } from '@/core/store/Resource';
 
 const touchs = [
   new Touch({ key: 'purchase', store: 'order.purchases' })

@@ -1,11 +1,11 @@
 import axios from "axios"
 import { getBrowserLocale } from '@/core/plugins/i18n'
-import token from './token.local'
+import firebaseAuth from '../firebase/auth'
 import RESTApi from '../rest.api'
 
-function defaultHeaders() {
+async function defaultHeaders() {
   return {
-    'Authorization': `Bearer ${token.get()}`,
+    'X-Firebase-IDToken': await firebaseAuth.getIdToken(),
     'Accept-Language': getBrowserLocale(),
     'Accept': 'application/json',
   }
@@ -16,8 +16,8 @@ const axiosAuth = axios.create({
   baseURL: process.env.VUE_APP_AUTH_SERVICE_HOST,
 })
 
-axiosAuth.interceptors.request.use(function (config) {
-  config.headers = defaultHeaders()
+axiosAuth.interceptors.request.use(async function (config) {
+  config.headers = await defaultHeaders()
   return config;
 })
 
@@ -26,8 +26,8 @@ const axiosOrder = axios.create({
   baseURL: process.env.VUE_APP_ORDER_SERVICE_HOST,
 })
 
-axiosOrder.interceptors.request.use(function (config) {
-  config.headers = defaultHeaders()
+axiosOrder.interceptors.request.use(async function (config) {
+  config.headers = await defaultHeaders()
   return config;
 })
 
@@ -36,8 +36,8 @@ const axiosProduct = axios.create({
   baseURL: process.env.VUE_APP_PRODUCT_SERVICE_HOST,
 })
 
-axiosProduct.interceptors.request.use(function (config) {
-  config.headers = defaultHeaders()
+axiosProduct.interceptors.request.use(async function (config) {
+  config.headers = await defaultHeaders()
   return config;
 })
 

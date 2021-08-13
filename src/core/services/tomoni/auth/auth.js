@@ -30,7 +30,4 @@ export default {
   logout() {
     return SERVICE.post('api/me/logout');
   },
-  flattenPermissions() {
-    return SERVICE.query('api/me/get-flatten-permissions');
-  },
 }

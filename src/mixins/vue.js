@@ -10,7 +10,7 @@ export default {
      * @returns {Boolean}
      */
     hasPermissions: function (...permissions) {
-      return lodash.hasAll(this.flattenPermissions, permissions)
+      return lodash.hasAll(this.permission_ids, permissions)
     },
 
     /**
@@ -20,13 +20,13 @@ export default {
      * @returns 
      */
     hasAnyPermissions: function (...permissions) {
-      return lodash.hasAny(this.flattenPermissions, permissions)
+      return lodash.hasAny(this.permission_ids, permissions)
     },
   },
 
   computed: {
     ...mapGetters({
-      flattenPermissions: 'auth.flatten_permissions',
+      permission_ids: 'auth.me.permission_ids',
     }),
   },
 }

@@ -7,8 +7,8 @@
             <p v-if="!!toast.title" :class="getStyle(toast.type)">{{toast.title}}</p>
           </template>
           <template class="p-0">
-            <p v-if="!toast.title" :class="getStyle(toast.type)">{{toast.message}}</p>
-            <p v-if="!!toast.title" class="w-100 m-0">{{toast.message}}</p>
+            <TMessage v-if="!toast.title" :content="toast.message" :color="toast.type" style="overflow-x:auto" />
+            <TMessage v-if="!!toast.title" :content="toast.message" style="overflow-x:auto" />
           </template>
         </CToast>
       </template>

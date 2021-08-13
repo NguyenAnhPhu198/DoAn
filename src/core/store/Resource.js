@@ -1,4 +1,4 @@
-import tomoni from '@/core/services/tomoni'
+import tomoni from '../services/tomoni'
 
 export class Touch {
   constructor({ key, store }) {
@@ -211,9 +211,9 @@ export default class Resource {
               }
               context.commit(PREFIX + '.set-fetching', false);
               resolve(data)
-            }).catch(({ response }) => {
+            }).catch((error) => {
               context.commit(PREFIX + '.set-fetching', false);
-              context.dispatch('errors.push-http-error', response);
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },
@@ -248,9 +248,9 @@ export default class Resource {
                 type: "success",
               });
               resolve(data)
-            }).catch(({ response }) => {
+            }).catch((error) => {
               context.commit(PREFIX + '.detail.set-creating', false);
-              context.dispatch('errors.push-http-error', response);
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },
@@ -264,8 +264,8 @@ export default class Resource {
                 type: "success",
               });
               resolve(data)
-            }).catch(({ response }) => {
-              context.dispatch('errors.push-http-error', response);
+            }).catch((error) => {
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },
@@ -279,8 +279,8 @@ export default class Resource {
                 type: "success",
               });
               resolve(data)
-            }).catch(({ response }) => {
-              context.dispatch('errors.push-http-error', response);
+            }).catch((error) => {
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },
@@ -296,9 +296,9 @@ export default class Resource {
               context.commit(PREFIX + '.detail.set-detail', data)
               context.commit(PREFIX + '.detail.set-fetching', false);
               resolve(data)
-            }).catch(({ response }) => {
+            }).catch((error) => {
               context.commit(PREFIX + '.detail.set-fetching', false);
-              context.dispatch('errors.push-http-error', response);
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },
@@ -314,9 +314,9 @@ export default class Resource {
                 type: "success",
               });
               resolve(data)
-            }).catch(({ response }) => {
+            }).catch((error) => {
               context.commit(PREFIX + '.detail.set-updating', false);
-              context.dispatch('errors.push-http-error', response);
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },
@@ -332,9 +332,9 @@ export default class Resource {
                 type: "success",
               });
               resolve(data)
-            }).catch(({ response }) => {
+            }).catch((error) => {
               context.commit(PREFIX + '.detail.set-deleting', false);
-              context.dispatch('errors.push-http-error', response);
+              context.dispatch('errors.push-http-error', error);
             });
         });
       },

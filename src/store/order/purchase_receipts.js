@@ -1,4 +1,4 @@
-import Resource from '../Resource';
+import Resource from '@/core/store/Resource';
 
 const resource = new Resource(
   {

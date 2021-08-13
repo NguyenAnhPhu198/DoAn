@@ -18,16 +18,26 @@ const actions = {
       type: ERROR,
     })
   },
-  ['errors.push-http-error'](context, response) {
-    context.dispatch('errors.push', {
-      error: {
-        type: response.data.error,
-        message: response.data.errors?.message || response.data.message,
-        code: response.status,
-        status: response.statusText,
-      },
-      notify: true,
-    })
+  ['errors.push-http-error'](context, error) {
+    const response = error.response
+    if (response) {
+      context.dispatch('errors.push', {
+        error: {
+          type: response.data.error,
+          message: response.data.errors?.message || response.data.message,
+          code: response.status,
+          status: response.statusText,
+        },
+        notify: true,
+      })
+    } else {
+      context.dispatch('errors.push', {
+        error: {
+          message: error.message,
+        },
+        notify: true,
+      })
+    }
   },
   ['errors.push'](context, { error, notify = false }) {
     context.commit('errors.push', error)

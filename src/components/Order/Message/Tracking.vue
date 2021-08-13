@@ -81,8 +81,8 @@ export default {
           this.setEditing(false);
           this.$emit("change", data.id);
         })
-        .catch(({ response }) => {
-          this.$store.dispatch("errors.push-http-error", response);
+        .catch((error) => {
+          this.$store.dispatch("errors.push-http-error", error);
         });
     },
     close() {

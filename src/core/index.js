@@ -6,6 +6,7 @@ import CoreuiVuePro from '@coreui/vue-pro'
 // import CoreuiVuePro from '../node_modules/@coreui/vue-pro/src/index.js'
 import { iconsSet as icons } from '@/assets/icons/icons.js'
 import mixin from "@/mixins/vue"
+import firebaseAuth from './services/firebase/auth'
 import redirect from './plugins/redirect'
 import tomoni from './services/tomoni'
 import lodash from './plugins/lodash'
@@ -38,6 +39,12 @@ export default {
     Vue.use({
       install(Vue) {
         Vue.prototype.$tomoni = tomoni;
+      }
+    });
+
+    Vue.use({
+      install(Vue) {
+        Vue.prototype.$auth = firebaseAuth;
       }
     });
   }

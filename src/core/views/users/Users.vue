@@ -91,11 +91,6 @@ export default {
           label: "Role",
           onlyValues: this.$store.getters['auth.roles.list'].map((r) => r.name),
         },
-        {
-          value: "status.name",
-          label: "Status",
-          onlyValues: this.$store.getters['auth.user_statuses.list'].map((s) => s.name),
-        },
       ];
     },
   },

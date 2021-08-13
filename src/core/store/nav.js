@@ -36,13 +36,13 @@ const actions = {
     const items = context.getters["nav.items"].filter((i) => {
       if (i.permissions) {
         return lodash.hasAll(
-          context.getters["auth.flatten_permissions"],
+          context.getters["auth.me.permission_ids"],
           i.permissions
         );
       }
       if (i.any_permissions) {
         return lodash.hasAny(
-          context.getters["auth.flatten_permissions"],
+          context.getters["auth.me.permission_ids"],
           i.any_permissions
         );
       }

@@ -167,8 +167,8 @@ export default {
           // - paginate
           this.orderItems = data.data;
         })
-        .catch(({ response }) => {
-          this.$store.dispatch("errors.push-http-error", response);
+        .catch((error) => {
+          this.$store.dispatch("errors.push-http-error", error);
         });
     },
     fetchDistributions() {

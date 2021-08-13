@@ -13,6 +13,8 @@ chromedriver.log
 .env.local
 .env.*.local
 .env
+.env.development
+.env.production
 
 # Log files
 npm-debug.log*

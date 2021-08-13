@@ -33,7 +33,7 @@
                   </CInput>
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton color="primary" class="px-4" @click="login"
+                      <CButton color="primary" class="px-4" @click="loginPW"
                         >Login</CButton
                       >
                     </CCol>
@@ -50,6 +50,17 @@
                     </CCol>
                   </CRow>
                 </CForm>
+                <CRow>
+                  <CCol class="text-center">
+                    <hr />
+                    <CButton color="facebook" @click="loginSocial('facebook')">
+                      <CIcon name="cib-facebook" />
+                    </CButton>
+                    <CButton class="ml-2" color="youtube" @click="loginSocial('google')">
+                      <CIcon name="cib-google" />
+                    </CButton>
+                  </CCol>
+                </CRow>
               </CCardBody>
             </CCard>
             <CCard
@@ -86,24 +97,23 @@ export default {
   name: "Login",
   data() {
     return {
-      username: "admin@abc.xyz",
+      username: "root@abc.xyz",
       password: "password",
     };
   },
   methods: {
-    login() {
-      this.$store
-        .dispatch("auth.fetch_access_token", {
-          grant_type: "password",
-          client_id: process.env.VUE_APP_OAUTH_CLIENT_ID,
-          client_secret: process.env.VUE_APP_OAUTH_CLIENT_SECRET,
-          scope: "*",
-          username: this.username,
-          password: this.password,
-        })
-        .then(() => {
-          this.$redirect.toHome();
-        });
+    loginPW() {
+      this.$store.dispatch("auth.login.password", {
+        email: this.username,
+        password: this.password,
+      }).then(() => {
+        this.$redirect.toHome();
+      })
+    },
+    loginSocial(provider) {
+      this.$store.dispatch("auth.login.social", provider).then(() => {
+        this.$redirect.toHome();
+      })
     },
   },
 };

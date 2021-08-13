@@ -47,11 +47,12 @@ router.beforeEach((routeTo, routeFrom, next) => {
   // If auth isn't required for the route, just continue.
   if (!authRequired) return next()
 
-  // If authenticated, just continue.
-  if (!store.getters['auth.authenticated']) redirect.toLogin()
-
-  Promise.all([store.dispatch('auth.verify')]).then(next())
-  // next()
+  store.dispatch('auth.verify').then(() => {
+    next()
+  }).catch((error) => {
+    store.dispatch("errors.push", { error, notify: true });
+    redirect.toLogin();
+  })
 })
 
 router.afterEach((to) => {

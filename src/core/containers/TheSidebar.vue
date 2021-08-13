@@ -41,7 +41,7 @@ export default {
     this.$store.dispatch("nav.set", items);
   },
   watch: {
-    flattenPermissions: function () {
+    permission_ids: function () {
       this.$store.dispatch("nav.available.refresh");
     },
   },
