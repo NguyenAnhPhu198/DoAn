@@ -14,7 +14,7 @@
           <TInputDateTime
             :value="value"
             @update:value="setInput"
-            :dateOnly="content.indexOf(' ') < 0"
+            :dateOnly="dateOnly"
           />
         </template>
       </TInputEditable>
@@ -52,6 +52,11 @@ export default {
     small: {
       type: Boolean,
       default: false,
+    },
+  },
+  computed: {
+    dateOnly() {
+      return this.content ? this.content.indexOf(" ") < 0 : true;
     },
   },
 };
