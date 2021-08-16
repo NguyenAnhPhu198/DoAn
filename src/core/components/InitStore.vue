@@ -25,12 +25,14 @@ export default {
     },
   },
   watch: {
-    immediate: true,
-    authId(newId) {
-      if (newId) {
-        this.initStore();
-        //
-      }
+    authId: {
+      immediate: true,
+      handler(newId) {
+        if (newId) {
+          this.initStore();
+          //
+        }
+      },
     },
   },
 };

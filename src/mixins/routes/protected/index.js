@@ -1,5 +1,6 @@
 const Purchases = () => import('@/views/purchases/Index')
 const Purchase = () => import('@/views/purchases/Detail')
+const Users = () => import('@/views/users/Index')
 
 export default [
   {
@@ -22,6 +23,20 @@ export default [
         name: 'Purchase',
         component: Purchase
       }
+    ]
+  },
+  {
+    path: '/users',
+    meta: { label: 'Users' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+    children: [
+      {
+        path: '',
+        name: 'Users',
+        component: Users
+      },
     ]
   },
 ]

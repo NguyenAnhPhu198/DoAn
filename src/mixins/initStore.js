@@ -6,6 +6,7 @@
  */
 
 export default [
+  'auth.roles',
   'order.statuses',
   'order.purchase_statuses',
 ]

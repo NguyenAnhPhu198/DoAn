@@ -8,7 +8,7 @@
     is-range
   >
     <template v-slot="{ inputValue, inputEvents }">
-      <div class="d-inline-flex" style="min-width: 200px">
+      <div class="d-inline-flex w-100" style="min-width: 200px">
         <input
           class="form-control"
           :value="inputValue.start"

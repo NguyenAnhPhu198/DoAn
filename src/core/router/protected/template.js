@@ -131,28 +131,6 @@ export default [
     component: Widgets
   },
   {
-    path: 'users',
-    meta: { label: 'Users' },
-    component: {
-      render(c) { return c('router-view') }
-    },
-    children: [
-      {
-        path: '',
-        name: 'Users',
-        component: Users
-      },
-      {
-        path: ':id',
-        meta: {
-          label: 'User Details'
-        },
-        name: 'User',
-        component: User
-      }
-    ]
-  },
-  {
     path: 'base',
     redirect: '/base/cards',
     name: 'Base',
