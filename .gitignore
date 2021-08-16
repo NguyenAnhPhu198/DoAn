@@ -9,6 +9,8 @@ package-lock.json
 selenium-debug.log
 chromedriver.log
 
+.firebase
+
 # local env files
 .env.local
 .env.*.local
