@@ -2,28 +2,33 @@ export default [
   {
     _name: "CSidebarNavTitle",
     _children: ["Theme"],
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavItem",
     name: "Colors",
     to: "/theme/colors",
     icon: "cil-drop",
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavItem",
     name: "Typography",
     to: "/theme/typography",
     icon: "cil-pencil",
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavTitle",
     _children: ["Components"],
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavDropdown",
     name: "Base",
     route: "/base",
     icon: "cil-puzzle",
+    visible_on: 'development',
     items: [
       {
         name: "Breadcrumbs",
@@ -88,6 +93,7 @@ export default [
     name: "Buttons",
     route: "/buttons",
     icon: "cil-cursor",
+    visible_on: 'development',
     items: [
       {
         name: "Buttons",
@@ -120,12 +126,14 @@ export default [
     name: "Charts",
     to: "/charts",
     icon: "cil-chart-pie",
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavDropdown",
     name: "Editors",
     route: "/editors",
     icon: "cil-code",
+    visible_on: 'development',
     items: [
       {
         name: "Code editors",
@@ -148,6 +156,7 @@ export default [
     name: "Forms",
     route: "/forms",
     icon: "cil-notes",
+    visible_on: 'development',
     items: [
       {
         name: "Basic forms",
@@ -188,12 +197,14 @@ export default [
       color: "danger",
       text: "PRO",
     },
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavDropdown",
     name: "Icons",
     route: "/icons",
     icon: "cil-star",
+    visible_on: 'development',
     items: [
       {
         name: "CoreUI Icons",
@@ -218,6 +229,7 @@ export default [
     name: "Notifications",
     route: "/notifications",
     icon: "cil-bell",
+    visible_on: 'development',
     items: [
       {
         name: "Alerts",
@@ -246,6 +258,7 @@ export default [
     name: "Plugins",
     route: "/plugins",
     icon: "cil-input-power",
+    visible_on: 'development',
     items: [
       {
         name: "Draggable",
@@ -281,6 +294,7 @@ export default [
     name: "Tables",
     route: "/tables",
     icon: "cil-list",
+    visible_on: 'development',
     items: [
       {
         name: "Basic Tables",
@@ -304,19 +318,23 @@ export default [
       text: "NEW",
       shape: "pill",
     },
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavDivider",
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavTitle",
     _children: ["Extras"],
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavDropdown",
     name: "Pages",
     route: "/pages",
     icon: "cil-star",
+    visible_on: 'development',
     items: [
       {
         name: "Login",
@@ -341,6 +359,7 @@ export default [
     name: "Apps",
     route: "/apps",
     icon: "cil-layers",
+    visible_on: 'development',
     _children: [
       {
         _name: "CSidebarNavDropdown",
@@ -398,10 +417,12 @@ export default [
   {
     _name: "CSidebarNavDivider",
     _class: "m-2",
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavTitle",
     _children: ["Labels"],
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavItem",
@@ -411,6 +432,7 @@ export default [
       class: "text-danger",
     },
     label: true,
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavItem",
@@ -420,6 +442,7 @@ export default [
       class: "text-info",
     },
     label: true,
+    visible_on: 'development',
   },
   {
     _name: "CSidebarNavItem",
@@ -429,5 +452,6 @@ export default [
       class: "text-warning",
     },
     label: true,
+    visible_on: 'development',
   },
 ]

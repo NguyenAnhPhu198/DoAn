@@ -1,11 +1,23 @@
 import templateItems from "./template"
 import serviceItems from "@/mixins/nav"
 import dashboardItems from "./dashboard"
-// import authItems from "./auth"
 
-export default [
-  ...dashboardItems,
-  ...serviceItems,
-  // ...authItems,
-  ...templateItems,
-]
+function navItemsAvailable() {
+  const nav = [
+    ...dashboardItems,
+    ...serviceItems,
+    ...templateItems,
+  ];
+
+  return nav.filter((item) => {
+    if (!item.visible_on) {
+      return true
+    }
+    if (Array.isArray(item.visible_on)) {
+      return item.visible_on.includes(process.env.NODE_ENV)
+    }
+    return item.visible_on == process.env.NODE_ENV
+  })
+}
+
+export default navItemsAvailable()
