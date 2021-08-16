@@ -26,7 +26,7 @@
       <CBadge color="primary" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
     <CDropdownDivider />
-    <CDropdownItem v-if="visiableOn('development')" @click="showIdToken">
+    <CDropdownItem @click="showIdToken">
       <CIcon class="text-info" name="cil-key" /> Get ID Token
     </CDropdownItem>
     <CDropdownItem @click="logout">
