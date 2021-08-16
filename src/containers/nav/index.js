@@ -1,4 +1,3 @@
-import templateItems from "./template"
 import serviceItems from "@/mixins/nav"
 import dashboardItems from "./dashboard"
 
@@ -6,7 +5,6 @@ function navItemsAvailable() {
   const nav = [
     ...dashboardItems,
     ...serviceItems,
-    ...templateItems,
   ];
 
   return nav.filter((item) => {

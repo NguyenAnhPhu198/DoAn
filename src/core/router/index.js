@@ -3,30 +3,14 @@ import Router from 'vue-router'
 import store from '../store'
 import redirect from '@/core/plugins/redirect'
 
-import defaultProtectedRoutes from './protected'
 import defaultPublicRoutes from './public'
-
-import protectedRoutes from '@/mixins/routes/protected'
-import publicRoutes from '@/mixins/routes/public'
+import serviceRoutes from '@/mixins/routes'
 
 Vue.use(Router)
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/dashboard',
-    name: 'Home',
-    component: () => import('@/core/containers/TheContainer'),
-    meta: {
-      authRequired: true,
-    },
-    children: [
-      ...defaultProtectedRoutes,
-      ...protectedRoutes,
-    ]
-  },
+  ...serviceRoutes,
   ...defaultPublicRoutes,
-  ...publicRoutes,
 ]
 
 const router = new Router({

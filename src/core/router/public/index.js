@@ -1,7 +1,7 @@
-import template from "./template"
+import errors from "./errors"
 import authenticate from "./authenticate"
 
 export default [
-  ...template,
+  ...errors,
   ...authenticate,
 ]

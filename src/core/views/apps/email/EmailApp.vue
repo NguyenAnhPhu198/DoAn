@@ -24,9 +24,9 @@
 
 <script>
 import EmailSidebar from './EmailSidebar'
-import TheHeader from '../../../containers/TheHeader'
-import TheFooter from '../../../containers/TheFooter'
-import TheAside from '../../../containers/TheAside'
+import TheHeader from '@/containers/TheHeader'
+import TheFooter from '@/containers/TheFooter'
+import TheAside from '@/containers/TheAside'
 
 export default {
   name: 'EmailApp',

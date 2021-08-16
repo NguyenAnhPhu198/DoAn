@@ -1,8 +1,14 @@
+const Dashboard = () => import('@/core/views/Dashboard')
 const Purchases = () => import('@/views/purchases/Index')
 const Purchase = () => import('@/views/purchases/Detail')
 const Users = () => import('@/views/users/Index')
 
 export default [
+  {
+    path: 'dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+  },
   {
     path: '/purchases',
     meta: { label: 'Purchases' },
