@@ -127,12 +127,14 @@ import {
   cilPlus,
   cilArrowLeft,
   cilTimeline,
+  cilKey,
   //
 } from '@coreui/icons-pro'
 import { logo } from './logo'
 
 export const iconsSet = Object.assign({}, { logo }, {
   //
+  cilKey,
   cilTimeline,
   cilArrowLeft,
   cilPlus,

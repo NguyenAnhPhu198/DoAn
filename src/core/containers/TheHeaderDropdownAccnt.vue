@@ -13,25 +13,6 @@
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
-      <strong>Account</strong>
-    </CDropdownHeader>
-    <CDropdownItem>
-      <CIcon name="cil-bell" /> Updates
-      <CBadge color="info" class="mfs-auto">{{ itemsCount }}</CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-envelope-open" /> Messages
-      <CBadge color="success" class="mfs-auto">{{ itemsCount }}</CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-task" /> Tasks
-      <CBadge color="danger" class="mfs-auto">{{ itemsCount }}</CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-comment-square" /> Comments
-      <CBadge color="warning" class="mfs-auto">{{ itemsCount }}</CBadge>
-    </CDropdownItem>
-    <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Settings</strong>
     </CDropdownHeader>
     <CDropdownItem> <CIcon name="cil-user" /> Profile </CDropdownItem>
@@ -45,11 +26,11 @@
       <CBadge color="primary" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
     <CDropdownDivider />
-    <CDropdownItem>
-      <CIcon name="cil-shield-alt" /> Lock Account
+    <CDropdownItem v-if="visiableOn('development')" @click="showIdToken">
+      <CIcon class="text-info" name="cil-key" /> Get ID Token
     </CDropdownItem>
     <CDropdownItem @click="logout">
-      <CIcon name="cil-lock-locked" /> Logout
+      <CIcon class="text-danger" name="cil-lock-locked" /> Logout
     </CDropdownItem>
   </CDropdown>
 </template>
@@ -63,6 +44,9 @@ export default {
     };
   },
   methods: {
+    showIdToken() {
+      this.$store.dispatch("auth.me.idtoken.toast");
+    },
     logout() {
       this.$store.dispatch("auth.logout").then(() => {
         this.$redirect.toLogin();

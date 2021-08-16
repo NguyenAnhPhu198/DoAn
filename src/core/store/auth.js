@@ -135,6 +135,9 @@ const actions = {
       return result
     })
   },
+  ['auth.me.idtoken.toast'](context) {
+    toastIDToken(context)
+  },
 };
 
 const mutations = {

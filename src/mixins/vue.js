@@ -22,6 +22,15 @@ export default {
     hasAnyPermissions: function (...permissions) {
       return lodash.hasAny(this.permission_ids, permissions)
     },
+
+    /**
+     * 
+     * @param {String} mode 
+     * @returns 
+     */
+    visiableOn(mode) {
+      return process.env.NODE_ENV == mode
+    },
   },
 
   computed: {
