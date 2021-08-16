@@ -5,7 +5,7 @@ import i18n from "./plugins/i18n"
 import CoreuiVuePro from '@coreui/vue-pro'
 // import CoreuiVuePro from '../node_modules/@coreui/vue-pro/src/index.js'
 import { iconsSet as icons } from '@/assets/icons/icons.js'
-import mixin from "@/mixins/vue"
+import mixin from "./components/mixin"
 import firebaseAuth from './services/firebase/auth'
 import redirect from './plugins/redirect'
 import tomoni from './services/tomoni'
