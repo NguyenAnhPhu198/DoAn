@@ -12,6 +12,8 @@ export default {
 </script>
 
 <style lang="scss">
-// Import Main styles for this application
+// Import core styles for this application
+@import "@/core/assets/scss/style";
+// Import main styles for this application
 @import "assets/scss/style";
 </style>

@@ -220,7 +220,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/style';
+  @import '@/core/assets/scss/style';
   #calendar {
     color: $body-color;
     height: 63vh;
