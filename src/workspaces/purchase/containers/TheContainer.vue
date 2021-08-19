@@ -9,7 +9,7 @@
       <TheHeader />
       <div class="c-body">
         <main class="c-main">
-          <CContainer fluid>
+          <CContainer fluid class="container-purchase">
             <transition name="fade" mode="out-in">
               <router-view :key="$route.path"></router-view>
             </transition>
@@ -70,8 +70,8 @@ export default {
 </style>
 
 <style lang="scss">
-// Import core styles for this application
-@import "@/assets/scss/style";
 // Import main styles for this container
-@import "../assets/scss/style";
+.container-purchase {
+  @import "../assets/scss/style";
+}
 </style>

@@ -15,5 +15,5 @@ export default {
 // Import core styles for this application
 @import "@/core/assets/scss/style";
 // Import main styles for this application
-@import "assets/scss/style";
+@import "@/assets/scss/style";
 </style>
