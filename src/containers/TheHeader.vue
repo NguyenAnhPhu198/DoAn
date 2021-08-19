@@ -11,23 +11,17 @@
       @click="$store.commit('sidebar.toggle_desktop')"
     />
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
-      <CIcon name="logo" height="48" alt="Logo"/>
+      <CIcon name="logo" height="48" alt="Logo" />
     </CHeaderBrand>
     <CHeaderNav class="d-md-down-none mr-auto">
       <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/dashboard">
-          Dashboard
-        </CHeaderNavLink>
+        <CHeaderNavLink to="/" exact> Home </CHeaderNavLink>
       </CHeaderNavItem>
       <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/users" exact>
-          Users
-        </CHeaderNavLink>
+        <CHeaderNavLink to="/sale" exact> Sale </CHeaderNavLink>
       </CHeaderNavItem>
       <CHeaderNavItem class="px-3">
-        <CHeaderNavLink>
-          Settings
-        </CHeaderNavLink>
+        <CHeaderNavLink to="/purchase" exact> Purchase </CHeaderNavLink>
       </CHeaderNavItem>
     </CHeaderNav>
     <CHeaderNav>
@@ -36,43 +30,43 @@
           @click="() => $store.commit('sidebar.toggle', 'sidebar_dark_mode')"
           class="c-header-nav-btn"
         >
-          <CIcon v-if="$store.state.sidebar.sidebar_dark_mode" name="cil-sun"/>
-          <CIcon v-else name="cil-moon"/>
+          <CIcon v-if="$store.state.sidebar.sidebar_dark_mode" name="cil-sun" />
+          <CIcon v-else name="cil-moon" />
         </button>
       </CHeaderNavItem>
-      <TheHeaderDropdownNotif/>
-      <TheHeaderDropdownTasks/>
-      <TheHeaderDropdownMssgs/>
-      <TheHeaderDropdownAccnt/>
+      <TheHeaderDropdownNotif />
+      <TheHeaderDropdownTasks />
+      <TheHeaderDropdownMssgs />
+      <TheHeaderDropdownAccnt />
       <CHeaderNavItem class="px-3">
         <button
           class="c-header-nav-btn"
           @click="$store.commit('sidebar.toggle', 'sidebar_aside_show')"
         >
-          <CIcon size="lg" name="cil-applications-settings" class="mr-2"/>
+          <CIcon size="lg" name="cil-applications-settings" class="mr-2" />
         </button>
       </CHeaderNavItem>
     </CHeaderNav>
 
     <CSubheader class="px-3">
-      <CBreadcrumbRouter class="border-0 mb-0"/>
+      <CBreadcrumbRouter class="border-0 mb-0" />
     </CSubheader>
   </CHeader>
 </template>
 
 <script>
-import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
-import TheHeaderDropdownNotif from './TheHeaderDropdownNotif'
-import TheHeaderDropdownTasks from './TheHeaderDropdownTasks'
-import TheHeaderDropdownMssgs from './TheHeaderDropdownMssgs'
+import TheHeaderDropdownAccnt from "./TheHeaderDropdownAccnt";
+import TheHeaderDropdownNotif from "./TheHeaderDropdownNotif";
+import TheHeaderDropdownTasks from "./TheHeaderDropdownTasks";
+import TheHeaderDropdownMssgs from "./TheHeaderDropdownMssgs";
 
 export default {
-  name: 'TheHeader',
+  name: "TheHeader",
   components: {
     TheHeaderDropdownAccnt,
     TheHeaderDropdownNotif,
     TheHeaderDropdownTasks,
-    TheHeaderDropdownMssgs
-  }
-}
+    TheHeaderDropdownMssgs,
+  },
+};
 </script>
