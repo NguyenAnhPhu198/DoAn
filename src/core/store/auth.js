@@ -94,6 +94,23 @@ const actions = {
       })
     })
   },
+  ['auth.authenticate'](context) {
+    if (context.getters['auth.authenticated']) {
+      return
+    }
+    var unsubscribe
+    return new Promise((resolve) => {
+      unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+        if (user) {
+          context.dispatch('auth.me.fetch').then(() => {
+            resolve(1)
+          })
+        }
+      })
+    }).finally(() => {
+      unsubscribe()
+    })
+  },
   ['auth.verify'](context) {
     var unsubscribe // stop listening auth change when it log out
     return new Promise((resolve, reject) => {
@@ -131,8 +148,9 @@ const actions = {
         }
       })
     }).then((result) => {
-      unsubscribe()
       return result
+    }).finally(() => {
+      unsubscribe()
     })
   },
   ['auth.me.idtoken.toast'](context) {

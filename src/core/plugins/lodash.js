@@ -74,6 +74,9 @@ lodash.mixin({
    * @returns 
    */
   hasAll: function (source, target) {
+    if (!source) {
+      return false
+    }
     return target.filter(i => source.includes(i)).length === target.length
   },
 
@@ -84,6 +87,9 @@ lodash.mixin({
    * @returns 
    */
   hasAny: function (source, target) {
+    if (!source) {
+      return false
+    }
     return target.filter(i => source.includes(i)).length > 0
   },
 

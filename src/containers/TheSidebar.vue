@@ -32,14 +32,10 @@
 </template>
 
 <script>
-import items from "./nav";
 import { mapGetters } from "vuex";
 
 export default {
   name: "TheSidebar",
-  created() {
-    this.$store.dispatch("nav.set", items);
-  },
   watch: {
     permission_ids: function () {
       this.$store.dispatch("nav.available.refresh");

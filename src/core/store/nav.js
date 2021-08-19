@@ -29,6 +29,15 @@ const actions = {
     context.dispatch('nav.available.refresh');
   },
   ['nav.set'](context, items) {
+    items = items.filter((item) => {
+      if (!item.visible_on) {
+        return true
+      }
+      if (Array.isArray(item.visible_on)) {
+        return item.visible_on.includes(process.env.NODE_ENV)
+      }
+      return item.visible_on == process.env.NODE_ENV
+    });
     context.commit('nav.set', items);
     context.dispatch('nav.available.refresh');
   },

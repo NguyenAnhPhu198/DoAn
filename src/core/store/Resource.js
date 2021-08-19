@@ -328,7 +328,7 @@ export default class Resource {
               context.commit(PREFIX + '.detail.set-deleting', false);
               context.commit(PREFIX + '.delete', { id: context.getters[PREFIX + '.detail.id'], data });
               context.commit("toasts.push", {
-                message: "Created",
+                message: "Deleted",
                 type: "success",
               });
               resolve(data)

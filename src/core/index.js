@@ -6,7 +6,7 @@ import CoreuiVuePro from '@coreui/vue-pro'
 // import CoreuiVuePro from '../node_modules/@coreui/vue-pro/src/index.js'
 import { iconsSet as coreIcons } from '@/core/assets/icons/icons.js'
 import { iconsSet as icons } from '@/assets/icons/icons.js'
-import mixin from "./components/mixin"
+import authorMixin from "./components/mixins/authorization"
 import firebaseAuth from './services/firebase/auth'
 import redirect from './plugins/redirect'
 import tomoni from './services/tomoni'
@@ -29,7 +29,7 @@ export default {
 
     Vue.use(VueLodash, { lodash: lodash })
 
-    Vue.mixin(mixin);
+    Vue.mixin(authorMixin);
 
     Vue.use({
       install(Vue) {

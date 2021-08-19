@@ -29,10 +29,12 @@ router.beforeEach((routeTo, routeFrom, next) => {
   const authRequired = routeTo.matched.some((route) => route.meta.authRequired)
 
   // If auth isn't required for the route, just continue.
-  if (!authRequired) return next()
+  if (!authRequired) {
+    return next()
+  }
 
   store.dispatch('auth.verify').then(() => {
-    next()
+    return next()
   }).catch((error) => {
     store.dispatch("errors.push", { error, notify: true });
     redirect.toLogin();
@@ -40,10 +42,15 @@ router.beforeEach((routeTo, routeFrom, next) => {
 })
 
 router.afterEach((to) => {
-  /*
-   * Use next tick to handle router history correctly
-   * see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
+  /**
+   * 
    */
+  store.dispatch('auth.authenticate')
+
+  /*
+  * Use next tick to handle router history correctly
+  * see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
+  */
   Vue.nextTick(() => {
     document.title = process.env.VUE_APP_NAME + ' - ' + (to.meta.title || to.name);
   });
