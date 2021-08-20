@@ -37,5 +37,8 @@ export default {
     ...mapGetters({
       permission_ids: 'auth.me.permission_ids',
     }),
+    meID() {
+      return this.$store.getters["auth.me.id"];
+    },
   },
 }

@@ -3,8 +3,6 @@
     class="c-app"
     :class="{ 'c-dark-theme': $store.state.sidebar.sidebar_dark_mode }"
   >
-    <TheSidebar />
-    <TheAside />
     <CWrapper>
       <TheHeader />
       <div class="c-body">
@@ -22,10 +20,8 @@
 </template>
 
 <script>
-import TheSidebar from "@/containers/TheSidebar";
-import TheHeader from "@/containers/TheHeader";
+import TheHeader from "./TheHeader";
 import TheFooter from "@/containers/TheFooter";
-import TheAside from "@/containers/TheAside";
 import navItems from "../mixins/nav";
 import modules from "../store";
 import Vue from "vue";
@@ -39,10 +35,8 @@ export default {
   name: "TheHomeContainer",
   mixins: [authenMixin, registerStoreMixin],
   components: {
-    TheSidebar,
     TheHeader,
     TheFooter,
-    TheAside,
   },
   storeModules: modules,
   created() {
