@@ -14,7 +14,7 @@ A fully functional demo is available at [CoreUI](http://coreui.io/vue/)
 
 ``` bash
 # clone the repo
-$ git clone https://github.com/tomonisolution/coreui-vue-pro.git
+$ git clone https://github.com/tomonisolution/tomoniglobal-app.git
 
 # go into app's directory -> install app's dependencies
 $ npm install
