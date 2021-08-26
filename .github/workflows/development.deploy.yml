@@ -2,14 +2,26 @@ name: Development deploy
 
 on:
   push:
-    branches: [ tomoniservice ]
+    branches: [ dev ]
 env:
   NODE_ENV: 'development'
-  VUE_APP_DOMAIN: 'admin.tomonisolution.com'
-  VUE_APP_HOST: 'http://admin.tomonisolution.com:84'
-  VUE_APP_OAUTH_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-  VUE_APP_OAUTH_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-  WORKING_DIR: /var/www/admin-dev/_work/coreui-vue-pro/coreui-vue-pro
+  VUE_APP_DOMAIN: 'dev.tomonisolution.com'
+  VUE_APP_HOST: 'https://dev.tomonisolution.com'
+  VUE_APP_AUTH_SERVICE_HOST: 'https://dev-auth.tomonisolution.com'
+  VUE_APP_ACCOUNTING_SERVICE_HOST: 'https://dev-accounting.tomonisolution.com'
+  VUE_APP_ORDER_SERVICE_HOST: 'https://dev-order.tomonisolution.com'
+  VUE_APP_PRODUCT_SERVICE_HOST: 'https://dev-product.tomonisolution.com'
+  VUE_APP_NOTIFICATION_SERVICE_HOST: 'https://dev-notification.tomonisolution.com'
+  VUE_APP_WAREHOUSE_SERVICE_HOST: 'https://dev-warehouse.tomonisolution.com'
+  VUE_APP_FIREBASE_API_KEY: ${{ secrets.DEV_FIREBASE_API_KEY }}
+  VUE_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.DEV_FIREBASE_AUTH_DOMAIN }}
+  VUE_APP_FIREBASE_PROJECT_ID: ${{ secrets.DEV_FIREBASE_PROJECT_ID }}
+  VUE_APP_FIREBASE_APP_ID: ${{ secrets.DEV_FIREBASE_APP_ID }}
+  VUE_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.DEV_FIREBASE_STORAGE_BUCKET }}
+  VUE_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.DEV_FIREBASE_MESSAGING_SENDER_ID }}
+  VUE_APP_FIREBASE_MEASUREMENT_ID: ${{ secrets.DEV_FIREBASE_MEASUREMENT_ID }}
+  WORKING_DIR: /var/www/app/_work/tomoniglobal-app/tomoniglobal-app
+
 jobs:
   build:
     runs-on: [self-hosted, dev]
@@ -21,8 +33,20 @@ jobs:
         echo -e "\nNODE_ENV=$NODE_ENV" >> .env.production
         echo -e "\nVUE_APP_DOMAIN=$VUE_APP_DOMAIN" >> .env.production
         echo -e "\nVUE_APP_HOST=$VUE_APP_HOST" >> .env.production
-        echo -e "\nVUE_APP_OAUTH_CLIENT_ID=$VUE_APP_OAUTH_CLIENT_ID" >> .env.production
-        echo -e "\nVUE_APP_OAUTH_CLIENT_SECRET=$VUE_APP_OAUTH_CLIENT_SECRET" >> .env.production
+        echo -e "\nVUE_APP_AUTH_SERVICE_HOST=$VUE_APP_AUTH_SERVICE_HOST" >> .env.production
+        echo -e "\nVUE_APP_ACCOUNTING_SERVICE_HOST=$VUE_APP_ACCOUNTING_SERVICE_HOST" >> .env.production
+        echo -e "\nVUE_APP_ORDER_SERVICE_HOST=$VUE_APP_ORDER_SERVICE_HOST" >> .env.production
+        echo -e "\nVUE_APP_PRODUCT_SERVICE_HOST=$VUE_APP_PRODUCT_SERVICE_HOST" >> .env.production
+        echo -e "\nVUE_APP_NOTIFICATION_SERVICE_HOST=$VUE_APP_NOTIFICATION_SERVICE_HOST" >> .env.production
+        echo -e "\nVUE_APP_WAREHOUSE_SERVICE_HOST=$VUE_APP_WAREHOUSE_SERVICE_HOST" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_API_KEY=$VUE_APP_FIREBASE_API_KEY" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_AUTH_DOMAIN=$VUE_APP_FIREBASE_AUTH_DOMAIN" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_PROJECT_ID=$VUE_APP_FIREBASE_PROJECT_ID" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_APP_ID=$VUE_APP_FIREBASE_APP_ID" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_STORAGE_BUCKET=$VUE_APP_FIREBASE_STORAGE_BUCKET" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_MESSAGING_SENDER_ID=$VUE_APP_FIREBASE_MESSAGING_SENDER_ID" >> .env.production
+        echo -e "\nVUE_APP_FIREBASE_MEASUREMENT_ID=$VUE_APP_FIREBASE_MEASUREMENT_ID" >> .env.production
+        
     - name: Building
       working-directory: ../../../../../laradock
       run: |
