@@ -5,7 +5,7 @@
     @update:show="$emit('update:show', $event)"
     @click-create="create()"
   >
-    <SProductSelect :id="item.product_id" @update:id="item.product_id = $event">
+    <SSelectProduct :id="item.product_id" @update:id="item.product_id = $event">
       <template #append-product-selected="{ product }">
         <TTableAsForm :data="product" :fields="itemFields">
           <template #price="{ value }">
@@ -29,7 +29,7 @@
           </template>
         </TTableAsForm>
       </template>
-    </SProductSelect>
+    </SSelectProduct>
   </TModal>
 </template>
 

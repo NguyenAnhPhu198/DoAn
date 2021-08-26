@@ -9,7 +9,7 @@
         :loading="searching"
       >
         <template #option="option">
-          <SProductItems :items="normalizeProductItem(option)" />
+          <SCardProductItems :items="normalizeProductItem(option)" />
         </template>
         <template #search="{ attributes, events }">
           <CInput
@@ -28,11 +28,11 @@
       </v-select>
     </CCol>
     <CCol col="12" v-if="!!id" class="mt-2">
-      <SProductItems :items="[{ product_id: id }]">
+      <SCardProductItems :items="[{ product_id: id }]">
         <template #append="{ product }">
           <slot name="append-product-selected" :product="product"></slot>
         </template>
-      </SProductItems>
+      </SCardProductItems>
     </CCol>
   </CRow>
 </template>
@@ -40,12 +40,12 @@
 <script>
 import VSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-import SProductItems from "./Items.vue";
+import SCardProductItems from "../Card/ProductItems.vue";
 
 export default {
   components: {
     VSelect,
-    SProductItems,
+    SCardProductItems,
   },
   props: {
     id: {

@@ -4,7 +4,7 @@
       <strong>{{ purchase.id }} </strong>
       <TMessageStatus :id="purchase.status.id" />
       <div class="float-right">
-        <SOrderButtonStatus
+        <SButtonStatus
           v-for="(status, index) in purchase.steps"
           :key="index"
           :id="status"
@@ -114,17 +114,17 @@
           >
             <template #append-actions="{ item }">
               <CCol class="pl-1 pr-1 ml-1" col="12">
-                <SOrderButtonDistribution @click="clickDistribution(item.id)" />
+                <SButtonDistribution @click="clickDistribution(item.id)" />
               </CCol>
             </template>
             <template #product_id="{ item }">
               <td>
-                <SProductItems :items="[item]" />
+                <SCardProductItems :items="[item]" />
               </td>
             </template>
             <template #tracking_id="{ item }">
               <td>
-                <SOrderMessageTracking
+                <SMessageTracking
                   :value="item.tracking_id"
                   editable
                   @change="

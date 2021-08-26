@@ -11,7 +11,7 @@
   >
     <template #role_id="{ item }">
       <td>
-        <SAuthMessageRole :id="item.role_id" />
+        <SMessageRole :id="item.role_id" />
       </td>
     </template>
     <template #created_at="{ item }">
@@ -26,7 +26,7 @@
       <CInput :value.sync="filter.email" @change="filterChange" class="m-0" />
     </template>
     <template #role_id-filter>
-      <SAuthSelectRole :value.sync="filter.role_id" @change="filterChange" />
+      <SSelectRole :value.sync="filter.role_id" @change="filterChange" />
     </template>
     <template #created_at-filter>
       <TInputDateTimeRange

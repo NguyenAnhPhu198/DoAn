@@ -11,7 +11,7 @@
   >
     <template #items="{ item }">
       <td>
-        <SProductItems :items="item.items" />
+        <SCardProductItems :items="item.items" />
       </td>
     </template>
     <template #status="{ item }">
@@ -64,7 +64,7 @@
       />
     </template>
     <template #status-filter>
-      <SOrderSelectStatus
+      <SSelectStatus
         :value.sync="filter['director.status.id']"
         @change="filterChange"
       />
