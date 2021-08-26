@@ -7,14 +7,16 @@ import {
 //
 } from '@coreui/icons-pro'
 import {
-// cilKey,
-//
+  cilCart,
+  cilDescription,
+  //
 } from '@coreui/icons-pro'
 import { logo } from '@/core/assets/icons/logo'
 
 export const iconsSet = Object.assign({}, { logo }, {
   //
-  // cilKey,
+  cilDescription,
+  cilCart,
 }, {
   //
   // cifPl,
