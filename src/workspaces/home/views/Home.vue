@@ -1,7 +1,7 @@
 <template>
-  <div>Home</div>
+  <div>{{ $t("Home") }}</div>
 </template>
 
 <script>
-export default { }
+export default {};
 </script>

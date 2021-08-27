@@ -1,7 +1,18 @@
 <template>
-  <div>Purchase Dashboard</div>
+  <div>{{ $t("Dashboard") }}</div>
 </template>
 
 <script>
-export default { }
+export default {
+  i18n: {
+    messages: {
+      en: {
+        Dashboard: "Purchase Dashboard",
+      },
+      vi: {
+        Dashboard: "Trang mua hàng",
+      },
+    },
+  },
+};
 </script>

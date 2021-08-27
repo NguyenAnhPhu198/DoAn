@@ -1,3 +1,4 @@
 export default {
-  'Dashboard': 'Trang chủ',
+  'Dashboard': 'Bảng điều khiển',
+  'Home': 'Trang chủ',
 };
