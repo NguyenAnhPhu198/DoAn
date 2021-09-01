@@ -8,28 +8,39 @@
       </CCol>
       <CCol sm="12" md="8" lg="9" class="pl-4">
         <CRow>
-          <slot name="prepend"></slot>
-          <CHeaderNav class="mr-auto"> </CHeaderNav>
+          <CHeaderNav class="pl-2">
+            <slot name="prepend"></slot>
+          </CHeaderNav>
+          <CHeaderNav class="mr-auto" />
           <CHeaderNav>
             <TheHeaderDropdownCart class="px-3" />
             <TheHeaderDropdownOrders class="px-3" />
             <TheHeaderDropdownAccnt class="px-3" />
           </CHeaderNav>
-
-          <CSubheader class="px-2">
-            <CHeaderNav class="mr-auto">
-              <CHeaderNavItem class="px-3">
-                <CHeaderNavLink to="/" exact> Home </CHeaderNavLink>
-              </CHeaderNavItem>
-              <CHeaderNavItem class="px-3">
-                <CHeaderNavLink to="/services" exact> Services </CHeaderNavLink>
-              </CHeaderNavItem>
-              <CHeaderNavItem class="px-3">
-                <CHeaderNavLink to="/pricing" exact> Pricing </CHeaderNavLink>
-              </CHeaderNavItem>
-              <CHeaderNavItem class="px-3">
-                <CHeaderNavLink to="/policies" exact> Policies </CHeaderNavLink>
-              </CHeaderNavItem>
+        </CRow>
+        <CRow>
+          <CSubheader>
+            <CHeaderNav class="mr-auto" style="overflow-x: auto">
+              <CNavItem>
+                <CHeaderNavLink to="/" exact>
+                  <TMessage content="Home" uppercase />
+                </CHeaderNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CHeaderNavLink to="/services" exact>
+                  <TMessage content="Services" uppercase />
+                </CHeaderNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CHeaderNavLink to="/pricing" exact>
+                  <TMessage content="Pricing" uppercase />
+                </CHeaderNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CHeaderNavLink to="/policies" exact>
+                  <TMessage content="Policies" uppercase />
+                </CHeaderNavLink>
+              </CNavItem>
             </CHeaderNav>
           </CSubheader>
         </CRow>
@@ -52,3 +63,9 @@ export default {
   },
 };
 </script>
+
+<style lang="css" scoped>
+::-webkit-scrollbar {
+  height: 1px;
+}
+</style>

@@ -8,7 +8,7 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <CIcon name="cil-description" />
+        <CIcon size="lg" name="cil-description" />
         <CBadge shape="pill" color="info">{{ itemsCount }}</CBadge>
       </CHeaderNavLink>
     </template>

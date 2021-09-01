@@ -8,17 +8,28 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <CIcon class="text-info" name="cil-user" /> {{ meID }}
+        <CIcon size="lg" class="text-info" name="cil-user" />
+        <TMessage :content="meID" noTranslate />
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
-      <strong>Workspaces</strong>
+      <TMessage content="Workspaces" noTranslate bold />
     </CDropdownHeader>
-    <CDropdownItem to="/customer" exact> Account </CDropdownItem>
-    <CDropdownItem to="/sale" exact> Sale </CDropdownItem>
-    <CDropdownItem to="/purchase" exact> Purchase </CDropdownItem>
-    <CDropdownItem to="/accounting" exact> Accounting </CDropdownItem>
-    <CDropdownItem to="/warehouse" exact> Warehouse </CDropdownItem>
+    <CDropdownItem to="/customer" exact>
+      <TMessage content="Account" />
+    </CDropdownItem>
+    <CDropdownItem disabled>
+      <TMessage content="Sale" />
+    </CDropdownItem>
+    <CDropdownItem to="/purchase" exact>
+      <TMessage content="Purchase" />
+    </CDropdownItem>
+    <CDropdownItem disabled>
+      <TMessage content="Accounting" />
+    </CDropdownItem>
+    <CDropdownItem disabled>
+      <TMessage content="Warehouse" />
+    </CDropdownItem>
     <CDropdownDivider />
     <CDropdownItem @click="showIdToken">
       <CIcon class="text-info" name="cil-key" /> Get ID Token

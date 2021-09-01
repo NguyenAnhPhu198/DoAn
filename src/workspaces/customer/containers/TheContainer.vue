@@ -8,7 +8,7 @@
         <template #prepend>
           <CToggler
             in-header
-            class="ml-3 d-lg-none"
+            class="d-lg-none"
             @click="$store.commit('sidebar.toggle_mobile')"
           />
         </template>
