@@ -1,5 +1,6 @@
 <template>
   <CDropdown
+    v-if="meID"
     :caret="false"
     placement="bottom-end"
     in-nav
