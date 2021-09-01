@@ -7,6 +7,16 @@ export default [
   },
   {
     _name: "CSidebarNavItem",
+    name: "Cart",
+    to: "/customer/cart",
+    icon: "cil-cart",
+    badge: {
+      color: "primary",
+      text: "3",
+    },
+  },
+  {
+    _name: "CSidebarNavItem",
     name: "Orders",
     to: "/customer/orders",
     icon: "cil-library-books",

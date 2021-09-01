@@ -16,7 +16,7 @@
       <TMessage content="Workspaces" noTranslate bold />
     </CDropdownHeader>
     <CDropdownItem to="/customer" exact>
-      <TMessage content="Account" />
+      <TMessage content="Customer" />
     </CDropdownItem>
     <CDropdownItem disabled>
       <TMessage content="Sale" />
@@ -31,6 +31,10 @@
       <TMessage content="Warehouse" />
     </CDropdownItem>
     <CDropdownDivider />
+    <CDropdownItem to="/customer" exact>
+      <CIcon class="text-info" name="cil-user" />
+      <TMessage content="Account" />
+    </CDropdownItem>
     <CDropdownItem @click="showIdToken">
       <CIcon class="text-info" name="cil-key" /> Get ID Token
     </CDropdownItem>

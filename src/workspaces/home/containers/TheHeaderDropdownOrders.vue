@@ -13,48 +13,13 @@
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center bg-light">
-      <strong>You have {{ itemsCount }} pending tasks</strong>
+      <strong>You have {{ itemsCount }} incomplete orders</strong>
     </CDropdownHeader>
 
-    <CDropdownItem class="d-block">
-      <div class="small mb-1">
-        Upgrade NPM &amp; Bower
-        <span class="float-right"><strong>0%</strong></span>
-      </div>
-      <CProgress class="progress-xs" color="info" />
-    </CDropdownItem>
+    <SCardOrder v-for="i in itemsCount" :key="i" :id="i" />
 
-    <CDropdownItem class="d-block">
-      <div class="small mb-1">
-        ReactJS Version <span class="float-right"><strong>25%</strong></span>
-      </div>
-      <CProgress class="progress-xs" color="danger" :value="25" />
-    </CDropdownItem>
-
-    <CDropdownItem class="d-block">
-      <div class="small mb-1">
-        VueJS Version <span class="float-right"><strong>50%</strong></span>
-      </div>
-      <CProgress class="progress-xs" color="warning" :value="50" />
-    </CDropdownItem>
-
-    <CDropdownItem class="d-block">
-      <div class="small mb-1">
-        Add new layouts <span class="float-right"><strong>75%</strong></span>
-      </div>
-      <CProgress class="progress-xs" color="info" :value="75" />
-    </CDropdownItem>
-
-    <CDropdownItem class="d-block">
-      <div class="small mb-1">
-        Angular 2 Cli Version
-        <span class="float-right"><strong>100%</strong></span>
-      </div>
-      <CProgress class="progress-xs" color="success" :value="100" />
-    </CDropdownItem>
-
-    <CDropdownItem class="text-center border-top">
-      <strong>View all tasks</strong>
+    <CDropdownItem to="/customer/orders" exact class="text-center border-top">
+      View all orders
     </CDropdownItem>
   </CDropdown>
 </template>
@@ -62,7 +27,7 @@
 export default {
   name: "TheHeaderDropdownTasks",
   data() {
-    return { itemsCount: 15 };
+    return { itemsCount: 3 };
   },
 };
 </script>
