@@ -8,6 +8,7 @@
       </CCol>
       <CCol sm="12" md="8" lg="9" class="pl-4">
         <CRow>
+          <slot name="prepend"></slot>
           <CHeaderNav class="mr-auto"> </CHeaderNav>
           <CHeaderNav>
             <TheHeaderDropdownCart class="px-3" />

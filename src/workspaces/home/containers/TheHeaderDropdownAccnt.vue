@@ -14,6 +14,7 @@
     <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Workspaces</strong>
     </CDropdownHeader>
+    <CDropdownItem to="/customer" exact> Account </CDropdownItem>
     <CDropdownItem to="/sale" exact> Sale </CDropdownItem>
     <CDropdownItem to="/purchase" exact> Purchase </CDropdownItem>
     <CDropdownItem to="/accounting" exact> Accounting </CDropdownItem>
