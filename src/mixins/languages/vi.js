@@ -8,5 +8,5 @@ export default {
   'Email' : 'Email',
   'Email verified': 'Đã xác thực',
   'Email status': 'Tình trạng',
-  'Password reset': 'Đặt lại mật khẩu qua Email'
+  'Password reset': 'Đặt lại mật khẩu'
 };
