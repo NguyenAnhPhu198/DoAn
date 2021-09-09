@@ -1,19 +1,27 @@
 import {
-// cibGoogle,
-//
+  // cibGoogle,
+  //
 } from '@coreui/icons-pro'
 import {
-// cifPl,
-//
+  // cifPl,
+  //
 } from '@coreui/icons-pro'
 import {
   cilCart,
   cilDescription,
   //
 } from '@coreui/icons-pro'
-import { logo } from '@/core/assets/icons/logo'
+import {
+  cisEye,
+  cisEyeSlash
+} from '@coreui/icons-pro'
+import {
+  logo
+} from '@/core/assets/icons/logo'
 
-export const iconsSet = Object.assign({}, { logo }, {
+export const iconsSet = Object.assign({}, {
+  logo
+}, {
   //
   cilDescription,
   cilCart,
@@ -23,4 +31,7 @@ export const iconsSet = Object.assign({}, { logo }, {
 }, {
   //
   // cibGoogle,
+}, {
+  cisEye,
+  cisEyeSlash
 })

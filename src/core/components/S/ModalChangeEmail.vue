@@ -6,11 +6,11 @@
     </template>
     <slot></slot>
     <template #footer>
-      <slot name="actions" :creating="creating">
-        <TButtonCreate
-          :options="{ disabled: creating }"
-          variant="outline"
+      <slot name="actions">
+        <SButtonConfirmChangeEmail
+          color="primary"
           @click="$emit('click-create')"
+          content="Confirm"
         />
       </slot>
     </template>
@@ -31,10 +31,6 @@ export default {
     size: {
       type: String,
       required: false,
-    },
-    creating: {
-      type: Boolean,
-      default: false,
     },
   },
 };

@@ -6,6 +6,8 @@
     type="email"
     :placeholder="$t('Enter your email')"
     :label="$t(label)"
+    prepend="@"
+    autocomplete="email"
   />
 </template>
 
@@ -23,7 +25,7 @@ export default {
     label: {
       type: String,
       required: false,
-    }
+    },
   },
 };
 </script>

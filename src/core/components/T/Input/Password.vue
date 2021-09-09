@@ -3,24 +3,24 @@
     v-bind="inputOptions"
     :value="value"
     @change="$emit('update:value', $event)"
-    :type="showPassword ? 'text' : 'password'"
+    :type="show ? 'text' : 'password'"
     :placeholder="$t('Enter your password')"
     :label="$t(label)"
   >
-    <template #append>
+    <template #prepend-content><CIcon name="cil-lock-locked" /></template>
+    <template #append-content v-if="showPassword">
       <CIcon
-        class="eyeIcon"
-        :name="showPassword ? 'cisEyeSlash' : 'cisEye'"
-        @click.native="showPassword = !showPassword"
+        :name="show ? 'cisEyeSlash' : 'cisEye'"
+        @click.native="show = !show"
       /> </template
-     ></CInput>
+  ></CInput>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      showPassword: false,
+      show: false,
     };
   },
   props: {
@@ -35,15 +35,12 @@ export default {
     label: {
       type: String,
       required: false,
-    }
+    },
+    showPassword: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 };
 </script>
-<style lang="scss" scoped>
-.c-icon {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  z-index: 999;
-}
-</style>
