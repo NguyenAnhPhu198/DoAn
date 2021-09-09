@@ -2,7 +2,6 @@ import firebase from "@/core/plugins/firebase";
 import facebook from './facebook'
 import google from './google'
 import password from './password'
-import email from './email'
 
 const currentUser = () => {
   return firebase.auth().currentUser
@@ -27,12 +26,22 @@ const sendPasswordResetEmail = (email) => {
   return firebase.auth().sendPasswordResetEmail(email);
 }
 
+const updateEmail = (email) => {
+  const user = firebase.auth().currentUser;
+  return user.updateEmail(email)
+}
+
+const sendEmailVerify = () => {
+  return firebase.auth().currentUser.sendEmailVerification()
+}
+
 export default {
   facebook,
   google,
   password,
-  email,
+  updateEmail,
   getIdToken,
+  sendEmailVerify,
   currentUser,
   signOut,
   onAuthStateChanged,
