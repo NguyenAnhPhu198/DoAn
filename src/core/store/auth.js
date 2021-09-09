@@ -24,7 +24,10 @@ const getters = {
 };
 
 const actions = {
-  ['auth.login.password'](context, { email, password }) {
+  ['auth.login.password'](context, {
+    email,
+    password
+  }) {
     return new Promise((resolve) => {
       // - set loading true
       firebaseAuth.password
@@ -33,7 +36,10 @@ const actions = {
           toastIDToken(context);
           context.dispatch('auth.me.fetch').then((me) => resolve(me))
         }).catch((error) => {
-          context.dispatch("errors.push", { error, notify: true });
+          context.dispatch("errors.push", {
+            error,
+            notify: true
+          });
         }).finally(() => {
           // - set loading false
         })
@@ -48,7 +54,10 @@ const actions = {
           toastIDToken(context);
           context.dispatch('auth.me.fetch').then((me) => resolve(me))
         }).catch((error) => {
-          context.dispatch("errors.push", { error, notify: true });
+          context.dispatch("errors.push", {
+            error,
+            notify: true
+          });
         }).finally(() => {
           // - set loading false
         })
@@ -56,7 +65,11 @@ const actions = {
   },
   ['auth.me.fetch'](context) {
     return new Promise((resolve, reject) => {
-      tomoni.auth.auth.me({ appends: 'manageUserIds;permissionIds' }).then(({ data }) => {
+      tomoni.auth.auth.me({
+        appends: 'manageUserIds;permissionIds'
+      }).then(({
+        data
+      }) => {
         const user_logged_in = firebaseAuth.currentUser()
         const me = {
           id: data.id,
@@ -79,6 +92,26 @@ const actions = {
       context.commit('auth.me.purge');
     })
   },
+  ['auth.change_email'](context, email) {
+    return new Promise((resolve, reject) => {
+      firebaseAuth.email.updateEmail(email).then(() => {
+        context.commit("toasts.push", {
+          title: "Email has changed",
+          message: "Check your mail for verification ",
+          type: "success",
+        })
+        firebaseAuth.email.sendEmailVerify()
+        context.commit('auth.me.purge');
+        resolve()
+      }).catch((error) => {
+        context.dispatch("errors.push", {
+          error,
+          notify: true
+        });
+        reject(error)
+      })
+    })
+  },
   ['auth.reset_password'](context, email) {
     return new Promise((resolve, reject) => {
       firebaseAuth.sendPasswordResetEmail(email).then(() => {
@@ -89,7 +122,10 @@ const actions = {
         })
         resolve()
       }).catch((error) => {
-        context.dispatch("errors.push", { error, notify: true });
+        context.dispatch("errors.push", {
+          error,
+          notify: true
+        });
         reject(error)
       })
     })

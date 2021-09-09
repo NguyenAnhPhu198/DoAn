@@ -152,6 +152,9 @@ export default {
       if (typeof this.content == "number") {
         return this.content;
       }
+      if (!this.noTranslate) {
+        return this.$t(this.content) || "...";
+      }
       return this.content || "...";
     },
   },

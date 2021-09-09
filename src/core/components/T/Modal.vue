@@ -6,7 +6,14 @@
     </template>
     <slot></slot>
     <template #footer>
-      <slot name="actions" :creating="creating">
+      <slot name="actions" v-if="accept">
+        <TButtonBasic
+          color="primary"
+          @click="$emit('click-create')"
+          content="Confirm"
+        />
+      </slot>
+      <slot name="actions" v-else :creating="creating">
         <TButtonCreate
           :options="{ disabled: creating }"
           variant="outline"
@@ -36,6 +43,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    accept: {
+      type: Boolean,
+      default: false,
+    }
   },
 };
 </script>

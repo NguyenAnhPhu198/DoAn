@@ -1,11 +1,12 @@
 <template>
-    <CInput
-      :value="value"
-      @change="$emit('update:value', $event)"
-      class="mb-0"
-      :label="getLabel()"
-      v-bind="inputOptions"
-    />
+  <CInput
+    v-bind="inputOptions"
+    :value="value"
+    @change="$emit('update:value', $event)"
+    type="email"
+    :placeholder="$t('Enter your email')"
+    :label="$t(label)"
+  />
 </template>
 
 <script>
@@ -22,12 +23,7 @@ export default {
     label: {
       type: String,
       required: false,
-    },
-  },
-  methods: {
-    getLabel() {
-      return this.$t(this.label) || "...";
-    },
+    }
   },
 };
 </script>

@@ -2,6 +2,7 @@ import firebase from "@/core/plugins/firebase";
 import facebook from './facebook'
 import google from './google'
 import password from './password'
+import email from './email'
 
 const currentUser = () => {
   return firebase.auth().currentUser
@@ -30,6 +31,7 @@ export default {
   facebook,
   google,
   password,
+  email,
   getIdToken,
   currentUser,
   signOut,

@@ -130,6 +130,10 @@ import {
   cilKey,
   //
 } from '@coreui/icons-pro'
+import {
+  cisEye,
+  cisEyeSlash
+} from '@coreui/icons-pro'
 import { logo } from './logo'
 
 export const iconsSet = Object.assign({}, { logo }, {
@@ -261,4 +265,7 @@ export const iconsSet = Object.assign({}, { logo }, {
   cibGooglePay,
   cibCcAmex,
   cibGoogle,
+}, {
+  cisEye,
+  cisEyeSlash
 })
