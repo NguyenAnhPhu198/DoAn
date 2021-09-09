@@ -18,6 +18,9 @@ export default [
     path: 'orders',
     name: 'Orders',
     component: Orders,
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: 'address',

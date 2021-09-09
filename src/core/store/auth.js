@@ -101,7 +101,7 @@ const actions = {
           type: "success",
         })
         firebaseAuth.email.sendEmailVerify()
-        context.commit('auth.me.purge');
+        context.dispatch('auth.me.fetch');
         resolve()
       }).catch((error) => {
         context.dispatch("errors.push", {

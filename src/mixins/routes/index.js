@@ -18,7 +18,7 @@ export default [
     name: 'Customer',
     component: () => import('@/workspaces/customer/containers/TheContainer'),
     meta: {
-      authRequired: true,
+      authRequired: false,
     },
     children: customerRoutes,
   },

@@ -10,7 +10,7 @@
       <CRow class="mx-1 mt-sm-0 mt-2">
         <SButtonChangeEmail
           color="primary"
-          @click="openModal = true"
+          @click="changeEmail"
           content="Change email"
         />
         <SButtonResetPassword
@@ -33,29 +33,12 @@
         </CCol>
         <CCol sm="12" class="mb-3">
           <TInputEmail
+            @update:value="setEmail"
             :value="auth.email"
-            :inputOptions="{ readonly: true }"
             label="Email"
           />
         </CCol>
-        <CCol sm="12" class="mb-3">
-          <SModalChangeEmail
-            title="Change email"
-            @click-create="confirm"
-            :show.sync="openModal"
-            :creating="false"
-            accept
-          >
-            <slot>
-              <TInputEmail @update:value="setEmail" label="New email" />
-              <TInputPassword
-                @update:value="setPassword"
-                showPassword
-                label="Password"
-              />
-            </slot>
-          </SModalChangeEmail>
-        </CCol>
+        <CCol sm="12" class="mb-3"> </CCol>
       </CRow>
     </CCardBody>
   </CCard>
@@ -67,33 +50,19 @@ export default {
   mixins: [authenMixin],
   data() {
     return {
-      password: "",
       new_email: "",
-      openModal: false,
     };
   },
   methods: {
-    setPassword(data) {
-      this.password = data;
-    },
     setEmail(data) {
       this.new_email = data;
     },
     resetPassword() {
       this.$store.dispatch("auth.reset_password", this.auth.email);
     },
-    confirm() {
-      const dataUpdate = {
-        current_email: this.auth.email,
-        new_email: this.new_email,
-        password: this.password,
-      };
-      this.$store.dispatch("auth.change_email", dataUpdate);
-    },
-  },
-  watch: {
-    auth() {
-      if (!this.auth.email_verified) this.$redirect.toLogin();
+    changeEmail() {
+      if (this.new_email !== this.auth.email && this.new_email !== '')
+        this.$store.dispatch("auth.change_email", this.new_email);
     },
   },
 };
