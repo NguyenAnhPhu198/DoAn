@@ -94,18 +94,21 @@ const actions = {
       context.commit("auth.me.purge");
     });
   },
+  ["auth.send_email_verify"](context){
+    return firebaseAuth.sendEmailVerify().then(() => {
+      context.commit("toasts.push", {
+        title: "Email has changed",
+        message: "Check your mail for verification ",
+        type: "success"
+      });
+    });
+  },
   ["auth.change_email"](context, email) {
     return new Promise((resolve, reject) => {
       firebaseAuth
         .updateEmail(email)
         .then(() => {
-          firebaseAuth.sendEmailVerify().then(() => {
-            context.commit("toasts.push", {
-              title: "Email has changed",
-              message: "Check your mail for verification ",
-              type: "success"
-            });
-          });
+          context.dispatch("auth.send_email_verify");
           context.dispatch("auth.me.fetch");
           resolve();
         })

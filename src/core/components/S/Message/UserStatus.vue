@@ -1,5 +1,5 @@
 <template>
-  <CBadge :color="getColor">
+  <CBadge v-if="!disable" :color="getColor">
     {{ $t(getType) }}
   </CBadge>
 </template>
@@ -11,6 +11,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     getColor(){

@@ -17,25 +17,16 @@
 </template>
 
 <script>
+import mixins from "./mixins";
+
 export default {
+  mixins: [mixins],
   data() {
     return {
       show: false,
     };
   },
   props: {
-    value: {
-      type: [String, Number],
-      required: false,
-    },
-    inputOptions: {
-      type: Object,
-      required: false,
-    },
-    label: {
-      type: String,
-      required: false,
-    },
     showPassword: {
       type: Boolean,
       required: false,

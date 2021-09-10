@@ -1,31 +1,23 @@
 <template>
-  <CInput
-    v-bind="inputOptions"
+  <TInputText
+    :inputOptions="{
+      ...inputOptions,
+      type: 'email',
+      prepend: '@',
+      autocomplete: 'email',
+    }"
     :value="value"
-    @change="$emit('update:value', $event)"
-    type="email"
-    :placeholder="$t('Enter your email')"
-    :label="$t(label)"
-    prepend="@"
-    autocomplete="email"
-  />
+    @update:value="$emit('update', $event)"
+    placeholder="Enter your email"
+    :label="label"
+  >
+    <slot> </slot>
+  </TInputText>
 </template>
 
 <script>
+import mixins from "./mixins";
 export default {
-  props: {
-    value: {
-      type: [String, Number],
-      required: false,
-    },
-    inputOptions: {
-      type: Object,
-      required: false,
-    },
-    label: {
-      type: String,
-      required: false,
-    },
-  },
+  mixins: [mixins],
 };
 </script>

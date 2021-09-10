@@ -1,33 +1,22 @@
 <template>
-    <CInput
-      :value="value"
-      @change="$emit('update:value', $event)"
-      class="mb-0"
-      :label="getLabel()"
-      v-bind="inputOptions"
-    />
+  <CInput
+    :value="value"
+    @change="$emit('update:value', $event)"
+    class="mb-0"
+    :label="getLabel()"
+    :placeholder="$t(placeholder)"
+    v-bind="inputOptions"
+  >
+    <template  #append-content>
+      <slot> </slot>
+    </template>
+  </CInput>
 </template>
 
 <script>
+import mixins from "./mixins";
+
 export default {
-  props: {
-    value: {
-      type: [String, Number],
-      required: false,
-    },
-    inputOptions: {
-      type: Object,
-      required: false,
-    },
-    label: {
-      type: String,
-      required: false,
-    },
-  },
-  methods: {
-    getLabel() {
-      return this.$t(this.label) || "...";
-    },
-  },
+  mixins: [mixins],
 };
 </script>
