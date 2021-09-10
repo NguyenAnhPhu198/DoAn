@@ -27,12 +27,11 @@ const sendPasswordResetEmail = (email) => {
 }
 
 const updateEmail = (email) => {
-  const user = firebase.auth().currentUser;
-  return user.updateEmail(email)
+  return currentUser().updateEmail(email)
 }
 
 const sendEmailVerify = () => {
-  return firebase.auth().currentUser.sendEmailVerification()
+  return currentUser().sendEmailVerification()
 }
 
 export default {

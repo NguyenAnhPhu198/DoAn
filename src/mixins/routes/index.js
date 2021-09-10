@@ -18,7 +18,7 @@ export default [
     name: 'Customer',
     component: () => import('@/workspaces/customer/containers/TheContainer'),
     meta: {
-      authRequired: false,
+      authRequired: true,
     },
     children: customerRoutes,
   },
@@ -29,6 +29,7 @@ export default [
     component: () => import('@/workspaces/purchase/containers/TheContainer'),
     meta: {
       authRequired: true,
+      verifyRequired: true
     },
     children: purchaseRoutes,
   },
@@ -39,6 +40,7 @@ export default [
     component: () => import('@/workspaces/sale/containers/TheContainer'),
     meta: {
       authRequired: true,
+      verifyRequired: true
     },
     children: saleRoutes,
   },

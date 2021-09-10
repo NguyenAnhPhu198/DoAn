@@ -20,6 +20,7 @@ export default [
     component: Orders,
     meta: {
       authRequired: true,
+      verifyRequired: true
     },
   },
   {
