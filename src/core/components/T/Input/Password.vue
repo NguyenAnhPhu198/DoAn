@@ -1,6 +1,7 @@
 <template>
   <CInput
     v-bind="inputOptions"
+    :value="value"
     @change="$emit('update:value', $event)"
     :type="toggle ? 'text' : 'password'"
     :placeholder="$t('Enter your password')"

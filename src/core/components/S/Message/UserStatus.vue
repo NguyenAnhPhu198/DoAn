@@ -1,5 +1,5 @@
 <template>
-  <CBadge v-if="!disabled" :color="getColor">
+  <CBadge :color="getColor">
     {{ $t(getStatus) }}
   </CBadge>
 </template>
@@ -9,19 +9,16 @@ export default {
   props: {
     status: {
       type: Boolean,
-      required: false,
+      required: true,
+      default: false,
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
   },
   computed: {
-    getColor(){
+    getColor() {
       return this.status ? "success" : "danger";
     },
     getStatus() {
-      return this.status ? "Verified" : "Disabled";
+      return this.status ? "verified" : "unverified";
     },
   },
 };

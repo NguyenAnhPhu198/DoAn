@@ -97,16 +97,16 @@ const actions = {
   ["auth.send_email_verify"](context){
     return firebaseAuth.sendEmailVerify().then(() => {
       context.commit("toasts.push", {
-        title: "Email has changed",
-        message: "Check your mail for verification ",
+        title: "Verification email sent",
+        message: "Check your mail",
         type: "success"
       });
     });
   },
-  ["auth.change_email"](context, email) {
+  ["auth.change_email"](context, data) {
     return new Promise((resolve, reject) => {
       firebaseAuth
-        .updateEmail(email)
+        .updateEmail(data)
         .then(() => {
           context.dispatch("auth.send_email_verify");
           context.dispatch("auth.me.fetch");

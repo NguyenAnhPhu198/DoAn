@@ -4,10 +4,13 @@
       <TMessage content="User info" class="d-inline-flex mr-2" bold />
       <SMessageUserStatus :status="auth.email_verified" />
       <div class="float-right">
-        <SButtonResetPassword class="ml-3" @click="resetPassword" />
+        <SButtonEmailVerify
+          v-if="!auth.email_verified"
+          @click="sendEmailVerify"
+        />
+        <SButtonResetPassword class="ml-2" @click="resetPassword" />
       </div>
     </CCardHeader>
-
     <CCardBody>
       <CRow class="m-lg-1">
         <CCol sm="12" class="mb-3">
@@ -32,11 +35,29 @@
             }"
           >
             <slot slot="append-content">
-              <TButtonSave @click="changeEmail" />
+              <TButtonSave @click="showModal" />
             </slot>
           </TInputEmail>
         </CCol>
-        <CCol sm="12" class="mb-3"> </CCol>
+        <CCol sm="12" class="mb-3">
+          <SModalConfirm
+            title="Confirm password"
+            :show.sync="openModal"
+            @click-confirm="changeEmail"
+          >
+            <slot>
+              <TInputPassword
+                :value="password"
+                show
+                label="Password"
+                :inputOptions="{
+                  addLabelClasses: 'font-weight-bold',
+                }"
+                @update:value="setPassword"
+              />
+            </slot>
+          </SModalConfirm>
+        </CCol>
       </CRow>
     </CCardBody>
   </CCard>
@@ -48,19 +69,36 @@ export default {
   mixins: [authenMixin],
   data() {
     return {
+      password: "",
       new_email: "",
+      openModal: false,
     };
   },
   methods: {
     setEmail(data) {
       this.new_email = data;
     },
+    setPassword(data) {
+      this.password = data;
+    },
+    showModal() {
+      this.password = "";
+      if (this.new_email !== this.auth.email && this.new_email !== "")
+        this.openModal = true;
+    },
     resetPassword() {
       this.$store.dispatch("auth.reset_password", this.auth.email);
     },
+    sendEmailVerify() {
+      this.$store.dispatch("auth.send_email_verify");
+    },
     changeEmail() {
-      if (this.new_email !== this.auth.email && this.new_email !== "")
-        this.$store.dispatch("auth.change_email", this.new_email);
+      const dataUpdate = {
+        current_email: this.auth.email,
+        new_email: this.new_email,
+        password: this.password,
+      };
+      this.$store.dispatch("auth.change_email", dataUpdate);
     },
   },
 };
