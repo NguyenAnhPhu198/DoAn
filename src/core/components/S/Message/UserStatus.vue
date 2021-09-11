@@ -1,27 +1,27 @@
 <template>
-  <CBadge v-if="!disable" :color="getColor">
-    {{ $t(getType) }}
+  <CBadge v-if="!disabled" :color="getColor">
+    {{ $t(getStatus) }}
   </CBadge>
 </template>
 
 <script>
 export default {
   props: {
-    type: {
+    status: {
       type: Boolean,
       required: false,
     },
-    disable: {
+    disabled: {
       type: Boolean,
       default: false
     }
   },
   computed: {
     getColor(){
-      return this.type ? "success" : "danger";
+      return this.status ? "success" : "danger";
     },
-    getType() {
-      return this.type ? "Email verified" : "Email unverified";
+    getStatus() {
+      return this.status ? "Verified" : "Disabled";
     },
   },
 };

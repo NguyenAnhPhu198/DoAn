@@ -1,17 +1,16 @@
 <template>
   <CInput
     v-bind="inputOptions"
-    :value="value"
     @change="$emit('update:value', $event)"
-    :type="show ? 'text' : 'password'"
+    :type="toggle ? 'text' : 'password'"
     :placeholder="$t('Enter your password')"
     :label="$t(label)"
   >
     <template #prepend-content><CIcon name="cil-lock-locked" /></template>
-    <template #append-content v-if="showPassword">
+    <template #append-content v-if="show">
       <CIcon
-        :name="show ? 'cisEyeSlash' : 'cisEye'"
-        @click.native="show = !show"
+        :name="toggle ? 'cisEyeSlash' : 'cisEye'"
+        @click.native="toggle = !toggle"
       /> </template
   ></CInput>
 </template>
@@ -23,11 +22,11 @@ export default {
   mixins: [mixins],
   data() {
     return {
-      show: false,
+      toggle: false,
     };
   },
   props: {
-    showPassword: {
+    show: {
       type: Boolean,
       required: false,
       default: false,

@@ -2,15 +2,9 @@
   <CCard>
     <CCardHeader>
       <TMessage content="User info" class="d-inline-flex mr-2" bold />
-      <SMessageUserStatus :type="auth.email_verified" />
+      <SMessageUserStatus :status="auth.email_verified" />
       <div class="float-right">
-        <SButtonResetPassword
-          class="ml-3"
-          :timeout="1500"
-          color="primary"
-          content="Reset password"
-          @click="resetPassword"
-        />
+        <SButtonResetPassword class="ml-3" @click="resetPassword" />
       </div>
     </CCardHeader>
 
@@ -29,7 +23,7 @@
         </CCol>
         <CCol sm="12" class="mb-3">
           <TInputEmail
-            @update="setEmail"
+            @update:value="setEmail"
             :value="auth.email"
             label="Email"
             :inputOptions="{
@@ -37,10 +31,8 @@
               addWrapperClasses: 'append-label',
             }"
           >
-            <slot>
-              <TButtonSave
-                @click="changeEmail"
-              />
+            <slot slot="append-content">
+              <TButtonSave @click="changeEmail" />
             </slot>
           </TInputEmail>
         </CCol>
@@ -73,8 +65,3 @@ export default {
   },
 };
 </script>
-<style lang="css">
-.mt-5 .input-group-text {
-  padding: 0px;
-}
-</style>

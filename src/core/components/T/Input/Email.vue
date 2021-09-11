@@ -7,11 +7,12 @@
       autocomplete: 'email',
     }"
     :value="value"
-    @update:value="$emit('update', $event)"
+    @update:value="$emit('update:value', $event)"
     placeholder="Enter your email"
     :label="label"
   >
-    <slot> </slot>
+    <slot name="append-content" slot="append-content"> </slot>
+    <slot name="prepend-content" slot="prepend-content"> </slot>
   </TInputText>
 </template>
 

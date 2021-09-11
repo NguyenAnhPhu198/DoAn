@@ -1,29 +1,10 @@
 <template>
   <CLoadingButton
-    :color="color"
-    :timeout="timeout"
+    color="primary"
+    timeout="1500"
     @click.native="$emit('click')"
   >
-    {{ $t(content) }}
+    {{ $t('Reset password') }}
   </CLoadingButton>
 </template>
 
-
-<script>
-export default {
-  props: {
-    color: {
-      type: String,
-      required: false,
-    },
-    content: {
-      type: String,
-      required: false,
-    },
-    timeout: {
-      type: Number,
-      required: false,
-    },
-  },
-};
-</script>

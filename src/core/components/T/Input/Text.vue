@@ -7,8 +7,11 @@
     :placeholder="$t(placeholder)"
     v-bind="inputOptions"
   >
-    <template  #append-content>
-      <slot> </slot>
+    <template #prepend-content>
+      <slot name="prepend-content"> </slot>
+    </template>
+    <template #append-content>
+      <slot name="append-content"> </slot>
     </template>
   </CInput>
 </template>
