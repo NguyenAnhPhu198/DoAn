@@ -14,7 +14,7 @@
       }"
       @update:value="password = $event"
     />
-    <slot name="actions" slot="actions" :creating="creating">
+    <template v-slot:actions>
       <CButton
         :options="{ disabled: creating }"
         color="primary"
@@ -22,7 +22,7 @@
       >
         {{ $t("Confirm") }}
       </CButton>
-    </slot>
+    </template>
   </TModal>
 </template>
 
@@ -31,10 +31,10 @@ import mixinModal from "@/core/components/T/mixinModal";
 
 export default {
   mixins: [mixinModal],
-  data(){
+  data() {
     return {
-      password: ''
-    }
+      password: "",
+    };
   },
 };
 </script>

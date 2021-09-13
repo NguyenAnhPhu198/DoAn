@@ -39,7 +39,7 @@
         <CCol sm="12" class="mb-3">
           <SModalPasswordConfirmation
             :show.sync="openModal"
-            @click-confirm="comfirmPassword"
+            @click-confirm="changeEmail"
           >
           </SModalPasswordConfirmation>
         </CCol>
@@ -68,7 +68,7 @@ export default {
       if (this.new_email !== this.auth.email && this.new_email !== "")
         this.openModal = true;
     },
-    comfirmPassword(password) {
+    changeEmail(password) {
       const dataUpdate = {
         current_email: this.auth.email,
         new_email: this.new_email,

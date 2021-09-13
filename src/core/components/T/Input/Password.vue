@@ -6,13 +6,16 @@
     :type="toggle ? 'text' : 'password'"
     :placeholder="$t('Enter your password')"
     :label="$t(label)"
+    addWrapperClasses="append-label"
   >
     <template #prepend-content><CIcon name="cil-lock-locked" /></template>
     <template #append-content v-if="viewAble">
-      <CIcon
-        :name="toggle ? 'cisEyeSlash' : 'cisEye'"
-        @click.native="toggle = !toggle"
-      /> </template
+      <CButton size="sm" variant="ghost">
+        <CIcon
+          :name="toggle ? 'cisEyeSlash' : 'cisEye'"
+          @click.native="toggle = !toggle"
+        />
+      </CButton> </template
   ></CInput>
 </template>
 
@@ -36,7 +39,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.c-icon {
-    cursor: pointer
+.input-group-append .input-group-text {
+  padding: 0;
 }
 </style>
