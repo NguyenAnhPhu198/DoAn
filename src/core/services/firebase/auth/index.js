@@ -26,12 +26,12 @@ const sendPasswordResetEmail = email => {
   return firebase.auth().sendPasswordResetEmail(email)
 }
 
-const updateEmail = ({ current_email, new_email, password }) => {
+const updateEmail = ({ currentEmail, newEmail, password }) => {
   return new Promise((resolve, reject) => {
-    var credential = firebase.auth.EmailAuthProvider.credential(current_email, password);
+    var credential = firebase.auth.EmailAuthProvider.credential(currentEmail, password);
     return currentUser().reauthenticateWithCredential(credential)
       .then(function() {
-        currentUser().updateEmail(new_email)
+        currentUser().updateEmail(newEmail)
           .then(() => {
             resolve();
           })

@@ -11,8 +11,10 @@
     placeholder="Enter your email"
     :label="label"
   >
-    <slot name="append-content" slot="append-content"> </slot>
-    <slot name="prepend-content" slot="prepend-content"> </slot>
+    <template #append-content>
+      <TButtonSave @click="$emit('click-save', $event)" v-if="savable" />
+    </template>
+    <template #prepend-content> </template>
   </TInputText>
 </template>
 
@@ -20,5 +22,12 @@
 import mixins from "./mixins";
 export default {
   mixins: [mixins],
+  props: {
+    savable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
 };
 </script>

@@ -9,10 +9,11 @@
     addWrapperClasses="append-label"
   >
     <template #prepend-content><CIcon name="cil-lock-locked" /></template>
-    <template #append-content v-if="viewAble">
+    <template #append-content v-if="viewable">
       <CButton @click="toggle = !toggle" size="sm" variant="ghost">
         <CIcon :name="toggle ? 'cisEyeSlash' : 'cisEye'" />
-      </CButton> </template
+      </CButton>
+    </template
   ></CInput>
 </template>
 
@@ -27,7 +28,7 @@ export default {
     };
   },
   props: {
-    viewAble: {
+    viewable: {
       type: Boolean,
       required: false,
       default: false,

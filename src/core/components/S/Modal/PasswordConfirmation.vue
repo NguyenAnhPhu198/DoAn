@@ -7,16 +7,15 @@
   >
     <TInputPassword
       :value="password"
-      viewAble
+      viewable
       label="Password"
       :inputOptions="{
         addLabelClasses: 'font-weight-bold',
       }"
       @update:value="password = $event"
     />
-    <template v-slot:actions>
+    <template #actions>
       <CButton
-        :options="{ disabled: creating }"
         color="primary"
         @click="$emit('click-confirm', password)"
       >

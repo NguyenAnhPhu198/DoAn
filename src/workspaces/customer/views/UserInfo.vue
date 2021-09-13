@@ -30,15 +30,13 @@
               addLabelClasses: 'font-weight-bold',
               addWrapperClasses: 'append-label',
             }"
-          >
-            <template v-slot:append-content>
-              <TButtonSave @click="showModal" />
-            </template>
-          </TInputEmail>
+            savable
+            @click-save="showModal"
+          />
         </CCol>
         <CCol sm="12" class="mb-3">
           <SModalPasswordConfirmation
-            :show.sync="openModal"
+            :show.sync="showPWConfirmation"
             @click-confirm="changeEmail"
           >
           </SModalPasswordConfirmation>
@@ -54,28 +52,26 @@ export default {
   mixins: [authenMixin],
   data() {
     return {
-      password: "",
-      new_email: "",
-      openModal: false,
+      newEmail: "",
+      showPWConfirmation: false,
     };
   },
   methods: {
     setEmail(data) {
-      this.new_email = data;
+      this.newEmail = data;
     },
     showModal() {
-      this.password = "";
-      if (this.new_email !== this.auth.email && this.new_email !== "")
-        this.openModal = true;
+      if (this.newEmail !== this.auth.email && this.newEmail !== "")
+        this.showPWConfirmation = true;
     },
     changeEmail(password) {
       const dataUpdate = {
-        current_email: this.auth.email,
-        new_email: this.new_email,
+        currentEmail: this.auth.email,
+        newEmail: this.newEmail,
         password: password,
       };
       this.$store.dispatch("auth.change_email", dataUpdate).then(() => {
-        this.openModal = false;
+        this.showPWConfirmation = false;
       });
     },
   },
