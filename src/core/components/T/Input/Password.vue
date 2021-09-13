@@ -38,8 +38,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.input-group-append .input-group-text {
-  padding: 0;
-}
-</style>

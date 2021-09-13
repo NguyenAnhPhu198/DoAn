@@ -31,9 +31,9 @@
               addWrapperClasses: 'append-label',
             }"
           >
-            <slot slot="append-content">
+            <template v-slot:append-content>
               <TButtonSave @click="showModal" />
-            </slot>
+            </template>
           </TInputEmail>
         </CCol>
         <CCol sm="12" class="mb-3">
