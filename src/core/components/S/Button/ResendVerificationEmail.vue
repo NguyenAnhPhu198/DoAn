@@ -1,5 +1,5 @@
 <template>
   <CButton color="primary" @click="$emit('click')">
-    {{ $t("Reset password") }}
+    {{ $t("Resend verification email") }}
   </CButton>
 </template>

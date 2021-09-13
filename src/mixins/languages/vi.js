@@ -9,12 +9,12 @@ export default {
   'New email': 'Email mới',
   "Enter your email": "Nhập email",
   "Enter your password": "Nhập mật khẩu",
-  "Email verify": 'Xác thực email',
+  "Resend verification email": 'Gửi lại mail xác thực',
   'unverified': "Chưa xác thực",
   'verified': "Đã xác thực",
   'disabled': "Vô hiệu",
   "Reset password": "Đặt lại mật khẩu",
-  'Confirm password': 'Xác nhận mật khẩu',
+  'Password confirmation': 'Yêu cầu nhập mật khẩu',
   'Confirm': 'Xác nhận'
 
 };

@@ -2,9 +2,9 @@
   <CCard>
     <CCardHeader>
       <TMessage content="User info" class="d-inline-flex mr-2" bold />
-      <SMessageUserStatus :status="auth.email_verified" />
+      <SMessageUserStatus :status="checkUserStatus" />
       <div class="float-right">
-        <SButtonEmailVerify
+        <SButtonResendVerificationEmail
           v-if="!auth.email_verified"
           @click="sendEmailVerify"
         />
@@ -40,23 +40,13 @@
           </TInputEmail>
         </CCol>
         <CCol sm="12" class="mb-3">
-          <SModalConfirm
-            title="Confirm password"
+          <SModalPasswordConfirmation
             :show.sync="openModal"
             @click-confirm="changeEmail"
+            @update:value="setPassword"
+            :value="password"
           >
-            <slot>
-              <TInputPassword
-                :value="password"
-                show
-                label="Password"
-                :inputOptions="{
-                  addLabelClasses: 'font-weight-bold',
-                }"
-                @update:value="setPassword"
-              />
-            </slot>
-          </SModalConfirm>
+          </SModalPasswordConfirmation>
         </CCol>
       </CRow>
     </CCardBody>
@@ -99,6 +89,11 @@ export default {
         password: this.password,
       };
       this.$store.dispatch("auth.change_email", dataUpdate);
+    },
+  },
+  computed: {
+    checkUserStatus() {
+      return this.auth.email_verified ? "verified" : "unverified";
     },
   },
 };

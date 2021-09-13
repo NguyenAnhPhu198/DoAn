@@ -1,6 +1,6 @@
 <template>
   <CBadge :color="getColor">
-    {{ $t(getStatus) }}
+    {{ $t(status) }}
   </CBadge>
 </template>
 
@@ -8,17 +8,23 @@
 export default {
   props: {
     status: {
-      type: Boolean,
+      type: String,
       required: true,
-      default: false,
+      validator: function (value) {
+        return ["verified", "unverified", "disabled"].indexOf(value) !== -1;
+      },
     },
   },
   computed: {
     getColor() {
-      return this.status ? "success" : "danger";
-    },
-    getStatus() {
-      return this.status ? "verified" : "unverified";
+      switch (this.status) {
+        case "verified":
+          return "success";
+        case "unverified":
+          return "danger";
+        default:
+          return "secondary";
+      }
     },
   },
 };

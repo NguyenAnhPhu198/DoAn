@@ -34,8 +34,13 @@ router.beforeEach((routeTo, routeFrom, next) => {
 
   if (authRequired) {
     if (verifyRequired) {
-      store.dispatch("auth.verify").then(() => {
-        return next();
+      store.dispatch("auth.authenticated").then(() => {
+        store.dispatch("auth.verify").then(() => {
+          return next();
+        })
+          .catch(error => {
+            store.dispatch("errors.push", { error, notify: true });
+          });
       })
         .catch(error => {
           store.dispatch("errors.push", { error, notify: true });

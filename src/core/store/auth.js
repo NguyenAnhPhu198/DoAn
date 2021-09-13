@@ -77,6 +77,7 @@ const actions = {
             email: data.email,
             role_id: data.role_id,
             email_verified: user_logged_in.emailVerified,
+            disabled: data.disabled,
             permission_ids: data.permission_ids,
             manage_user_ids: data.manage_user_ids
           };
@@ -94,13 +95,25 @@ const actions = {
       context.commit("auth.me.purge");
     });
   },
-  ["auth.send_email_verify"](context){
-    return firebaseAuth.sendEmailVerify().then(() => {
-      context.commit("toasts.push", {
-        title: "Verification email sent",
-        message: "Check your mail",
-        type: "success"
-      });
+  ["auth.send_email_verify"](context) {
+    return new Promise((resolve, reject) => {
+      firebaseAuth
+        .sendEmailVerify()
+        .then(() => {
+          context.commit("toasts.push", {
+            title: "Verification email sent",
+            message: "Check your mail",
+            type: "success"
+          });
+          resolve();
+        })
+        .catch(error => {
+          context.dispatch("errors.push", {
+            error,
+            notify: true
+          });
+          reject(error);
+        });
     });
   },
   ["auth.change_email"](context, data) {
@@ -163,6 +176,18 @@ const actions = {
     return new Promise((resolve, reject) => {
       //verified
       if (!context.getters["auth.authenticated"]) {
+        context.dispatch("auth.me.fetch").then(() => {
+          if (context.getters["auth.me"].email_verified) {
+            resolve(1);
+          }
+          reject({
+            code: 403,
+            type: "email_not_verified",
+            message: "Email not verified"
+          });
+        });
+      } else {
+        //unverified
         if (context.getters["auth.me"].email_verified) {
           resolve(1);
         }
@@ -171,17 +196,6 @@ const actions = {
           type: "email_not_verified",
           message: "Email not verified"
         });
-      }
-      else {
-        //unverified
-        if (context.getters['auth.me'].email_verified) {
-          resolve(1)
-        }
-        reject({
-          code: 403,
-          type: 'email_not_verified',
-          message: 'Email not verified',
-        })
       }
     })
       .then(result => {
@@ -201,7 +215,7 @@ const actions = {
             message: "Logged out"
           });
         }
-        // logged in 
+        // logged in
         else resolve(1);
       });
     })
