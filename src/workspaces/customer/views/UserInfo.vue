@@ -4,11 +4,8 @@
       <TMessage content="User info" class="d-inline-flex mr-2" bold />
       <SMessageUserStatus :status="checkUserStatus" />
       <div class="float-right">
-        <SButtonResendVerificationEmail
-          v-if="!auth.email_verified"
-          @click="sendEmailVerify"
-        />
-        <SButtonResetPassword class="ml-2" @click="resetPassword" />
+        <SButtonResendVerificationEmail v-if="!auth.email_verified" />
+        <SButtonResetPassword class="ml-2" />
       </div>
     </CCardHeader>
     <CCardBody>
@@ -42,9 +39,7 @@
         <CCol sm="12" class="mb-3">
           <SModalPasswordConfirmation
             :show.sync="openModal"
-            @click-confirm="changeEmail"
-            @update:value="setPassword"
-            :value="password"
+            @click-confirm="comfirmPassword"
           >
           </SModalPasswordConfirmation>
         </CCol>
@@ -68,27 +63,20 @@ export default {
     setEmail(data) {
       this.new_email = data;
     },
-    setPassword(data) {
-      this.password = data;
-    },
     showModal() {
       this.password = "";
       if (this.new_email !== this.auth.email && this.new_email !== "")
         this.openModal = true;
     },
-    resetPassword() {
-      this.$store.dispatch("auth.reset_password", this.auth.email);
-    },
-    sendEmailVerify() {
-      this.$store.dispatch("auth.send_email_verify");
-    },
-    changeEmail() {
+    comfirmPassword(password) {
       const dataUpdate = {
         current_email: this.auth.email,
         new_email: this.new_email,
-        password: this.password,
+        password: password,
       };
-      this.$store.dispatch("auth.change_email", dataUpdate);
+      this.$store.dispatch("auth.change_email", dataUpdate).then(() => {
+        this.openModal = false;
+      });
     },
   },
   computed: {

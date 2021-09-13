@@ -8,7 +8,7 @@
     :label="$t(label)"
   >
     <template #prepend-content><CIcon name="cil-lock-locked" /></template>
-    <template #append-content v-if="show">
+    <template #append-content v-if="viewAble">
       <CIcon
         :name="toggle ? 'cisEyeSlash' : 'cisEye'"
         @click.native="toggle = !toggle"
@@ -27,7 +27,7 @@ export default {
     };
   },
   props: {
-    show: {
+    viewAble: {
       type: Boolean,
       required: false,
       default: false,

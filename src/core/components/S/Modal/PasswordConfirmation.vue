@@ -4,22 +4,21 @@
     :size="size"
     @update:show="$emit('update:show', $event)"
     title="Password confirmation"
-    ><slot>
-      <TInputPassword
-        :value="value"
-        show
-        label="Password"
-        :inputOptions="{
-          addLabelClasses: 'font-weight-bold',
-        }"
-        @update:value="$emit('update:value', $event)"
-      />
-    </slot>
+  >
+    <TInputPassword
+      :value="password"
+      viewAble
+      label="Password"
+      :inputOptions="{
+        addLabelClasses: 'font-weight-bold',
+      }"
+      @update:value="password = $event"
+    />
     <slot name="actions" slot="actions" :creating="creating">
       <CButton
         :options="{ disabled: creating }"
         color="primary"
-        @click="$emit('click-confirm')"
+        @click="$emit('click-confirm', password)"
       >
         {{ $t("Confirm") }}
       </CButton>
@@ -32,11 +31,10 @@ import mixinModal from "@/core/components/T/mixinModal";
 
 export default {
   mixins: [mixinModal],
-  props: {
-    value: {
-      type: String,
-      required: false
+  data(){
+    return {
+      password: ''
     }
-  }
+  },
 };
 </script>
