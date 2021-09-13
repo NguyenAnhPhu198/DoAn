@@ -10,11 +10,8 @@
   >
     <template #prepend-content><CIcon name="cil-lock-locked" /></template>
     <template #append-content v-if="viewAble">
-      <CButton size="sm" variant="ghost">
-        <CIcon
-          :name="toggle ? 'cisEyeSlash' : 'cisEye'"
-          @click.native="toggle = !toggle"
-        />
+      <CButton @click="toggle = !toggle" size="sm" variant="ghost">
+        <CIcon :name="toggle ? 'cisEyeSlash' : 'cisEye'" />
       </CButton> </template
   ></CInput>
 </template>
