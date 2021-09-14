@@ -32,9 +32,9 @@ router.beforeEach((routeTo, routeFrom, next) => {
     return next();
   }
 
-  if (authRequired) {
+  else {
     if (verifyRequired) {
-      store.dispatch("auth.authenticated").then(() => {
+      store.dispatch("auth.authenticate").then(() => {
         store.dispatch("auth.verify").then(() => {
           return next();
         })
@@ -47,7 +47,7 @@ router.beforeEach((routeTo, routeFrom, next) => {
           redirect.toLogin();
         });
     } else {
-      store.dispatch("auth.authenticated").then(() => {
+      store.dispatch("auth.authenticate").then(() => {
         return next();
       })
         .catch(error => {

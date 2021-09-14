@@ -64,15 +64,8 @@ export default {
       if (this.newEmail !== this.auth.email && this.newEmail !== "")
         this.showPWConfirmation = true;
     },
-    changeEmail(password) {
-      const dataUpdate = {
-        currentEmail: this.auth.email,
-        newEmail: this.newEmail,
-        password: password,
-      };
-      this.$store.dispatch("auth.change_email", dataUpdate).then(() => {
-        this.showPWConfirmation = false;
-      });
+    changeEmail() {
+      this.$store.dispatch("auth.change_email", this.newEmail).then(() => {});
     },
   },
   computed: {

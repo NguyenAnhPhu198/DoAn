@@ -26,23 +26,21 @@ const sendPasswordResetEmail = email => {
   return firebase.auth().sendPasswordResetEmail(email)
 }
 
-const updateEmail = ({ currentEmail, newEmail, password }) => {
+const reAuthenticate = ({ currentEmail, password }) => {
   return new Promise((resolve, reject) => {
     var credential = firebase.auth.EmailAuthProvider.credential(currentEmail, password);
     return currentUser().reauthenticateWithCredential(credential)
-      .then(function() {
-        currentUser().updateEmail(newEmail)
-          .then(() => {
-            resolve();
-          })
-          .catch(error => {
-            reject(error);
-          });
+      .then(() => {
+        resolve();
       })
-      .catch(function(error) {
+      .catch((error) => {
         reject(error);
       });
   });
+}
+
+const updateEmail = (newEmail) => {
+  return currentUser().updateEmail(newEmail)
 };
 
 const sendEmailVerify = () => {
@@ -59,5 +57,6 @@ export default {
   currentUser,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  reAuthenticate
 }

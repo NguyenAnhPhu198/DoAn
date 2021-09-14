@@ -116,10 +116,10 @@ const actions = {
         });
     });
   },
-  ["auth.change_email"](context, data) {
+  ["auth.change_email"](context, email) {
     return new Promise((resolve, reject) => {
       firebaseAuth
-        .updateEmail(data)
+        .updateEmail(email)
         .then(() => {
           context.dispatch("auth.send_email_verify");
           context.dispatch("auth.me.fetch");
@@ -155,42 +155,33 @@ const actions = {
         });
     });
   },
-  ["auth.authenticate"](context) {
-    if (context.getters["auth.authenticated"]) {
-      return;
-    }
-    var unsubscribe;
-    return new Promise(resolve => {
-      unsubscribe = firebaseAuth.onAuthStateChanged(user => {
-        if (user) {
-          context.dispatch("auth.me.fetch").then(() => {
-            resolve(1);
+  ["auth.reAuthenticate"](context, data) {
+    return new Promise((resolve, reject) => {
+      firebaseAuth
+        .reAuthenticate(data)
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          context.dispatch("errors.push", {
+            error,
+            notify: true
           });
-        }
-      });
-    }).finally(() => {
-      unsubscribe();
+          reject(error);
+        });
     });
   },
   ["auth.verify"](context) {
     return new Promise((resolve, reject) => {
-      //verified
       if (!context.getters["auth.authenticated"]) {
-        context.dispatch("auth.me.fetch").then(() => {
-          if (context.getters["auth.me"].email_verified) {
-            resolve(1);
-          }
-          reject({
-            code: 403,
-            type: "email_not_verified",
-            message: "Email not verified"
-          });
+        if(firebaseAuth.currentUser().emailVerified) resolve(1);
+        reject({
+          code: 403,
+          type: "email_not_verified",
+          message: "Email not verified"
         });
       } else {
-        //unverified
-        if (context.getters["auth.me"].email_verified) {
-          resolve(1);
-        }
+        if (context.getters["auth.me"].email_verified) resolve(1);
         reject({
           code: 403,
           type: "email_not_verified",
@@ -203,7 +194,10 @@ const actions = {
       })
       .finally(() => {});
   },
-  ["auth.authenticated"]() {
+  ["auth.authenticate"](context) {
+    if (context.getters["auth.authenticated"]) {
+      return;
+    }
     var unsubscribe; // stop listening auth change when it log out
     return new Promise((resolve, reject) => {
       unsubscribe = firebaseAuth.onAuthStateChanged(user => {
@@ -216,7 +210,11 @@ const actions = {
           });
         }
         // logged in
-        else resolve(1);
+        else {
+          context.dispatch("auth.me.fetch").then(() => {
+            resolve(1);
+          });
+        }
       });
     })
       .then(result => {
