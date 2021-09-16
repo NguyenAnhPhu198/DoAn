@@ -31,15 +31,8 @@
               addWrapperClasses: 'append-label',
             }"
             savable
-            @click-save="showModal"
+            @click-save="changeEmail"
           />
-        </CCol>
-        <CCol sm="12" class="mb-3">
-          <SModalPasswordConfirmation
-            :show.sync="showPWConfirmation"
-            @click-confirm="changeEmail"
-          >
-          </SModalPasswordConfirmation>
         </CCol>
       </CRow>
     </CCardBody>
@@ -53,19 +46,15 @@ export default {
   data() {
     return {
       newEmail: "",
-      showPWConfirmation: false,
     };
   },
   methods: {
     setEmail(data) {
       this.newEmail = data;
     },
-    showModal() {
-      if (this.newEmail !== this.auth.email && this.newEmail !== "")
-        this.showPWConfirmation = true;
-    },
     changeEmail() {
-      this.$store.dispatch("auth.change_email", this.newEmail).then(() => {});
+      if (this.newEmail !== this.auth.email && this.newEmail !== "")
+        this.$store.dispatch("auth.change_email", this.newEmail);
     },
   },
   computed: {
