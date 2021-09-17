@@ -37,7 +37,6 @@ router.beforeEach((routeTo, routeFrom, next) => {
   store.dispatch('auth.verify', verifyRequired).then(() => {
     return next()
   }).catch((error) => {
-    console.log(error)
     store.dispatch("errors.push", { error, notify: true });
     if (error.type != 'email_not_verified') {
       redirect.toLogin();
