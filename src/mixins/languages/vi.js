@@ -15,4 +15,13 @@ export default {
   'Password confirmation': 'Yêu cầu nhập mật khẩu',
   'Confirm': 'Xác nhận',
   'Email empty': 'Email trống',
+  'Customer': 'Khách hàng',
+  'Sale': 'Bán hàng',
+  'Purchase': 'Mua hàng',
+  'Warehouse': 'Kho',
+  'Accounting': 'Kế toán',
+  'Account': 'Tài khoản',
+  'Services': 'Dịch vụ',
+  'Pricing': 'Bảng giá',
+  'Policies': 'Chính sách',
 };
