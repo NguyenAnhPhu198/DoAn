@@ -2,7 +2,7 @@
   <CCard>
     <CCardHeader>
       <strong>{{ purchase.id }} </strong>
-      <TMessageStatus :id="purchase.status.id" />
+      <SMessageOrderStatus :id="purchase.status.id" />
       <div class="float-right">
         <SButtonStatus
           v-for="(status, index) in purchase.steps"
