@@ -116,7 +116,7 @@ const actions = {
         });
     });
   },
-  ["auth.change_email"](context, email) {
+  ["auth.me.update_email"](context, email) {
     return new Promise((resolve, reject) => {
       firebaseAuth
         .updateEmail(email)

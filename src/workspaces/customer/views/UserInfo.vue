@@ -41,8 +41,9 @@
 export default {
   methods: {
     changeEmail(email) {
-      if (email !== this.me.email && email !== "")
-        this.$store.dispatch("auth.change_email", email);
+      if (email !== this.me.email && email !== "") {
+        this.$store.dispatch("auth.me.update_email", email);
+      }
     },
   },
   computed: {
