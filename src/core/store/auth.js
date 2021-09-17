@@ -193,6 +193,7 @@ const actions = {
             type: 'logged_out',
             message: 'Logged out',
           })
+          return
         }
         context.dispatch('auth.me.fetch').then(() => {
           resolve(user)
