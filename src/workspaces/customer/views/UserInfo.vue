@@ -2,9 +2,9 @@
   <CCard>
     <CCardHeader>
       <TMessage content="User info" class="d-inline-flex mr-2" bold />
-      <SMessageUserStatus :id="userStatus" />
+      <SMessageUserStatus :id="status" />
       <div class="float-right">
-        <SButtonResendVerificationEmail v-if="!auth.email_verified" />
+        <SButtonResendVerificationEmail v-if="!me.email_verified" />
         <SButtonResetPassword class="ml-2" />
       </div>
     </CCardHeader>
@@ -12,7 +12,7 @@
       <CRow class="m-lg-1">
         <CCol sm="12" class="mb-3">
           <TInputText
-            :value="auth.id"
+            :value="me.id"
             :inputOptions="{
               readonly: true,
               prepend: 'ID',
@@ -24,7 +24,7 @@
         <CCol sm="12" class="mb-3">
           <TInputEmail
             @update:value="setEmail"
-            :value="auth.email"
+            :value="me.email"
             label="Email"
             :inputOptions="{
               addLabelClasses: 'font-weight-bold',
@@ -40,9 +40,7 @@
 </template>
 
 <script>
-import authenMixin from "../mixins/authentication";
 export default {
-  mixins: [authenMixin],
   data() {
     return {
       newEmail: "",
@@ -53,13 +51,16 @@ export default {
       this.newEmail = data;
     },
     changeEmail() {
-      if (this.newEmail !== this.auth.email && this.newEmail !== "")
+      if (this.newEmail !== this.me.email && this.newEmail !== "")
         this.$store.dispatch("auth.change_email", this.newEmail);
     },
   },
   computed: {
-    userStatus() {
-      return this.auth.email_verified ? "verified" : "unverified";
+    me() {
+      return this.$store.getters["auth.me"];
+    },
+    status() {
+      return this.me.email_verified ? "verified" : "unverified";
     },
   },
 };

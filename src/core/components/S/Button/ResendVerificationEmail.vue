@@ -1,14 +1,13 @@
 <template>
   <CButton color="primary" @click="sendEmailVerify()">
-    {{ $t("Resend verification email") }}
+    <TMessage content="Resend verification email" />
   </CButton>
 </template>
 <script>
-
 export default {
   methods: {
     sendEmailVerify() {
-      this.$store.dispatch("auth.send_email_verify");
+      this.$store.dispatch("auth.me.send_mail.verification");
     },
   },
 };
