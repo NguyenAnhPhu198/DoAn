@@ -23,12 +23,10 @@
         </CCol>
         <CCol sm="12" class="mb-3">
           <TInputEmail
-            @update:value="setEmail"
             :value="me.email"
-            label="Email"
+            label="Email address"
             :inputOptions="{
               addLabelClasses: 'font-weight-bold',
-              addWrapperClasses: 'append-label',
             }"
             savable
             @click-save="changeEmail"
@@ -41,18 +39,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      newEmail: "",
-    };
-  },
   methods: {
-    setEmail(data) {
-      this.newEmail = data;
-    },
-    changeEmail() {
-      if (this.newEmail !== this.me.email && this.newEmail !== "")
-        this.$store.dispatch("auth.change_email", this.newEmail);
+    changeEmail(email) {
+      if (email !== this.me.email && email !== "")
+        this.$store.dispatch("auth.change_email", email);
     },
   },
   computed: {
