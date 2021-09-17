@@ -26,37 +26,13 @@ const sendPasswordResetEmail = email => {
   return firebase.auth().sendPasswordResetEmail(email)
 }
 
-const reAuthenticate = ({ currentEmail, password }) => {
-  return new Promise((resolve, reject) => {
-    var credential = firebase.auth.EmailAuthProvider.credential(currentEmail, password);
-    return currentUser().reauthenticateWithCredential(credential)
-      .then(() => {
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
-
-const updateEmail = (newEmail) => {
-  return currentUser().updateEmail(newEmail)
-};
-
-const sendEmailVerify = () => {
-  return currentUser().sendEmailVerification()
-}
-
 export default {
   facebook,
   google,
   password,
-  updateEmail,
   getIdToken,
-  sendEmailVerify,
   currentUser,
   signOut,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  reAuthenticate
 }

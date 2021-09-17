@@ -24,38 +24,26 @@ router.beforeEach((routeTo, routeFrom, next) => {
    * (including nested routes).
    */
   const authRequired = routeTo.matched.some(route => route.meta.authRequired);
-  const verifyRequired = routeTo.matched.some(
-    route => route.meta.verifyRequired
-  );
+
   // If auth isn't required for the route, just continue.
   if (!authRequired) {
     return next();
   }
 
-  else {
-    if (verifyRequired) {
-      store.dispatch("auth.authenticate").then(() => {
-        store.dispatch("auth.verify").then(() => {
-          return next();
-        })
-          .catch(error => {
-            store.dispatch("errors.push", { error, notify: true });
-          });
-      })
-        .catch(error => {
-          store.dispatch("errors.push", { error, notify: true });
-          redirect.toLogin();
-        });
-    } else {
-      store.dispatch("auth.authenticate").then(() => {
-        return next();
-      })
-        .catch(error => {
-          store.dispatch("errors.push", { error, notify: true });
-          redirect.toLogin();
-        });
+  const verifyRequired = routeTo.matched.some(
+    route => route.meta.verifyRequired
+  );
+
+  store.dispatch('auth.verify', verifyRequired).then(() => {
+    return next()
+  }).catch((error) => {
+    console.log(error)
+    store.dispatch("errors.push", { error, notify: true });
+    if (error.type != 'email_not_verified') {
+      redirect.toLogin();
     }
-  }
+    return
+  })
 });
 
 router.afterEach(to => {
