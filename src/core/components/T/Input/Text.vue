@@ -1,23 +1,25 @@
 <template>
   <CInput
     :value="value"
-    v-bind="inputOptions"
     @change="$emit('update:value', $event)"
     class="mb-0"
-  />
+    :label="getLabel()"
+    :placeholder="$t(placeholder)"
+    v-bind="inputOptions"
+  >
+    <template #prepend-content>
+      <slot name="prepend-content"> </slot>
+    </template>
+    <template #append-content>
+      <slot name="append-content"> </slot>
+    </template>
+  </CInput>
 </template>
 
 <script>
+import mixins from "./mixins";
+
 export default {
-  props: {
-    value: {
-      type: [String, Number],
-      required: false,
-    },
-    inputOptions: {
-      type: Object,
-      required: false,
-    },
-  },
+  mixins: [mixins],
 };
 </script>

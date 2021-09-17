@@ -261,4 +261,4 @@ export const iconsSet = Object.assign({}, { logo }, {
   cibGooglePay,
   cibCcAmex,
   cibGoogle,
-})
+}, )

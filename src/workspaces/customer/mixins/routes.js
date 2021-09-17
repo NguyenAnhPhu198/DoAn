@@ -18,6 +18,10 @@ export default [
     path: 'orders',
     name: 'Orders',
     component: Orders,
+    meta: {
+      authRequired: true,
+      verifyRequired: true
+    },
   },
   {
     path: 'address',

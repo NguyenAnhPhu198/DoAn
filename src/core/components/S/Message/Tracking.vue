@@ -20,7 +20,7 @@
       @click-edit="showEdit()"
     >
     </TMessage>
-    <TMessageStatus v-if="value" :id="status" />
+    <SMessageOrderStatus v-if="value" :id="status" />
   </div>
 </template>
 

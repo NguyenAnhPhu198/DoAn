@@ -48,7 +48,7 @@ import TheSidebar from "./TheSidebar.vue";
 Vue.mixin(mixin);
 
 export default {
-  name: "TheHomeContainer",
+  name: "TheCustomerContainer",
   mixins: [authenMixin, registerStoreMixin],
   components: {
     TheHeader,

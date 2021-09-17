@@ -1,12 +1,11 @@
 <template>
-  <CBadge v-if="!noBadge" :color="getBadge" :noTranslate="noTranslate">
-    <TMessage :content="name" />
+  <CBadge v-if="!noBadge" :color="color">
+    <TMessage :content="name" :noTranslate="noTranslate" />
   </CBadge>
-  <TMessage v-else :content="name" />
+  <TMessage v-else :content="name" :noTranslate="noTranslate" />
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import TMessage from "../Message.vue";
 
 export default {
@@ -28,31 +27,22 @@ export default {
       required: false,
       default: true,
     },
+    statuses: {
+      type: Array,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: false,
+    },
   },
   computed: {
-    ...mapGetters({
-      statuses: "order.statuses.list",
-    }),
     name() {
       const status = this.lodash.find(this.statuses, { id: this.id });
       if (!status) {
         return this.id;
       }
       return status.name;
-    },
-    getBadge() {
-      switch (this.id) {
-        case "Newish":
-          return "dark";
-        case "Paid":
-        case "Finish":
-          return "success";
-        case "OutOfStock":
-        case "Cancelled":
-          return "danger";
-        default:
-          return "warning";
-      }
     },
   },
 };
