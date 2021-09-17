@@ -187,7 +187,6 @@ const actions = {
       .then(result => {
         return result;
       })
-      .finally(() => { });
   },
   ["auth.authenticate"](context) {
     if (context.getters["auth.authenticated"]) {
