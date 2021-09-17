@@ -71,13 +71,11 @@ const actions = {
           appends: "manageUserIds;permissionIds"
         })
         .then(({ data }) => {
-          const user_logged_in = firebaseAuth.currentUser();
           const me = {
             id: data.id,
             email: data.email,
             role_id: data.role_id,
-            email_verified: user_logged_in.emailVerified,
-            disabled: data.disabled,
+            email_verified: data.email_verified,
             permission_ids: data.permission_ids,
             manage_user_ids: data.manage_user_ids
           };
@@ -97,28 +95,25 @@ const actions = {
   },
   ["auth.me.send_mail.verification"](context) {
     return new Promise((resolve, reject) => {
-      firebaseAuth
-        .sendEmailVerify()
-        .then(() => {
-          context.commit("toasts.push", {
-            title: "Verification email sent",
-            message: "Check your mail",
-            type: "success"
-          });
-          resolve();
-        })
-        .catch(error => {
-          context.dispatch("errors.push", {
-            error,
-            notify: true
-          });
-          reject(error);
+      firebaseAuth.currentUser().sendEmailVerification().then(() => {
+        context.commit("toasts.push", {
+          title: "Verification email sent",
+          message: "Check your mail",
+          type: "success"
         });
+        resolve();
+      }).catch(error => {
+        context.dispatch("errors.push", {
+          error,
+          notify: true
+        });
+        reject(error);
+      });
     });
   },
   ["auth.me.update_email"](context, email) {
     return new Promise((resolve, reject) => {
-      firebaseAuth
+      firebaseAuth.currentUser()
         .updateEmail(email)
         .then(() => {
           context.dispatch("auth.me.send_mail.verification");
@@ -166,57 +161,46 @@ const actions = {
         });
     });
   },
-  ["auth.verify"](context) {
+  ["auth.verify"](context, requireVerification = false) {
     return new Promise((resolve, reject) => {
-      if (!context.getters["auth.authenticated"]) {
-        if (firebaseAuth.currentUser().emailVerified) resolve(1);
-        reject({
-          code: 403,
-          type: "email_not_verified",
-          message: "Email not verified"
-        });
-      } else {
-        if (context.getters["auth.me"].email_verified) resolve(1);
-        reject({
-          code: 403,
-          type: "email_not_verified",
-          message: "Email not verified"
-        });
-      }
-    })
-      .then(result => {
-        return result;
+      context.dispatch('auth.authenticate').then((me) => {
+        if (requireVerification) {
+          if (me.email_verified) {
+            resolve(me)
+          }
+          reject({
+            code: 403,
+            type: 'email_not_verified',
+            message: 'Email not verified',
+          })
+        }
+        resolve(1)
+      }).catch(error => {
+        reject(error)
       })
+    })
   },
   ["auth.authenticate"](context) {
-    if (context.getters["auth.authenticated"]) {
-      return;
+    if (context.getters['auth.authenticated']) {
+      return context.getters['auth.me']
     }
-    var unsubscribe; // stop listening auth change when it log out
+    var unsubscribe
     return new Promise((resolve, reject) => {
-      unsubscribe = firebaseAuth.onAuthStateChanged(user => {
-        // not logged in
+      unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
         if (!user) {
           reject({
             code: 401,
-            type: "logged_out",
-            message: "Logged out"
-          });
+            type: 'logged_out',
+            message: 'Logged out',
+          })
         }
-        // logged in
-        else {
-          context.dispatch("auth.me.fetch").then(() => {
-            resolve(1);
-          });
-        }
-      });
-    })
-      .then(result => {
-        return result;
+        context.dispatch('auth.me.fetch').then(() => {
+          resolve(user)
+        })
       })
-      .finally(() => {
-        unsubscribe();
-      });
+    }).finally(() => {
+      unsubscribe()
+    })
   },
   ["auth.me.idtoken.toast"](context) {
     toastIDToken(context);
