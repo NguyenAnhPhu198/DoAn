@@ -16,7 +16,7 @@
     </template>
     <template #status="{ item }">
       <td>
-        <TMessageStatus :id="item.status.id" />
+        <SMessageOrderStatus :id="item.status.id" />
       </td>
     </template>
     <template #supplier="{ item }">

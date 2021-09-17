@@ -1,13 +1,16 @@
 <template>
-  <CBadge :color="getColor">
-    {{ $t(status) }}
-  </CBadge>
+  <TMessageStatus
+    :id="id"
+    :statuses="statuses"
+    :color="getBadge"
+    :noTranslate="false"
+  />
 </template>
 
 <script>
 export default {
   props: {
-    status: {
+    id: {
       type: String,
       required: true,
       validator: function (value) {
@@ -16,11 +19,20 @@ export default {
     },
   },
   computed: {
-    getColor() {
-      switch (this.status) {
+    statuses() {
+      return [
+        { id: "unverified", name: "Unverified" },
+        { id: "verified", name: "Verified" },
+        { id: "disabled", name: "Disabled" },
+      ];
+    },
+    getBadge() {
+      switch (this.id) {
+        case "unverified":
+          return "warning";
         case "verified":
           return "success";
-        case "unverified":
+        case "disabled":
           return "danger";
         default:
           return "secondary";

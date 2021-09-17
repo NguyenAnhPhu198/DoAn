@@ -2,7 +2,7 @@
   <CCard>
     <CCardHeader>
       <TMessage content="User info" class="d-inline-flex mr-2" bold />
-      <SMessageUserStatus :status="checkUserStatus" />
+      <SMessageUserStatus :id="userStatus" />
       <div class="float-right">
         <SButtonResendVerificationEmail v-if="!auth.email_verified" />
         <SButtonResetPassword class="ml-2" />
@@ -58,7 +58,7 @@ export default {
     },
   },
   computed: {
-    checkUserStatus() {
+    userStatus() {
       return this.auth.email_verified ? "verified" : "unverified";
     },
   },
