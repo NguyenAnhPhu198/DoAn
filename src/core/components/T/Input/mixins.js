@@ -17,9 +17,21 @@ export default {
       required: false
     }
   },
+  data() {
+    return {
+      input: this.value,
+    }
+  },
   methods: {
     getLabel() {
-      return this.$t(this.label) || "...";
-    }
-  }
+      if (this.label) {
+        return this.$t(this.label) || "...";
+      }
+      return null;
+    },
+    setInput(input) {
+      this.$emit('update:value', input)
+      this.input = input;
+    },
+  },
 };

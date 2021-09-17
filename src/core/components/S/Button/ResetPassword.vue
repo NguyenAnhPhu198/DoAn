@@ -1,16 +1,21 @@
 <template>
-  <CButton color="primary" @click="resetPassword()">
-    {{ $t("Reset password") }}
+  <CButton :disabled="sending" color="primary" @click="resetPassword()">
+    <TMessage content="Reset password" />
   </CButton>
 </template>
 <script>
-
-import authenMixin from "@/workspaces/customer/mixins/authentication";
 export default {
-  mixins: [authenMixin],
+  data() {
+    return {
+      sending: false,
+    };
+  },
   methods: {
     resetPassword() {
-      this.$store.dispatch("auth.reset_password", this.auth.email);
+      this.sending = true;
+      this.$store.dispatch("auth.me.send_mail.reset_password").finally(() => {
+        this.sending = false;
+      });
     },
   },
 };

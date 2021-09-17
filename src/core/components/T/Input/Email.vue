@@ -1,21 +1,23 @@
 <template>
-  <TInputText
-    :inputOptions="{
-      ...inputOptions,
-      type: 'email',
-      prepend: '@',
-      autocomplete: 'email',
-    }"
-    :value="value"
-    @update:value="$emit('update:value', $event)"
-    placeholder="Enter your email"
-    :label="label"
+  <CInput
+    type="email"
+    autocomplete="email"
+    class="mb-0"
+    :value="input"
+    :label="getLabel()"
+    :placeholder="$t(placeholder)"
+    v-bind="inputOptions"
+    @change="setInput"
   >
-    <template #append-content>
-      <TButtonSave @click="$emit('click-save', $event)" v-if="savable" />
+    <template #prepend-content><CIcon name="cil-envelope-closed" /></template>
+    <template #append>
+      <TButtonSave
+        @click="$emit('click-save', input)"
+        v-if="savable"
+        variant="outline"
+      />
     </template>
-    <template #prepend-content> </template>
-  </TInputText>
+  </CInput>
 </template>
 
 <script>
@@ -27,6 +29,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    placeholder: {
+      type: String,
+      required: false,
+      default: "Enter email",
     },
   },
 };

@@ -4,7 +4,7 @@
     :value="value"
     @change="$emit('update:value', $event)"
     :type="toggle ? 'text' : 'password'"
-    :placeholder="$t('Enter your password')"
+    :placeholder="$t('Enter password')"
     :label="$t(label)"
     addWrapperClasses="append-label"
   >

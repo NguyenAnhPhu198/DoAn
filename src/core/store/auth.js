@@ -95,7 +95,7 @@ const actions = {
       context.commit("auth.me.purge");
     });
   },
-  ["auth.send_email_verify"](context) {
+  ["auth.me.send_mail.verification"](context) {
     return new Promise((resolve, reject) => {
       firebaseAuth
         .sendEmailVerify()
@@ -116,12 +116,12 @@ const actions = {
         });
     });
   },
-  ["auth.change_email"](context, email) {
+  ["auth.me.update_email"](context, email) {
     return new Promise((resolve, reject) => {
       firebaseAuth
         .updateEmail(email)
         .then(() => {
-          context.dispatch("auth.send_email_verify");
+          context.dispatch("auth.me.send_mail.verification");
           context.dispatch("auth.me.fetch");
           resolve();
         })
@@ -134,8 +134,19 @@ const actions = {
         });
     });
   },
-  ["auth.reset_password"](context, email) {
+  ["auth.me.send_mail.reset_password"](context) {
     return new Promise((resolve, reject) => {
+      const email = context.getters['auth.me'].email;
+      if (!email) {
+        const error = {
+          message: 'Email empty',
+        }
+        context.dispatch("errors.push", {
+          error: error,
+          notify: true
+        });
+        reject(error)
+      }
       firebaseAuth
         .sendPasswordResetEmail(email)
         .then(() => {
@@ -155,26 +166,10 @@ const actions = {
         });
     });
   },
-  ["auth.reAuthenticate"](context, data) {
-    return new Promise((resolve, reject) => {
-      firebaseAuth
-        .reAuthenticate(data)
-        .then(() => {
-          resolve();
-        })
-        .catch(error => {
-          context.dispatch("errors.push", {
-            error,
-            notify: true
-          });
-          reject(error);
-        });
-    });
-  },
   ["auth.verify"](context) {
     return new Promise((resolve, reject) => {
       if (!context.getters["auth.authenticated"]) {
-        if(firebaseAuth.currentUser().emailVerified) resolve(1);
+        if (firebaseAuth.currentUser().emailVerified) resolve(1);
         reject({
           code: 403,
           type: "email_not_verified",
@@ -192,7 +187,6 @@ const actions = {
       .then(result => {
         return result;
       })
-      .finally(() => {});
   },
   ["auth.authenticate"](context) {
     if (context.getters["auth.authenticated"]) {
