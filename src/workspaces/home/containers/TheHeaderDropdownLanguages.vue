@@ -6,9 +6,8 @@
     :toggler-text="$t('Language')"
   >
     <CDropdownItem
-    :class="{Item__Active: $i18n.locale === lang.language}"
+    :class="{active : $i18n.locale === lang.language}"
     v-for="lang in languages" :key="lang.language" :value="lang.title"
-
     @click="changeLocale(lang.language)"
     >
      <flag :iso="lang.flag" v-bind:squared=false class="mr-2" />
@@ -38,8 +37,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.Item__Active{
-  background-color: red;
-  color: white;
-}
 </style>>
