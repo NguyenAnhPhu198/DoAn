@@ -18,7 +18,7 @@ export function getBrowserLocale() {
     navigator.languages !== undefined ?
       navigator.languages[0] :
       navigator.language
-
+      
   if (!navigatorLocale) {
     return undefined
   }

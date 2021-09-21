@@ -15,6 +15,7 @@
           <CHeaderNav>
             <TheHeaderDropdownCart class="px-3" />
             <TheHeaderDropdownOrders class="px-3" />
+            <TheHeaderDropdownLanguages class="px-3" />
             <TheHeaderDropdownAccnt class="px-3" />
           </CHeaderNav>
         </CRow>
@@ -53,6 +54,7 @@
 import TheHeaderDropdownAccnt from "./TheHeaderDropdownAccnt";
 import TheHeaderDropdownOrders from "./TheHeaderDropdownOrders";
 import TheHeaderDropdownCart from "./TheHeaderDropdownCart";
+import TheHeaderDropdownLanguages from "./TheHeaderDropdownLanguages.vue";
 
 export default {
   name: "TheHeader",
@@ -60,6 +62,7 @@ export default {
     TheHeaderDropdownAccnt,
     TheHeaderDropdownOrders,
     TheHeaderDropdownCart,
+    TheHeaderDropdownLanguages
   },
 };
 </script>
