@@ -10,7 +10,7 @@
     v-for="lang in languages" :key="lang.language" :value="lang.title"
     @click="changeLocale(lang.language)"
     >
-     <flag :iso="lang.flag" v-bind:squared=false class="mr-2" />
+     <CIcon :name="lang.flag" class="mr-2" size="xl"/>
      {{$t(lang.title)}}
       </CDropdownItem>
   </CDropdown>
@@ -23,9 +23,9 @@ export default {
   data() {
     return {
       languages: [
-        { flag: 'gb', language: 'en', title: 'English' },
-        { flag: 'jp', language: 'ja', title: 'Japanese' },
-        { flag: 'vn', language: 'vi', title: 'VietNamese' },
+        { flag: 'cifGb', language: 'en', title: 'English' },
+        { flag: 'cifJp', language: 'ja', title: 'Japanese' },
+        { flag: 'cifVn', language: 'vi', title: 'VietNamese' },
       ],
     };
   },

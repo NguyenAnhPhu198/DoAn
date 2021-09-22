@@ -3,8 +3,9 @@ import {
   //
 } from '@coreui/icons-pro'
 import {
-  // cifPl,
-  //
+  cifVn,
+  cifJp,
+  cifGb
 } from '@coreui/icons-pro'
 import {
   cilCart,
@@ -26,8 +27,9 @@ export const iconsSet = Object.assign({}, {
   cilDescription,
   cilCart,
 }, {
-  //
-  // cifPl,
+  cifVn,
+  cifJp,
+  cifGb
 }, {
   //
   // cibGoogle,

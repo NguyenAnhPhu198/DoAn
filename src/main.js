@@ -7,8 +7,6 @@ import core, { options } from '@/core'
 core.init()
 
 import '@/core/components'
-import FlagIcon from 'vue-flag-icon';
-Vue.use(FlagIcon);
 
 new Vue({
   el: '#app',
