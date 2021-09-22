@@ -24,8 +24,8 @@ export default {
   'Services': 'Dịch vụ',
   'Pricing': 'Bảng giá',
   'Policies': 'Chính sách',
-  'Language': 'ngôn ngữ',
-  'VietNamese': 'Tiếng Việt',
+  'Language': 'Ngôn ngữ',
+  'Vietnamese': 'Tiếng Việt',
   'Japanese': 'Tiếng Nhật',
   'English': 'Tiếng Anh'
 };

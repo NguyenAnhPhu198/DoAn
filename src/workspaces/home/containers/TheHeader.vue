@@ -54,7 +54,7 @@
 import TheHeaderDropdownAccnt from "./TheHeaderDropdownAccnt";
 import TheHeaderDropdownOrders from "./TheHeaderDropdownOrders";
 import TheHeaderDropdownCart from "./TheHeaderDropdownCart";
-import TheHeaderDropdownLanguages from "./TheHeaderDropdownLanguages.vue";
+import TheHeaderDropdownLanguages from "./TheHeaderDropdownLanguages";
 
 export default {
   name: "TheHeader",
