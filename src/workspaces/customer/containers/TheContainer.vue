@@ -58,6 +58,7 @@ export default {
   storeModules: modules,
   created() {
     this.$store.dispatch("nav.set", navItems);
+    this.$store.dispatch("auth.shipment_infos.fetch");
   },
 };
 </script>

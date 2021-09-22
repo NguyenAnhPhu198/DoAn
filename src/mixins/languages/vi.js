@@ -24,4 +24,6 @@ export default {
   'Services': 'Dịch vụ',
   'Pricing': 'Bảng giá',
   'Policies': 'Chính sách',
+  'New address': 'Thêm mới',
+  'Default': 'Mặc định',
 };
