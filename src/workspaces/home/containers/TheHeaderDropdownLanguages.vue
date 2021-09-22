@@ -1,12 +1,15 @@
-<template>
+<template >
   <div>
-    <CDropdown color="info" class="m-2" :toggler-text="$t('Language')">
+    <CDropdown class="m-2" toggler-text="Ngôn ngữ">
+      <template #toggler-content>
+        <CIcon :name="getFirstFlag()" class="mr-2" size="xl"
+      /></template>
       <CDropdownItem
         :class="{ active: $i18n.locale === lang.language }"
         v-for="lang in languages"
         :key="lang.language"
         :value="lang.title"
-        @click="changeLocale(lang.language)"
+        @click="changeLocale(lang)"
       >
         <CIcon :name="lang.flag" class="mr-2" size="xl" />
         {{ $t(lang.title) }}
@@ -23,13 +26,21 @@ export default {
       languages: [
         { flag: "cifGb", language: "en", title: "English" },
         { flag: "cifJp", language: "ja", title: "Japanese" },
-        { flag: "cifVn", language: "vi", title: "VietNamese" },
+        { flag: "cifVn", language: "vi", title: "Vietamese" },
       ],
     };
   },
   methods: {
     changeLocale(locale) {
-      this.$i18n.locale = locale;
+      this.flag = locale.flag;
+      this.$i18n.locale = locale.language;
+    },
+    getFirstFlag() {
+      const language = this.languages.find(
+        (x) => x.language === this.$i18n.locale
+      );
+      console.log(this.$i18n.locale);
+      return language.flag;
     },
   },
 };
