@@ -32,7 +32,9 @@
       </slot>
       <slot name="suffix"></slot>
     </div>
-    <slot name="over-suffix"></slot>
+    <div>
+      <slot name="over-suffix"></slot>
+    </div>
   </div>
 </template>
 
