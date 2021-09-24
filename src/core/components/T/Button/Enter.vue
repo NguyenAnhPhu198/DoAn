@@ -1,6 +1,7 @@
 <template>
   <CLink v-if="!href" :to="`/${resource}/${slug}`">
     <CButton
+      v-bind="options"
       color="info"
       :variant="variant"
       :size="size"
@@ -14,6 +15,7 @@
   </CLink>
   <CLink v-else :href="href">
     <CButton
+      v-bind="options"
       color="info"
       :variant="variant"
       :size="size"

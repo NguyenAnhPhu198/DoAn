@@ -26,4 +26,13 @@ export default {
   'Policies': 'Chính sách',
   'New address': 'Thêm mới',
   'Default': 'Mặc định',
+  'Address': 'Địa chỉ',
+  'Province': 'Tỉnh thành',
+  'District': 'Quận huyện',
+  'Ward': 'Phường xã',
+  'Consignee': 'Người nhận',
+  'Tel': 'Số điện thoại',
+  'Address detail': 'Địa chỉ chi tiết',
+  'Note': 'Ghi chú',
+  'Set as default': 'Đặt làm mặc định',
 };

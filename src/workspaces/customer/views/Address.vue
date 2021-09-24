@@ -1,7 +1,7 @@
 <template>
   <CRow>
     <CCol col="12" class="mb-4">
-      <SButtonAddAddress />
+      <SButtonAddAddress @click="showCreate" />
     </CCol>
     <CCol v-for="address in list" :key="address.id" col="12">
       <SCardAddress :address="address" :loading="loading" />
@@ -11,6 +11,10 @@
         <TPagination store="auth.shipment_infos" />
       </slot>
     </CCol>
+    <SModalAddress
+      :show.sync="showModalAddress"
+      @created="showModalAddress = false"
+    />
   </CRow>
 </template>
 
@@ -18,12 +22,22 @@
 import { mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      showModalAddress: false,
+    };
+  },
   computed: {
     ...mapGetters({
       list: "auth.shipment_infos.list",
       loading: "auth.shipment_infos.fetching",
       paginate: "auth.shipment_infos.paginate",
     }),
+  },
+  methods: {
+    showCreate() {
+      this.showModalAddress = true;
+    },
   },
 };
 </script>

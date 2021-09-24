@@ -41,9 +41,20 @@ axiosProduct.interceptors.request.use(async function (config) {
   return config;
 })
 
+// Notification service
+const axiosNotification = axios.create({
+  baseURL: process.env.VUE_APP_NOTIFICATION_SERVICE_HOST,
+})
+
+axiosNotification.interceptors.request.use(async function (config) {
+  config.headers = await defaultHeaders()
+  return config;
+})
+
 const AuthService = new RESTApi(axiosAuth);
 const OrderService = new RESTApi(axiosOrder);
 const ProductService = new RESTApi(axiosProduct);
+const NotificationService = new RESTApi(axiosNotification);
 
 // ... service
 
@@ -51,4 +62,5 @@ export {
   AuthService,
   OrderService,
   ProductService,
+  NotificationService,
 }

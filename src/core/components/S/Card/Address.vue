@@ -2,8 +2,8 @@
   <CCard>
     <CCardBody :class="getLoadingClass">
       <div class="float-right">
-        <TButtonEdit v-if="editable" />
-        <TButtonRemove v-if="!address.default && deletable" />
+        <TButtonEdit v-if="editable" @click="showModalEdit = true" />
+        <TButtonRemove v-if="!input.default && deletable" @click="destroy" />
       </div>
       <TMessage :content="input.consignee" noTranslate bold capitalize />
       <TMessage
@@ -18,7 +18,7 @@
         size="small"
         color="success"
         class="ml-2 float-right"
-        v-if="address.default"
+        v-if="input.default"
       >
         <template #prefix>
           <CIcon name="cil-check-alt" />
@@ -33,6 +33,11 @@
         :truncate="1"
       />
     </CCardBody>
+    <SModalAddress
+      :show.sync="showModalEdit"
+      :address="input"
+      @updated="update"
+    />
   </CCard>
 </template>
 
@@ -58,12 +63,30 @@ export default {
   },
   data() {
     return {
-      input: this.address,
+      input_data: this.address,
+      showModalEdit: false,
     };
   },
   computed: {
+    input: {
+      get() {
+        return this.address;
+      },
+      set(value) {
+        this.input_data = value;
+      },
+    },
     getLoadingClass() {
       return this.loading ? "text-secondary" : null;
+    },
+  },
+  methods: {
+    update(value) {
+      this.showModalEdit = false;
+      this.input = value;
+    },
+    destroy() {
+      this.$store.dispatch("auth.shipment_infos.delete", this.input.id);
     },
   },
 };

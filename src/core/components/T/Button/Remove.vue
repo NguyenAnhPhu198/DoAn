@@ -1,5 +1,6 @@
 <template>
   <CButton
+    v-bind="options"
     color="danger"
     :variant="variant"
     :size="size"
