@@ -39,7 +39,6 @@ export default {
       const language = this.languages.find(
         (x) => x.language === this.$i18n.locale
       );
-      console.log(this.$i18n.locale);
       return language.flag;
     },
   },
