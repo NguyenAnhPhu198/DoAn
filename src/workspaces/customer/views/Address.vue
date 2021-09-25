@@ -8,7 +8,7 @@
     </CCol>
     <CCol v-show="paginate.last > 1" col="12" class="mt-2">
       <slot name="pagination">
-        <TPagination store="auth.shipment_infos" />
+        <TPagination store="auth.addresses" />
       </slot>
     </CCol>
     <SModalAddress
@@ -29,9 +29,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      list: "auth.shipment_infos.list",
-      loading: "auth.shipment_infos.fetching",
-      paginate: "auth.shipment_infos.paginate",
+      list: "auth.addresses.list",
+      loading: "auth.addresses.fetching",
+      paginate: "auth.addresses.paginate",
     }),
   },
   methods: {

@@ -3,14 +3,12 @@ import Resource from '@/core/store/Resource';
 const resource = new Resource(
   {
     service: 'auth',
-    resource: 'shipment_infos'
+    resource: 'addresses'
   },
   {
     default_detail: {
       id: null,
       user_id: null,
-      sender_name: null,
-      sender_tel: null,
       consignee: null,
       address: null,
       tel: null,

@@ -1,5 +1,5 @@
-import shipment_infos from "./auth/shipment_infos"
+import addresses from "./auth/addresses"
 
 export default {
-  shipment_infos,
+  addresses,
 }
