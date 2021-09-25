@@ -95,8 +95,6 @@ export default {
         ...this.input,
         default: +this.input.set_as_default,
         address: this.input.address_detail,
-        sender_name: "fill up field",
-        sender_tel: "fill up field",
       };
     },
   },
@@ -104,7 +102,7 @@ export default {
     create() {
       this.loading = true;
       this.$store
-        .dispatch("auth.shipment_infos.create", this.data_submit)
+        .dispatch("auth.addresses.create", this.data_submit)
         .then((data) => {
           this.clearForm();
           this.$emit("created", data);
@@ -116,7 +114,7 @@ export default {
     update() {
       this.loading = true;
       this.$store
-        .dispatch("auth.shipment_infos.update", {
+        .dispatch("auth.addresses.update", {
           id: this.address.id,
           attributes: this.data_submit,
         })

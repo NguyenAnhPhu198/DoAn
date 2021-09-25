@@ -86,7 +86,7 @@ export default {
       this.input = value;
     },
     destroy() {
-      this.$store.dispatch("auth.shipment_infos.delete", this.input.id);
+      this.$store.dispatch("auth.addresses.delete", this.input.id);
     },
   },
 };
