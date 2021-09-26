@@ -35,4 +35,5 @@ export default {
   'Address detail': 'Địa chỉ chi tiết',
   'Note': 'Ghi chú',
   'Set as default': 'Đặt làm mặc định',
+  'View detail': 'Xem chi tiết',
 };

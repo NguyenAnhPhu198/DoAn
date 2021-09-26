@@ -105,12 +105,18 @@ export default class Resource {
       [PREFIX + '.set-list'](state, list) {
         state[PREFIX_STATE + '_list'] = list;
       },
-      [PREFIX + '.push-list'](state, item) {
-        state[PREFIX_STATE + '_list'].push(item)
+      [PREFIX + '.push-list'](state, items) {
+        if (!Array.isArray(items)) {
+          items = [items]
+        }
+
+        state[PREFIX_STATE + '_list'].push(...items);
 
         // touch to relations
-        touches.forEach((touch) => {
-          this.commit(touch.STORE + '.merge', item[touch.KEY])
+        items.forEach((item) => {
+          touches.forEach((touch) => {
+            this.commit(touch.STORE + '.merge', item[touch.KEY])
+          })
         })
       },
       [PREFIX + '.merge'](state, data) {
@@ -204,15 +210,19 @@ export default class Resource {
 
   actions({ PREFIX, PREFIX_STATE, SERVICE, RESOURCE, PAGINATE }) {
     return {
-      [PREFIX + '.fetch'](context) {
+      [PREFIX + '.fetch'](context, option = { append: false }) {
         return new Promise((resolve, reject) => {
           context.commit(PREFIX + '.set-fetching', true);
           tomoni[SERVICE][RESOURCE]
             .all(context.getters[PREFIX + '.query'])
             .then(({ data }) => {
               if (PAGINATE) {
-                context.commit(PREFIX + '.set-list', data.data)
                 context.commit(PREFIX + '.set-paginate', data)
+                if (option.append) {
+                  context.commit(PREFIX + '.push-list', data.data)
+                } else {
+                  context.commit(PREFIX + '.set-list', data.data)
+                }
               } else {
                 context.commit(PREFIX + '.set-list', data)
               }
@@ -230,6 +240,12 @@ export default class Resource {
           return context.getters[PREFIX + '.list'];
         }
         return context.dispatch(PREFIX + '.fetch');
+      },
+      [PREFIX + '.append-next-page'](context) {
+        context.commit(PREFIX + '.push-query', {
+          page: context.getters[PREFIX + '.paginate'].current + 1,
+        })
+        return context.dispatch(PREFIX + '.fetch', { append: true })
       },
       [PREFIX + '.change-page'](context, page) {
         context.commit(PREFIX + '.push-query', { page })
