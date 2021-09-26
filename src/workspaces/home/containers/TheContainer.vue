@@ -41,6 +41,7 @@ export default {
   storeModules: modules,
   created() {
     this.$store.dispatch("nav.set", navItems);
+    this.$store.dispatch("product.suggest_products.fetch.if-first-time");
   },
 };
 </script>

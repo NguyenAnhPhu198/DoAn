@@ -10,7 +10,7 @@
         <SearchProducts />
       </CCol>
     </CRow>
-    <CRow>
+    <CRow class="mb-4">
       <CCol>
         <Products />
       </CCol>
