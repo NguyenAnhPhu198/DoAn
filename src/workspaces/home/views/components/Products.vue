@@ -6,6 +6,7 @@
       lg="3"
       md="4"
       col="6"
+      xxl="2"
       class="mb-2"
     >
       <SCardProduct :product="product" />

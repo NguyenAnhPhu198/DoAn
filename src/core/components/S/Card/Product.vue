@@ -1,22 +1,15 @@
 <template>
-  <div class="product">
+  <div class="card-product scroll-hidden">
     <CWidgetBrand class="w-100">
-      <CImg
-        class="product-image"
-        :src="getImageUrl()"
-        fluid
-        block
-        align="center"
-      />
+      <CImg :src="getImageUrl()" fluid block align="center" />
       <template #body>
-        <div class="p-2">
+        <div class="card-body p-2">
           <TMessage :content="product.name" :truncate="2" noTranslate />
           <TMessage
             :content="product.id"
             size="small"
             italic
             :truncate="1"
-            class="my-1"
             noTranslate
           />
           <TMessageMoney :amount="product.price" />
@@ -56,15 +49,24 @@ export default {
 };
 </script>
 
-<style scoped>
-.product {
-  height: 100%;
+<style>
+.card-product {
+  height: 3.2in;
   width: 100%;
   display: flex;
 }
 
-.product .product-image {
-  height: 30vh;
+.card-product .card-header {
+  height: 55%;
+}
+
+.card-product .card-header img {
+  height: 100%;
   object-fit: cover;
+}
+
+.card-product .card-body {
+  height: 35%;
+  overflow-y: auto;
 }
 </style>
