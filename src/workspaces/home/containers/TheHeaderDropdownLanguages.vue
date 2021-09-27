@@ -1,6 +1,6 @@
 <template >
   <div>
-    <CDropdown class="m-2" toggler-text="Ngôn ngữ">
+    <CDropdown class="m-2" toggler-text="Ngôn ngữ" inNav >
       <template #toggler-content>
         <CIcon :name="getFirstFlag()" class="mr-2" size="xl"
       /></template>
@@ -32,8 +32,10 @@ export default {
   },
   methods: {
     changeLocale(locale) {
+      localStorage.setItem('lang' , locale.language)
       this.flag = locale.flag;
       this.$i18n.locale = locale.language;
+      window.location.reload()
     },
     getFirstFlag() {
       const language = this.languages.find(

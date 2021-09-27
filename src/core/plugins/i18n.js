@@ -6,10 +6,11 @@ import Vue from 'vue'
 
 const messages = { en, vi, ja };
 Vue.use(VueI18n)
-
+let lang = localStorage.getItem('lang');
+lang = lang ? lang: getBrowserLocale();
 export default new VueI18n({
-  locale: getBrowserLocale(),
-  fallbackLocale: 'en',
+  locale: lang,
+  fallbackLocale: lang,
   messages,
 })
 
@@ -18,7 +19,7 @@ export function getBrowserLocale() {
     navigator.languages !== undefined ?
       navigator.languages[0] :
       navigator.language
-      
+
   if (!navigatorLocale) {
     return undefined
   }
