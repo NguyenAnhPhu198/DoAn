@@ -1,12 +1,12 @@
 import axios from "axios"
-import { getBrowserLocale } from '@/core/plugins/i18n'
+// import { getBrowserLocale } from '@/core/plugins/i18n'
 import firebaseAuth from '../firebase/auth'
 import RESTApi from '../rest.api'
 
 async function defaultHeaders() {
   return {
     'X-Firebase-IDToken': await firebaseAuth.getIdToken(),
-    'Accept-Language': getBrowserLocale(),
+    'Accept-Language': localStorage.getItem('lang'),
     'Accept': 'application/json',
   }
 }
