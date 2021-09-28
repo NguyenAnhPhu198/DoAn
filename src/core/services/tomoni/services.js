@@ -1,12 +1,12 @@
 import axios from "axios";
-// import { getBrowserLocale } from '@/core/plugins/i18n'
+import { getActiveLocale } from '@/core/plugins/i18n'
 import firebaseAuth from "../firebase/auth";
 import RESTApi from "../rest.api";
 
 async function defaultHeaders() {
   return {
     "X-Firebase-IDToken": await firebaseAuth.getIdToken(),
-    "Accept-Language": localStorage.getItem("lang"),
+    "Accept-Language": getActiveLocale(),
     Accept: "application/json"
   };
 }
@@ -16,7 +16,7 @@ const axiosAuth = axios.create({
   baseURL: process.env.VUE_APP_AUTH_SERVICE_HOST
 });
 
-axiosAuth.interceptors.request.use(async function(config) {
+axiosAuth.interceptors.request.use(async function (config) {
   config.headers = await defaultHeaders();
   return config;
 });
@@ -26,7 +26,7 @@ const axiosOrder = axios.create({
   baseURL: process.env.VUE_APP_ORDER_SERVICE_HOST
 });
 
-axiosOrder.interceptors.request.use(async function(config) {
+axiosOrder.interceptors.request.use(async function (config) {
   config.headers = await defaultHeaders();
   return config;
 });
@@ -36,7 +36,7 @@ const axiosProduct = axios.create({
   baseURL: process.env.VUE_APP_PRODUCT_SERVICE_HOST
 });
 
-axiosProduct.interceptors.request.use(async function(config) {
+axiosProduct.interceptors.request.use(async function (config) {
   config.headers = await defaultHeaders();
   return config;
 });
@@ -46,7 +46,7 @@ const axiosNotification = axios.create({
   baseURL: process.env.VUE_APP_NOTIFICATION_SERVICE_HOST
 });
 
-axiosNotification.interceptors.request.use(async function(config) {
+axiosNotification.interceptors.request.use(async function (config) {
   config.headers = await defaultHeaders();
   return config;
 });
@@ -58,4 +58,9 @@ const NotificationService = new RESTApi(axiosNotification);
 
 // ... service
 
-export { AuthService, OrderService, ProductService, NotificationService };
+export {
+  AuthService,
+  OrderService,
+  ProductService,
+  NotificationService,
+}

@@ -4,17 +4,31 @@ import vi from "@/mixins/languages/vi";
 import ja from "@/mixins/languages/ja";
 import Vue from "vue";
 
-const messages = { en, vi, ja };
 Vue.use(VueI18n);
-let lang = localStorage.getItem("lang");
-lang = lang ? lang : getBrowserLocale();
-export default new VueI18n({
-  locale: lang,
-  fallbackLocale: lang,
-  messages
-});
 
-export function getBrowserLocale() {
+const messages = { en, vi, ja };
+
+const fallback = "en";
+
+export const locales = [
+  { id: "en", name: "English", flag: "cif-gb" },
+  { id: "ja", name: "Japanese", flag: "cif-jp" },
+  { id: "vi", name: "Vietnamese", flag: "cif-vn" },
+]
+
+export default new VueI18n({
+  locale: getActiveLocale(),
+  fallbackLocale: fallback,
+  messages,
+})
+
+export function getActiveLocale() {
+  const locale = getRememberLocale() ?? getBrowserLocale();
+  const included = locales.some(item => item.id === locale);
+  return included ? locale : fallback;
+}
+
+function getBrowserLocale() {
   const navigatorLocale =
     navigator.languages !== undefined
       ? navigator.languages[0]
@@ -25,4 +39,12 @@ export function getBrowserLocale() {
   }
 
   return navigatorLocale.trim().split(/-|_/)[0];
+}
+
+function getRememberLocale() {
+  return localStorage.getItem("locale");
+}
+
+export function setRememberLocale(locale) {
+  localStorage.setItem("locale", locale)
 }
