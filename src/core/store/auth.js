@@ -195,8 +195,8 @@ const actions = {
           })
           return
         }
-        context.dispatch('auth.me.fetch').then(() => {
-          resolve(user)
+        context.dispatch('auth.me.fetch').then((me) => {
+          resolve(me)
         })
       })
     }).finally(() => {

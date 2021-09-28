@@ -13,6 +13,7 @@
           </CHeaderNav>
           <CHeaderNav class="mr-auto" />
           <CHeaderNav>
+            <TheHeaderDropdownLang class="px-3" />
             <TheHeaderDropdownCart class="px-3" />
             <TheHeaderDropdownOrders class="px-3" />
             <TheHeaderDropdownAccnt class="px-3" />
@@ -53,6 +54,7 @@
 import TheHeaderDropdownAccnt from "./TheHeaderDropdownAccnt";
 import TheHeaderDropdownOrders from "./TheHeaderDropdownOrders";
 import TheHeaderDropdownCart from "./TheHeaderDropdownCart";
+import TheHeaderDropdownLang from "@/containers/TheHeaderDropdownLang";
 
 export default {
   name: "TheHeader",
@@ -60,6 +62,7 @@ export default {
     TheHeaderDropdownAccnt,
     TheHeaderDropdownOrders,
     TheHeaderDropdownCart,
+    TheHeaderDropdownLang,
   },
 };
 </script>

@@ -34,10 +34,11 @@
           <CIcon v-else name="cil-moon" />
         </button>
       </CHeaderNavItem>
-      <TheHeaderDropdownNotif />
-      <TheHeaderDropdownTasks />
-      <TheHeaderDropdownMssgs />
-      <TheHeaderDropdownAccnt />
+      <TheHeaderDropdownLang class="px-1" />
+      <TheHeaderDropdownNotif class="px-1" />
+      <TheHeaderDropdownTasks class="px-1" />
+      <TheHeaderDropdownMssgs class="px-1" />
+      <TheHeaderDropdownAccnt class="px-1" />
       <CHeaderNavItem class="px-3">
         <button
           class="c-header-nav-btn"
@@ -59,6 +60,7 @@ import TheHeaderDropdownAccnt from "./TheHeaderDropdownAccnt";
 import TheHeaderDropdownNotif from "./TheHeaderDropdownNotif";
 import TheHeaderDropdownTasks from "./TheHeaderDropdownTasks";
 import TheHeaderDropdownMssgs from "./TheHeaderDropdownMssgs";
+import TheHeaderDropdownLang from "./TheHeaderDropdownLang";
 
 export default {
   name: "TheHeader",
@@ -67,6 +69,7 @@ export default {
     TheHeaderDropdownNotif,
     TheHeaderDropdownTasks,
     TheHeaderDropdownMssgs,
+    TheHeaderDropdownLang,
   },
 };
 </script>
