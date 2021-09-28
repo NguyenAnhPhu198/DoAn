@@ -1,14 +1,10 @@
-import // cibGoogle,
-//
-"@coreui/icons-pro";
-import { cifVn, cifJp, cifGb } from "@coreui/icons-pro";
 import {
-  cisEye,
-  cisEyeSlash,
+  cisEye, cisEyeSlash,
   cilCart,
   cilDescription,
   cilCheckAlt,
-  cisPlus
+  cisPlus,
+  cifVn, cifJp, cifGb,
 } from "@coreui/icons-pro";
 
 import { logo } from "@/core/assets/icons/logo";
