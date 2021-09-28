@@ -35,9 +35,7 @@ export default {
       localStorage.setItem("lang", locale.language);
       this.flag = locale.flag;
       this.$i18n.locale = locale.language;
-      this.$store.dispatch("auth.me.fetch").then(() => {
-        window.location.reload();
-      });
+      window.location.reload();
     },
     getFirstFlag() {
       const language = this.languages.find(
