@@ -24,22 +24,22 @@
             <CHeaderNav class="mr-auto" style="overflow-x: auto">
               <CNavItem>
                 <CHeaderNavLink to="/" exact>
-                  <TMessage content="Home" uppercase />
+                  <TMessage content="Home" noWrap uppercase />
                 </CHeaderNavLink>
               </CNavItem>
               <CNavItem>
                 <CHeaderNavLink to="/services" exact>
-                  <TMessage content="Services" uppercase />
+                  <TMessage content="Services" noWrap uppercase />
                 </CHeaderNavLink>
               </CNavItem>
               <CNavItem>
                 <CHeaderNavLink to="/pricing" exact>
-                  <TMessage content="Pricing" uppercase />
+                  <TMessage content="Pricing" noWrap uppercase />
                 </CHeaderNavLink>
               </CNavItem>
               <CNavItem>
                 <CHeaderNavLink to="/policies" exact>
-                  <TMessage content="Policies" uppercase />
+                  <TMessage content="Policies" noWrap uppercase />
                 </CHeaderNavLink>
               </CNavItem>
             </CHeaderNav>

@@ -26,5 +26,17 @@ export default {
   'Policies': 'Chính sách',
   'Vietnamese': 'Tiếng Việt',
   'Japanese': 'Tiếng Nhật',
-  'English': 'Tiếng Anh'
+  'English': 'Tiếng Anh',
+  'New address': 'Thêm mới',
+  'Default': 'Mặc định',
+  'Address': 'Địa chỉ',
+  'Province': 'Tỉnh thành',
+  'District': 'Quận huyện',
+  'Ward': 'Phường xã',
+  'Consignee': 'Người nhận',
+  'Tel': 'Số điện thoại',
+  'Address detail': 'Địa chỉ chi tiết',
+  'Note': 'Ghi chú',
+  'Set as default': 'Đặt làm mặc định',
+  'View detail': 'Xem chi tiết',
 };

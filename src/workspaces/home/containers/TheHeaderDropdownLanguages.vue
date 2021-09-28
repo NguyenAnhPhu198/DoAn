@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     changeLocale(locale) {
-      localStorage.setItem('lang' , locale.language)
+      localStorage.setItem('lang', locale.language)
       this.flag = locale.flag;
       this.$i18n.locale = locale.language;
       this.$store.dispatch("auth.me.fetch").then(() => {window.location.reload()})

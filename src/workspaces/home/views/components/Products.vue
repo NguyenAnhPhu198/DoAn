@@ -1,11 +1,27 @@
 <template>
   <CRow>
-    <CCol v-for="n in 30" :key="n" lg="3" md="4" col="6" class="mb-4">
-      <SCardProduct />
+    <CCol
+      v-for="product of suggest_products"
+      :key="product.id"
+      lg="3"
+      md="4"
+      col="6"
+      xxl="2"
+      class="mb-2"
+    >
+      <SCardProduct :product="product" />
     </CCol>
   </CRow>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters({
+      suggest_products: "product.suggest_products.list",
+    }),
+  },
+};
 </script>

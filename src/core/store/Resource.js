@@ -105,12 +105,18 @@ export default class Resource {
       [PREFIX + '.set-list'](state, list) {
         state[PREFIX_STATE + '_list'] = list;
       },
-      [PREFIX + '.push-list'](state, item) {
-        state[PREFIX_STATE + '_list'].push(item)
+      [PREFIX + '.push-list'](state, items) {
+        if (!Array.isArray(items)) {
+          items = [items]
+        }
+
+        state[PREFIX_STATE + '_list'].push(...items);
 
         // touch to relations
-        touches.forEach((touch) => {
-          this.commit(touch.STORE + '.merge', item[touch.KEY])
+        items.forEach((item) => {
+          touches.forEach((touch) => {
+            this.commit(touch.STORE + '.merge', item[touch.KEY])
+          })
         })
       },
       [PREFIX + '.merge'](state, data) {
@@ -164,6 +170,16 @@ export default class Resource {
       [PREFIX + '.detail.set-detail'](state, data) {
         state[PREFIX_STATE + '_detail'] = data;
       },
+      [PREFIX + '.detail.purge'](state) {
+        state[PREFIX_STATE + '_detail'] = null;
+      },
+      [PREFIX + '.list.purge'](state) {
+        state[PREFIX_STATE + '_list'] = [];
+      },
+      [PREFIX + '.purge'](state) {
+        state[PREFIX_STATE + '_list'] = [];
+        state[PREFIX_STATE + '_detail'] = null;
+      },
       [PREFIX + '.select'](state, id) {
         const selected = state[PREFIX_STATE + '_list'].find((item) => item[PRIMARY_KEY] == id)
         this.commit(PREFIX + '.detail.set-detail', selected);
@@ -194,18 +210,19 @@ export default class Resource {
 
   actions({ PREFIX, PREFIX_STATE, SERVICE, RESOURCE, PAGINATE }) {
     return {
-      [PREFIX + '.fetch'](context) {
-        if (context.getters[PREFIX + '.fetching']) {
-          return;
-        }
-        return new Promise((resolve) => {
+      [PREFIX + '.fetch'](context, option = { append: false }) {
+        return new Promise((resolve, reject) => {
           context.commit(PREFIX + '.set-fetching', true);
           tomoni[SERVICE][RESOURCE]
             .all(context.getters[PREFIX + '.query'])
             .then(({ data }) => {
               if (PAGINATE) {
-                context.commit(PREFIX + '.set-list', data.data)
                 context.commit(PREFIX + '.set-paginate', data)
+                if (option.append) {
+                  context.commit(PREFIX + '.push-list', data.data)
+                } else {
+                  context.commit(PREFIX + '.set-list', data.data)
+                }
               } else {
                 context.commit(PREFIX + '.set-list', data)
               }
@@ -214,30 +231,37 @@ export default class Resource {
             }).catch((error) => {
               context.commit(PREFIX + '.set-fetching', false);
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
       [PREFIX + '.fetch.if-first-time'](context) {
         if (context.getters[PREFIX + '.list'].length) {
-          return;
+          return context.getters[PREFIX + '.list'];
         }
         return context.dispatch(PREFIX + '.fetch');
       },
+      [PREFIX + '.append-next-page'](context) {
+        context.commit(PREFIX + '.push-query', {
+          page: context.getters[PREFIX + '.paginate'].current + 1,
+        })
+        return context.dispatch(PREFIX + '.fetch', { append: true })
+      },
       [PREFIX + '.change-page'](context, page) {
         context.commit(PREFIX + '.push-query', { page })
-        context.dispatch(PREFIX + '.fetch')
+        return context.dispatch(PREFIX + '.fetch')
       },
       [PREFIX + '.push-query'](context, query) {
         context.commit(PREFIX + '.push-query', query)
-        context.dispatch(PREFIX + '.fetch')
+        return context.dispatch(PREFIX + '.fetch')
       },
       [PREFIX + '.apply-query'](context, query) {
         context.commit(PREFIX + '.reset-query')
         context.commit(PREFIX + '.push-query', query)
-        context.dispatch(PREFIX + '.fetch')
+        return context.dispatch(PREFIX + '.fetch')
       },
       [PREFIX + '.create'](context, attributes) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           context.commit(PREFIX + '.detail.set-creating', true);
           tomoni[SERVICE][RESOURCE].create(attributes)
             .then(({ data }) => {
@@ -251,11 +275,12 @@ export default class Resource {
             }).catch((error) => {
               context.commit(PREFIX + '.detail.set-creating', false);
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
       [PREFIX + '.update'](context, { id, attributes }) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           tomoni[SERVICE][RESOURCE].update(id, attributes)
             .then(({ data }) => {
               context.commit(PREFIX + '.merge', data)
@@ -266,11 +291,12 @@ export default class Resource {
               resolve(data)
             }).catch((error) => {
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
       [PREFIX + '.delete'](context, id) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           tomoni[SERVICE][RESOURCE].delete(id)
             .then(({ data }) => {
               context.commit(PREFIX + '.delete', { id, data });
@@ -281,15 +307,12 @@ export default class Resource {
               resolve(data)
             }).catch((error) => {
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
       [PREFIX + '.detail.fetch'](context, id) {
-        // if is fetching then skip
-        if (context.getters[PREFIX + '.detail.fetching']) {
-          return;
-        }
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           context.commit(PREFIX + '.detail.set-fetching', true);
           tomoni[SERVICE][RESOURCE].get(id, context.state[PREFIX_STATE + '_detail_query'])
             .then(({ data }) => {
@@ -299,11 +322,12 @@ export default class Resource {
             }).catch((error) => {
               context.commit(PREFIX + '.detail.set-fetching', false);
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
       [PREFIX + '.detail.update'](context, attributes) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           context.commit(PREFIX + '.detail.set-updating', true);
           tomoni[SERVICE][RESOURCE].update(context.getters[PREFIX + '.detail.id'], attributes)
             .then(({ data }) => {
@@ -317,11 +341,12 @@ export default class Resource {
             }).catch((error) => {
               context.commit(PREFIX + '.detail.set-updating', false);
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
       [PREFIX + '.detail.delete'](context) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           context.commit(PREFIX + '.detail.set-deleting', true);
           tomoni[SERVICE][RESOURCE].delete(context.getters[PREFIX + '.detail.id'])
             .then(({ data }) => {
@@ -335,6 +360,7 @@ export default class Resource {
             }).catch((error) => {
               context.commit(PREFIX + '.detail.set-deleting', false);
               context.dispatch('errors.push-http-error', error);
+              reject(error);
             });
         });
       },
