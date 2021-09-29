@@ -57,7 +57,7 @@ export default {
 }
 
 .card-product .card-header {
-  height: 55%;
+  height: 53%;
 }
 
 .card-product .card-header img {
@@ -66,7 +66,7 @@ export default {
 }
 
 .card-product .card-body {
-  height: 35%;
+  height: 37%;
   overflow-y: auto;
 }
 </style>

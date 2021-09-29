@@ -3,11 +3,7 @@
     <div class="header-top mx-3 mx-md-4">
       <CHeaderNav class="mr-auto d-md-none">
         <CHeaderBrand to="/">
-          <CIcon
-            src="https://tomoniglobal-dev.s3.ap-northeast-1.amazonaws.com/public/logo.png"
-            height="20"
-            alt="Logo"
-          />
+          <CIcon :src="`${assets_url}/logo.png`" height="20" alt="Logo" />
         </CHeaderBrand>
       </CHeaderNav>
       <CHeaderNav class="mr-md-auto">
@@ -18,38 +14,34 @@
       </CHeaderNav>
     </div>
     <CSubheader class="flex-nowrap scroll-hidden">
-      <CHeaderBrand class="mr-auto ml-4 pl-1 d-sm-down-none" to="/">
-        <CIcon
-          src="https://tomoniglobal-dev.s3.ap-northeast-1.amazonaws.com/public/logo.png"
-          height="48"
-          alt="Logo"
-        />
+      <CHeaderBrand class="ml-4 pl-1 d-sm-down-none" to="/">
+        <CIcon :src="`${assets_url}/logo.png`" height="48" alt="Logo" />
       </CHeaderBrand>
       <slot name="prepend"></slot>
-      <CHeaderNav class="ml-auto" style="overflow-x: auto">
-        <CNavItem>
-          <CHeaderNavLink to="/" exact>
-            <TMessage content="Home" noWrap uppercase />
-          </CHeaderNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CHeaderNavLink to="/services" exact>
-            <TMessage content="Services" noWrap uppercase />
-          </CHeaderNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CHeaderNavLink to="/pricing" exact>
-            <TMessage content="Pricing" noWrap uppercase />
-          </CHeaderNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CHeaderNavLink to="/policies" exact>
-            <TMessage content="Policies" noWrap uppercase />
-          </CHeaderNavLink>
-        </CNavItem>
+      <CHeaderNav class="mx-auto" style="overflow-x: auto">
+        <SMessageMarket name="Tomoni market" to="/" icon="logo-sm" />
+        <SMessageMarket
+          name="Y!Auction"
+          to="/market/y-auction"
+          icon="logo-yauction-sm"
+        />
+        <SMessageMarket
+          name="Y!Shopping"
+          to="/market/y-shopping"
+          icon="logo-yshopping-sm"
+        />
+        <SMessageMarket
+          name="Rakuten"
+          to="/market/rakuten"
+          icon="logo-rakuten-sm"
+        />
+        <SMessageMarket
+          name="Amazon"
+          to="/market/amazon"
+          icon="logo-amazon-sm"
+        />
       </CHeaderNav>
       <CHeaderNav class="mr-2 mr-md-4">
-        <CNavItem class="c-vr" />
         <TheHeaderDropdownCart class="px-3 px-lg-4" />
         <CNavItem v-if="meID" class="c-vr" />
         <TheHeaderDropdownOrders class="px-3 px-lg-4" />
@@ -71,6 +63,11 @@ export default {
     TheHeaderDropdownOrders,
     TheHeaderDropdownCart,
     TheHeaderDropdownLang,
+  },
+  data() {
+    return {
+      assets_url: process.env.VUE_APP_ASSETS_URL,
+    };
   },
 };
 </script>
