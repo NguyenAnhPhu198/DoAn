@@ -1,15 +1,13 @@
 <template>
   <CDropdown
     v-if="meID"
-    :caret="false"
-    placement="bottom-end"
     in-nav
-    class="c-header-nav-item mx-2"
+    class="c-header-nav-item"
     add-menu-classes="pt-0"
   >
     <template #toggler>
       <CHeaderNavLink>
-        <CIcon size="lg" name="cil-description" />
+        <CIcon size="xl" name="cil-description" />
         <CBadge shape="pill" color="info">{{ itemsCount }}</CBadge>
       </CHeaderNavLink>
     </template>

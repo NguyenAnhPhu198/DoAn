@@ -7,7 +7,12 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <CIcon :name="getActiveLocale().flag" size="lg" />
+        <CIcon size="lg" :name="getActiveLocale().flag" />
+        <TMessage
+          :content="getActiveLocale().name"
+          noTranslate
+          class="ml-2 d-sm-down-none"
+        />
       </CHeaderNavLink>
     </template>
     <CDropdownItem
@@ -16,14 +21,18 @@
       @click="updateLocale(locale)"
       :disabled="locale.id === getActiveLocale().id"
     >
-      <CIcon :name="locale.flag" size="lg" class="mr-1" />
+      <CIcon :name="locale.flag" size="lg" class="mr-2" />
       <TMessage :content="locale.name" noTranslate />
     </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
-import { setRememberLocale, getActiveLocale, locales } from "@/core/plugins/i18n";
+import {
+  setRememberLocale,
+  getActiveLocale,
+  locales,
+} from "@/core/plugins/i18n";
 
 export default {
   data() {

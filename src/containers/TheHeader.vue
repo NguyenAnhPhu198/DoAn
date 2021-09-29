@@ -34,7 +34,7 @@
           <CIcon v-else name="cil-moon" />
         </button>
       </CHeaderNavItem>
-      <TheHeaderDropdownLang class="px-1" />
+      <TheHeaderDropdownLang class="px-1" size="xl" />
       <TheHeaderDropdownNotif class="px-1" />
       <TheHeaderDropdownTasks class="px-1" />
       <TheHeaderDropdownMssgs class="px-1" />
