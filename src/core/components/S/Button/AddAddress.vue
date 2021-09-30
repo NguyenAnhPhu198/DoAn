@@ -13,11 +13,3 @@
 <script>
 export default {};
 </script>
-
-<style lang="css" scoped>
-.btn-add-address {
-  width: 100%;
-  height: 50px;
-  background: white;
-}
-</style>

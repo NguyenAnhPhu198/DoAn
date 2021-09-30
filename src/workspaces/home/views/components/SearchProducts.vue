@@ -6,6 +6,7 @@
       class="search-box-input mb-0"
       @update:value="onChange"
       :value.sync="input"
+      type="search"
     >
       <template #prepend-content
         ><CIcon name="cil-magnifying-glass"
