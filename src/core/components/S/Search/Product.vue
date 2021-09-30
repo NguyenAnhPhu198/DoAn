@@ -4,7 +4,7 @@
       :size="size"
       @update:value="onChange"
       :value.sync="input"
-      :placeholder="option.placeholder"
+      :placeholder="$t(option.placeholder)"
       type="search"
     >
       <template #prepend-content>
@@ -21,7 +21,7 @@ export default {
     size: {
       type: String,
       required: false,
-      default: "md",
+      default: undefined,
     },
     options: {
       type: Array,

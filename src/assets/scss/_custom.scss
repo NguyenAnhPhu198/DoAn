@@ -91,3 +91,15 @@
         }
     }
 }
+
+.v-line {
+    width: 100%;
+    height: 3px;
+    background: $primary;
+}
+
+.h-line {
+    width: 3px;
+    height: 100%;
+    background: $primary;
+}
