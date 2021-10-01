@@ -1,7 +1,7 @@
 <template>
   <div class="btn-add-address">
     <CButton class="w-100 h-100" @click="$emit('click')">
-      <TMessage content="New address" alignment="center" color="info">
+      <TMessage content="New address" alignment="center" color="primary">
         <template #prefix>
           <CIcon name="cis-plus" class="mr-1" />
         </template>

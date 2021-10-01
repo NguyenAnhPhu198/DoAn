@@ -2,7 +2,7 @@
   <CLink v-if="!href" :to="`/${resource}/${slug}`">
     <CButton
       v-bind="options"
-      color="info"
+      color="primary"
       :variant="variant"
       :size="size"
       @click="$emit('click')"
@@ -16,7 +16,7 @@
   <CLink v-else :href="href">
     <CButton
       v-bind="options"
-      color="info"
+      color="primary"
       :variant="variant"
       :size="size"
       @click="$emit('click')"

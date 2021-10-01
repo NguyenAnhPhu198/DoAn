@@ -1,7 +1,7 @@
 <template>
   <CButton
     v-bind="options"
-    color="info"
+    color="primary"
     :variant="variant"
     :size="size"
     @click="$emit('click')"

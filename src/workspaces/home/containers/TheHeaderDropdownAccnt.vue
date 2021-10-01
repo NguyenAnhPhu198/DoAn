@@ -8,7 +8,7 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <CIcon size="lg" class="text-info" name="cil-user" />
+        <CIcon size="lg" class="text-primary" name="cil-user" />
         <TMessage :content="meID" noTranslate />
       </CHeaderNavLink>
     </template>
@@ -32,7 +32,7 @@
     </CDropdownItem>
     <CDropdownDivider />
     <CDropdownItem to="/customer" exact>
-      <CIcon class="text-info" name="cil-user" />
+      <CIcon class="text-primary" name="cil-user" />
       <TMessage content="Account" />
     </CDropdownItem>
     <CDropdownItem @click="showIdToken">

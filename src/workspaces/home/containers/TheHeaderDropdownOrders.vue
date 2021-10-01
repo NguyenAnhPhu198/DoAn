@@ -8,7 +8,7 @@
     <template #toggler>
       <CHeaderNavLink>
         <CIcon size="xl" name="cil-description" />
-        <CBadge shape="pill" color="info">{{ itemsCount }}</CBadge>
+        <CBadge shape="pill" color="primary">{{ itemsCount }}</CBadge>
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center bg-light">
