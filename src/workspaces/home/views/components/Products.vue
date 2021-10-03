@@ -1,7 +1,7 @@
 <template>
   <CRow>
     <CCol
-      v-for="product of suggest_products"
+      v-for="product of products"
       :key="product.id"
       lg="3"
       md="4"
@@ -15,13 +15,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
+  props: {
+    store: {
+      type: String,
+      required: true,
+    },
+  },
   computed: {
-    ...mapGetters({
-      suggest_products: "product.suggest_products.list",
-    }),
+    products() {
+      return this.$store.getters[`product.${this.store}.list`];
+    },
   },
 };
 </script>

@@ -19,7 +19,11 @@
       </CHeaderBrand>
       <slot name="prepend"></slot>
       <CHeaderNav class="mx-auto" style="overflow-x: auto">
-        <SSearchProduct style="width: 50vw" :options="markets" />
+        <SSearchProduct
+          style="width: 50vw"
+          :options="markets"
+          @search="onSearch"
+        />
       </CHeaderNav>
       <CHeaderNav class="mr-2 mr-md-4">
         <TheHeaderDropdownCart class="px-3 px-lg-4" />
@@ -29,25 +33,29 @@
     </CSubheader>
     <CSubheader class="header-end flex-nowrap scroll-hidden">
       <CHeaderNav class="mx-auto" style="overflow-x: auto">
-        <SMessageMarket name="Tomoni market" to="/" icon="logo-sm" />
+        <SMessageMarket
+          name="Tomoni market"
+          to="/markets/tomoni"
+          icon="logo-sm"
+        />
         <SMessageMarket
           name="Y!Auction"
-          to="/market/y-auction"
+          to="/markets/y-auction"
           icon="logo-yauction-sm"
         />
         <SMessageMarket
           name="Y!Shopping"
-          to="/market/y-shopping"
+          to="/markets/y-shopping"
           icon="logo-yshopping-sm"
         />
         <SMessageMarket
           name="Rakuten"
-          to="/market/rakuten"
+          to="/markets/rakuten"
           icon="logo-rakuten-sm"
         />
         <SMessageMarket
           name="Amazon"
-          to="/market/amazon"
+          to="/markets/amazon"
           icon="logo-amazon-sm"
         />
       </CHeaderNav>
@@ -75,27 +83,42 @@ export default {
       markets: [
         {
           value: "tomoni",
+          store: "tomoni_products",
           label: "Tomoni Market",
           placeholder: "Name or jancode of product you want to search",
+          route: "/markets/tomoni",
           default: true,
         },
         {
           value: "yshopping",
           label: "Y! Shopping",
           placeholder: "Link or name of product you want to search",
+          route: "/markets/yshopping",
         },
         {
           value: "yaction",
           label: "Y! Auction",
           placeholder: "Link or name of product you want to search",
+          route: "/markets/yaction",
         },
         {
           value: "rakuten",
           label: "Rakuten",
           placeholder: "Link or name of product you want to search",
+          route: "/markets/rakuten",
         },
       ],
     };
+  },
+  methods: {
+    onSearch({ key, option }) {
+      this.$store.dispatch(`product.${option.store}.push-query`, {
+        search: key,
+      });
+      if(key !== "") {
+        this.$redirect.to(option.route);
+      }
+    },
   },
 };
 </script>

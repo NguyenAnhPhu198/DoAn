@@ -39,4 +39,5 @@ export default {
   'Name or jancode of product you want to search': 'Tên hoặc jancode sản phẩm muốn tìm',
   'Link or name of product you want to search': 'Link hoặc tên sản phẩm muốn tìm',
   'Suggest for you': 'Gợi ý cho bạn',
+  'Top products': 'Sản phẩm hàng đầu',
 };

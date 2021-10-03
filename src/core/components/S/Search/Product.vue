@@ -2,7 +2,8 @@
   <div class="product-search">
     <CInput
       :size="size"
-      @update:value="onChange"
+      @change="onChange"
+      @input="catchClear"
       :value.sync="input"
       :placeholder="$t(option.placeholder)"
       type="search"
@@ -10,7 +11,7 @@
       <template #prepend-content>
         <CSelect class="m-0" @update:value="setOption" :options="options" />
       </template>
-      <template #append-content><CIcon name="cil-magnifying-glass" /></template>
+      <template #append-content><TButtonSearch @click="fireSearch" /></template>
     </CInput>
   </div>
 </template>
@@ -50,10 +51,19 @@ export default {
       this.onChange(this.input);
     },
     onChange(input) {
+      this.input = input;
+      this.fireSearch();
+    },
+    fireSearch() {
       this.$emit("search", {
-        key: input,
+        key: this.input,
         option: this.option,
       });
+    },
+    catchClear(input) {
+      if (input === "") {
+        this.onChange("");
+      }
     },
   },
 };
