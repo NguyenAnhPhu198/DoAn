@@ -73,6 +73,12 @@
                     background-color: themes-get-value("input-bg");
                     border-color: themes-get-value("input-border-color");
                 }
+                padding: 0;
+                .btn {
+                    height: 100% !important;
+                    border-radius: 0 2rem 2rem 0 !important;
+                    border: none;
+                }
             }
         }
         .input-group {

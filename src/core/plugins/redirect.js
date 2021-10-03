@@ -8,6 +8,12 @@ export default {
    * },
    */
   to(params) {
+    if (params.path && router.currentRoute.path == params.path) {
+      return;
+    }
+    if (router.currentRoute.path == params) {
+      return;
+    }
     router.push(params);
   },
 
