@@ -60,6 +60,7 @@ export default {
 <style lang="scss">
 // Import main styles for this container
 .container-home {
+  max-width: 1400px;
   @import "../assets/scss/style";
 }
 </style>
