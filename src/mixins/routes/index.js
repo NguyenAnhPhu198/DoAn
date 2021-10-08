@@ -1,47 +1,57 @@
-import homeRoutes from '@/workspaces/home/mixins/routes'
-import customerRoutes from '@/workspaces/customer/mixins/routes'
-import purchaseRoutes from '@/workspaces/purchase/mixins/routes'
-import saleRoutes from '@/workspaces/sale/mixins/routes'
+import homeRoutes from "@/workspaces/home/mixins/routes";
+import customerRoutes from "@/workspaces/customer/mixins/routes";
+import purchaseRoutes from "@/workspaces/purchase/mixins/routes";
+import saleRoutes from "@/workspaces/sale/mixins/routes";
+import adminRoutes from "@/workspaces/admin/mixins/routes";
 
 export default [
   {
-    path: '/',
-    name: 'Home',
-    component: () => import('@/workspaces/home/containers/TheContainer'),
+    path: "/",
+    name: "Home",
+    component: () => import("@/workspaces/home/containers/TheContainer"),
     meta: {
-      authRequired: false,
+      authRequired: false
     },
-    children: homeRoutes,
+    children: homeRoutes
   },
   {
-    path: '/customer',
-    name: 'Customer',
-    component: () => import('@/workspaces/customer/containers/TheContainer'),
+    path: "/admin",
+    name: "Admin",
+    component: () => import("@/workspaces/admin/containers/TheContainer"),
     meta: {
-      authRequired: true,
+      authRequired: true
     },
-    children: customerRoutes,
+    children: adminRoutes
   },
   {
-    path: '/purchase',
-    redirect: '/purchase/dashboard',
-    name: 'Purchase',
-    component: () => import('@/workspaces/purchase/containers/TheContainer'),
+    path: "/customer",
+    name: "Customer",
+    component: () => import("@/workspaces/customer/containers/TheContainer"),
     meta: {
-      authRequired: true,
-      verifyRequired: true
+      authRequired: true
     },
-    children: purchaseRoutes,
+    children: customerRoutes
   },
   {
-    path: '/sale',
-    redirect: '/sale/dashboard',
-    name: 'Sale',
-    component: () => import('@/workspaces/sale/containers/TheContainer'),
+    path: "/purchase",
+    redirect: "/purchase/dashboard",
+    name: "Purchase",
+    component: () => import("@/workspaces/purchase/containers/TheContainer"),
     meta: {
       authRequired: true,
       verifyRequired: true
     },
-    children: saleRoutes,
+    children: purchaseRoutes
   },
-]
+  {
+    path: "/sale",
+    redirect: "/sale/dashboard",
+    name: "Sale",
+    component: () => import("@/workspaces/sale/containers/TheContainer"),
+    meta: {
+      authRequired: true,
+      verifyRequired: true
+    },
+    children: saleRoutes
+  }
+];

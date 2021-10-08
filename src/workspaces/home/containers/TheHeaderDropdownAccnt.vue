@@ -15,6 +15,9 @@
     <CDropdownHeader tag="div" class="text-center" color="light">
       <TMessage content="Workspaces" noTranslate bold />
     </CDropdownHeader>
+    <CDropdownItem to="/admin" exact>
+      <TMessage content="Admin" />
+    </CDropdownItem>
     <CDropdownItem to="/customer" exact>
       <TMessage content="Customer" />
     </CDropdownItem>

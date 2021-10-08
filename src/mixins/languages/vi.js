@@ -16,6 +16,7 @@ export default {
   'Confirm': 'Xác nhận',
   'Email empty': 'Email trống',
   'Customer': 'Khách hàng',
+  'Admin': 'Quản trị viên',
   'Sale': 'Bán hàng',
   'Purchase': 'Mua hàng',
   'Warehouse': 'Kho',
