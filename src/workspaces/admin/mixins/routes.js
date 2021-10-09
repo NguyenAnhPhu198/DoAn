@@ -1,13 +1,29 @@
-const Users = () => import('../views/users/Index')
-// const Orders = () => import('../views/Orders')
-// const Address = () => import('../views/Address')
-// const Cart = () => import('../views/Cart')
+const Users = () => import("../views/users/Index");
+const User = () => import("../views/users/Detail");
 
 export default [
   {
-    path: '/',
-    name: 'Users',
-    component: Users,
-  },
-
-]
+    path: "users",
+    meta: { label: "Users" },
+    component: {
+      render(c) {
+        return c("router-view");
+      }
+    },
+    children: [
+      {
+        path: "",
+        name: "Users",
+        component: Users
+      },
+      {
+        path: ":id",
+        meta: {
+          label: "User Detail"
+        },
+        name: "User Detail",
+        component: User
+      }
+    ]
+  }
+];

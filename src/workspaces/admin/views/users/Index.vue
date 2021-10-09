@@ -6,7 +6,7 @@
       store="auth.users"
       @click-clear-filter="clearFilter"
       @update:sorter-value="setSorter"
-      resource="purchase/users"
+      resource="admin/users"
       enterable
       creatable
       @click-create="ShowModalCreate"

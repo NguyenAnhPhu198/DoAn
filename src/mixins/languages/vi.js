@@ -41,4 +41,13 @@ export default {
   'Link or name of product you want to search': 'Link hoặc tên sản phẩm muốn tìm',
   'Suggest for you': 'Gợi ý cho bạn',
   'Top products': 'Sản phẩm hàng đầu',
+  'id' :'Mã',
+  'Email': 'email',
+  'Name' : 'Tên',
+  'Role' : "Quyền",
+  'Created at': 'Ngày taọ',
+  'Latest update' : 'Ngày cập nhật',
+  'User information': 'Thông tin người dùng',
+  'Role assignment' : 'Phân quyền',
+  'User detail' : 'Chi tiết khách hàng'
 };
