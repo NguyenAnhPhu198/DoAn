@@ -23,7 +23,7 @@
       <template #id-filter>
         <CInput
           :value.sync="filter.id"
-          lazy="false"
+          :lazy="false"
           @change="filterChange"
           class="m-0"
         />
@@ -31,7 +31,7 @@
       <template #name-filter>
         <CInput
           :value.sync="filter.name"
-          lazy="false"
+          :lazy="false"
           @change="filterChange"
           class="m-0"
         />
@@ -39,7 +39,7 @@
       <template #email-filter>
         <CInput
           :value.sync="filter.email"
-          lazy="false"
+          :lazy="false"
           @change="filterChange"
           class="m-0"
         />
@@ -47,7 +47,7 @@
       <template #tel-filter>
         <CInput
           :value.sync="filter.tel"
-          lazy="false"
+          :lazy="false"
           @change="filterChange"
           class="m-0"
         />
