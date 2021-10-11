@@ -9,7 +9,6 @@
       resource="admin/users"
       enterable
       creatable
-      @click-create="ShowModalCreate"
     >
       <template #role_id="{ item }">
         <td>
@@ -22,16 +21,36 @@
         </td>
       </template>
       <template #id-filter>
-        <CInput :value.sync="filter.id" @change="filterChange" class="m-0" />
+        <CInput
+          :value.sync="filter.id"
+          lazy="false"
+          @change="filterChange"
+          class="m-0"
+        />
       </template>
       <template #name-filter>
-        <CInput :value.sync="filter.name" @change="filterChange" class="m-0" />
+        <CInput
+          :value.sync="filter.name"
+          lazy="false"
+          @change="filterChange"
+          class="m-0"
+        />
       </template>
       <template #email-filter>
-        <CInput :value.sync="filter.email" @change="filterChange" class="m-0" />
+        <CInput
+          :value.sync="filter.email"
+          lazy="false"
+          @change="filterChange"
+          class="m-0"
+        />
       </template>
       <template #tel-filter>
-        <CInput :value.sync="filter.tel" @change="filterChange" class="m-0" />
+        <CInput
+          :value.sync="filter.tel"
+          lazy="false"
+          @change="filterChange"
+          class="m-0"
+        />
       </template>
       <template #role_id-filter>
         <SSelectRole :value.sync="filter.role_id" @change="filterChange" />
@@ -43,7 +62,6 @@
         />
       </template>
     </TTableAdvance>
-    <TModal title="abc" :show.sync="showModalCreate" />
   </div>
 </template>
 
@@ -55,10 +73,10 @@ export default {
     return {
       fields: [
         { key: "_", label: "#" },
-        { key: "id" },
-        { key: "name" },
-        { key: "email" },
-        { key: "tel" },
+        { key: "id", label: "ID" },
+        { key: "name", label: "Name" },
+        { key: "email", label: "Email" },
+        { key: "tel", label: "Tel" },
         { key: "role_id", label: "Role" },
         { key: "created_at", label: "Created At" },
       ],
@@ -103,9 +121,6 @@ export default {
         orderBy: sorter.column,
         sortedBy: sorter.asc ? "asc" : "desc",
       });
-    },
-    ShowModalCreate() {
-      this.showModalCreate = true;
     },
   },
 };

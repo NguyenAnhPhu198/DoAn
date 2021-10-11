@@ -45,9 +45,9 @@ export default {
   'Email': 'email',
   'Name' : 'Tên',
   'Role' : "Quyền",
-  'Created at': 'Ngày taọ',
+  'Created at': 'Ngày tạo',
   'Latest update' : 'Ngày cập nhật',
   'User information': 'Thông tin người dùng',
   'Role assignment' : 'Phân quyền',
-  'User detail' : 'Chi tiết khách hàng'
+  'User detail' : 'Chi tiết người dùng'
 };

@@ -16,6 +16,7 @@ export default [
   },
   {
     path: "/admin",
+    redirect: "/admin/dashboard",
     name: "Admin",
     component: () => import("@/workspaces/admin/containers/TheContainer"),
     meta: {

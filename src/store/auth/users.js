@@ -10,7 +10,7 @@ const resource = new Resource(
       orderBy: "created_at",
       sortedBy: "desc",
       searchJoin: 'and',
-      // searchFields: 'created_at:between',
+      searchFields: 'created_at:between;id:like;name:like;email:like;tel:like',
     },
     default_detail: {
       id: null,

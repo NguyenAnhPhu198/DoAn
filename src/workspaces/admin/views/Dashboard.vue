@@ -7,10 +7,10 @@ export default {
   i18n: {
     messages: {
       en: {
-        Dashboard: "Purchase Dashboard",
+        Dashboard: "Admin Dashboard",
       },
       vi: {
-        Dashboard: "Trang mua hàng",
+        Dashboard: "Trang Admin",
       },
     },
   },
