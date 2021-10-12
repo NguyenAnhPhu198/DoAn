@@ -1,16 +1,15 @@
-import Resource from '@/core/store/Resource';
+import Resource from "@/core/store/Resource";
 
 const resource = new Resource(
   {
-    service: 'auth',
-    resource: 'users'
+    service: "auth",
+    resource: "users"
   },
   {
     default_query: {
       orderBy: "created_at",
       sortedBy: "desc",
-      searchJoin: 'and',
-      searchFields: 'created_at:between;id:like;name:like;email:like;tel:like',
+      searchJoin: "and"
     },
     default_detail: {
       id: null,
@@ -20,10 +19,10 @@ const resource = new Resource(
       created_at: null,
       role: {
         id: null,
-        name: null,
-      },
+        name: null
+      }
     }
-  },
-).store()
+  }
+).store();
 
-export default resource
+export default resource;

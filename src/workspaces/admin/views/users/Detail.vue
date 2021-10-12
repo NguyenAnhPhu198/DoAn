@@ -26,9 +26,13 @@
       <CCol sm="6" md="6" lg="6">
         <CCard class="h-100">
           <CCardHeader>
-            <TMessage class="d-inline-flex mr-2" content="Role assignment" bold />
+            <TMessage
+              class="d-inline-flex mr-2"
+              content="Role assignment"
+              bold
+            />
             <div class="float-right">
-              <TButtonSave @click="updateRole" variant="outline"/>
+              <TButtonSave @click="updateRole" variant="outline" />
             </div>
           </CCardHeader>
           <CCardBody>
